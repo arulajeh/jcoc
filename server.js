@@ -236,11 +236,34 @@ app.post('/api/login', (req, res)=>{
 
 app.get('/api/users', (req, res) => {
     const head = req.headers;
-    db.sequelize.query(`SELECT username, (SELECT COUNT(username) AS "count" FROM users) AS "count" FROM users WHERE email LIKE '%${head.search}%' AND username LIKE '%${head.search}%' AND "name" LIKE '%${head.search}%' LIMIT ${head.page_size ? head.page_size : 5} OFFSET ${head.page_number ? head.page_number : 0}`, 
+    let pageNumber = head.page_number ? head.page_number : 1;
+    let pageSize = head.pageSize ? head.pageSize : 5;
+    let sortBy = head.sort_by ? head.sort_by : 'ASC';
+    let orderBy = head.order_by ? head.order_by : 'name';
+    let search = head.search ? head.search : '';
+    db.sequelize.query(`SELECT
+     username FROM users 
+     WHERE 
+     email LIKE '%${search}%' 
+     AND username LIKE '%${search}%' 
+     AND "name" LIKE '%${search}%'
+     AND email LIKE '%${search}%'
+     ORDER BY ${orderBy} ${sortBy}
+     LIMIT ${pageSize} 
+     OFFSET ${pageNumber - 1}`,
     { type: db.sequelize.QueryTypes.SELECT})
-    .then((result) => {
+    .then(async (result) => {
+      let totalPage = await parseInt(result.length / pageSize);
+      let totalRow = result.length;
       res.json({
-        data: result
+        data: result,
+        page_information: {
+          currentPage: pageNumber,
+          pageSize: pageSize,
+          totalPage: totalPage,
+          firstPage: 1,
+          totalData: totalRow
+        }
       });
     })
 })
