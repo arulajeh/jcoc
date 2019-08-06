@@ -234,8 +234,15 @@ app.post('/api/login', (req, res)=>{
   }
 })
 
-app.get('/api/music', (req, res) => {
-  
+app.get('/api/users', (req, res) => {
+    const head = req.headers;
+    db.sequelize.query(`SELECT username, (SELECT COUNT(username) AS "count" FROM users) AS "count" FROM users WHERE email LIKE '%${head.search}%' AND username LIKE '%${head.search}%' AND "name" LIKE '%${head.search}%' LIMIT ${head.page_size ? head.page_size : 5} OFFSET ${head.page_number ? head.page_number : 0}`, 
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then((result) => {
+      res.json({
+        data: result
+      });
+    })
 })
 
 const request = require('request');
