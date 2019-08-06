@@ -52,19 +52,14 @@ app.post('/api/users/create', (req, res) => {
     const pass1 = Md5.hashStr(args.password);
     // let pass = Md5.hashStr(a.password + a.email);
     const pass2 = Md5.hashStr(pass1 + args.email);
-    db.users.findOrCreate({where: {email: args.email}, defaults: {
+    db.users.findOrCreate({where: {username: args.username}, defaults: {
       name: args.name,
       email: args.email,
+      username: args.username,
       password: pass2,
-      date_of_birth: args.date_of_birth,
-      dayof: args.dayof,
-      no_rek: args.no_rek,
-      nip: args.nip,
-      entity_id: args.entity_id,
-      kepegawaian_id: args.kepegawaian_id,
-      bank_id: args.bank_id,
-      probation_date: args.probation_date,
-      join_date: args.join_date,
+      position: args.position,
+      gender: args.gender,
+      image: args.image,
       status: 1
     }})
     .then(([result, created]) => {
@@ -101,109 +96,112 @@ app.post('/api/users/create', (req, res) => {
 app.post('/api/login', (req, res)=>{
   let a = req.body;
   console.log(a);
-  if (a.email && a.password) {
-    let pass = Md5.hashStr(a.password + a.email);
+  if (a.username && a.password) {
+    let pass = Md5.hashStr(a.password + a.username);
     console.log(pass);
-    db.users.findOne({where:{email: a.email, password: pass}})
+    db.users.findOne({where:{username: a.username, password: a.password}})
     .then((hasil2) => {
       if (hasil2) {
-        let hasil = hasil2.get({plain: true});
-        delete hasil.password;
-        db.sequelize.query(`SELECT * FROM view_user_roles where user_id=${hasil.id}`, 
-          { type: db.sequelize.QueryTypes.SELECT})
-        .then(view_user_roles =>{
-          let roles = view_user_roles[0].roles_name;
-          let hasura = {
-            "X-Hasura-User-Id": hasil.id.toString(),
-            "X-Hasura-Entity-Id": hasil.entity_id.toString(),
-            "x-hasura-default-role": "user",
-            "x-hasura-allowed-roles": roles
-          }
-          let token = jwt.sign({
-            hasura: hasura
-          }, jwtSecret, { algorithm: 'HS256'});
-          db.sequelize.query(`SELECT * FROM alur_reimburse where user_id=${hasil.id} and entity_id=${hasil.entity_id}`, 
-          { type: db.sequelize.QueryTypes.SELECT})
-          // db.alur_reimburse.findOne({where: {entity_id: hasil.entity_id, user_id: hasil.id}})
-          .then((hasil_alur2) => {
-            let hasil_alur = hasil_alur2[0]//.get({plain: true});
-            console.log(hasil_alur);
-            if (hasil_alur && hasil_alur.step) {
-              console.log(view_user_roles);
-              hasura['X-Hasura-Max-Step-Reimburse'] = hasil_alur.step.toString();
-              token = jwt.sign({
-                hasura: hasura
-              }, jwtSecret, { algorithm: 'HS256'});
-              res.json({
-                sukses: true,
-                token: token,
-                hasura: hasura,
-                roles: roles,
-                entity_id: hasil.entity_id,
-                max_reimburse_step: hasil_alur.step,
-                msg: "Sukses Login"
-              })
-            } else {
-              console.log(view_user_roles);
-              hasura['X-Hasura-Max-Step-Reimburse'] = '3';
-              token = jwt.sign({
-                hasura: hasura
-              }, jwtSecret, { algorithm: 'HS256'});
-              res.json({
-                sukses: true,
-                token: token,
-                hasura: hasura,
-                roles: roles,
-                entity_id: hasil.entity_id,
-                max_reimburse_step: 3,
-                msg: "Sukses Login"
-              })
-            }
-          }).catch(err => {
-            console.log('Error');
-            console.log(err);
-            let roles = view_user_roles[0].roles_name;
-            let hasura = {
-              "X-Hasura-User-Id": hasil.id.toString(),
-              "X-Hasura-Entity-Id": hasil.entity_id.toString(),
-              "x-hasura-default-role": "user",
-              "x-hasura-allowed-roles": roles,
-              "X-Hasura-Max-Step-Reimburse": '3'
-            }
-            let token = jwt.sign({
-              hasura: hasura
-            }, jwtSecret, { algorithm: 'HS256'});
-            res.json({
-              sukses: true,
-              token: token,
-              hasura: hasura,
-              roles: roles,
-              entity_id: hasil.entity_id,
-              max_reimburse_step: 3,
-              msg: "Sukses Login"
-            })
-          });
-        }).catch(err => {
-          let roles = ["user"];
-          let hasura = {
-            "X-Hasura-User-Id": hasil.id.toString(),
-            "x-hasura-default-role": "user",
-            "x-hasura-allowed-roles": roles,
-            "X-Hasura-Max-Step-Reimburse": '3'
-          }
-          let token = jwt.sign({
-            hasura: hasura
-          }, jwtSecret, { algorithm: 'HS256'});
-          res.json({
-            sukses: true,
-            token: token,
-            hasura: hasura,
-            roles: roles,
-            entity_id: hasil.entity_id,
-            max_reimburse_step: 3,
-            msg: "Sukses Login"
-          })
+        res.json({
+          data: hasil2
         });
+      //   let hasil = hasil2.get({plain: true});
+      //   delete hasil.password;
+      //   db.sequelize.query(`SELECT * FROM view_user_roles where user_id=${hasil.id}`, 
+      //     { type: db.sequelize.QueryTypes.SELECT})
+      //   .then(view_user_roles =>{
+      //     let roles = view_user_roles[0].roles_name;
+      //     let hasura = {
+      //       "X-Hasura-User-Id": hasil.id.toString(),
+      //       "X-Hasura-Entity-Id": hasil.entity_id.toString(),
+      //       "x-hasura-default-role": "user",
+      //       "x-hasura-allowed-roles": roles
+      //     }
+      //     let token = jwt.sign({
+      //       hasura: hasura
+      //     }, jwtSecret, { algorithm: 'HS256'});
+      //     db.sequelize.query(`SELECT * FROM alur_reimburse where user_id=${hasil.id} and entity_id=${hasil.entity_id}`, 
+      //     { type: db.sequelize.QueryTypes.SELECT})
+      //     // db.alur_reimburse.findOne({where: {entity_id: hasil.entity_id, user_id: hasil.id}})
+      //     .then((hasil_alur2) => {
+      //       let hasil_alur = hasil_alur2[0]//.get({plain: true});
+      //       console.log(hasil_alur);
+      //       if (hasil_alur && hasil_alur.step) {
+      //         console.log(view_user_roles);
+      //         hasura['X-Hasura-Max-Step-Reimburse'] = hasil_alur.step.toString();
+      //         token = jwt.sign({
+      //           hasura: hasura
+      //         }, jwtSecret, { algorithm: 'HS256'});
+      //         res.json({
+      //           sukses: true,
+      //           token: token,
+      //           hasura: hasura,
+      //           roles: roles,
+      //           entity_id: hasil.entity_id,
+      //           max_reimburse_step: hasil_alur.step,
+      //           msg: "Sukses Login"
+      //         })
+      //       } else {
+      //         console.log(view_user_roles);
+      //         hasura['X-Hasura-Max-Step-Reimburse'] = '3';
+      //         token = jwt.sign({
+      //           hasura: hasura
+      //         }, jwtSecret, { algorithm: 'HS256'});
+      //         res.json({
+      //           sukses: true,
+      //           token: token,
+      //           hasura: hasura,
+      //           roles: roles,
+      //           entity_id: hasil.entity_id,
+      //           max_reimburse_step: 3,
+      //           msg: "Sukses Login"
+      //         })
+      //       }
+      //     }).catch(err => {
+      //       console.log('Error');
+      //       console.log(err);
+      //       let roles = view_user_roles[0].roles_name;
+      //       let hasura = {
+      //         "X-Hasura-User-Id": hasil.id.toString(),
+      //         "X-Hasura-Entity-Id": hasil.entity_id.toString(),
+      //         "x-hasura-default-role": "user",
+      //         "x-hasura-allowed-roles": roles,
+      //         "X-Hasura-Max-Step-Reimburse": '3'
+      //       }
+      //       let token = jwt.sign({
+      //         hasura: hasura
+      //       }, jwtSecret, { algorithm: 'HS256'});
+      //       res.json({
+      //         sukses: true,
+      //         token: token,
+      //         hasura: hasura,
+      //         roles: roles,
+      //         entity_id: hasil.entity_id,
+      //         max_reimburse_step: 3,
+      //         msg: "Sukses Login"
+      //       })
+      //     });
+      //   }).catch(err => {
+      //     let roles = ["user"];
+      //     let hasura = {
+      //       "X-Hasura-User-Id": hasil.id.toString(),
+      //       "x-hasura-default-role": "user",
+      //       "x-hasura-allowed-roles": roles,
+      //       "X-Hasura-Max-Step-Reimburse": '3'
+      //     }
+      //     let token = jwt.sign({
+      //       hasura: hasura
+      //     }, jwtSecret, { algorithm: 'HS256'});
+      //     res.json({
+      //       sukses: true,
+      //       token: token,
+      //       hasura: hasura,
+      //       roles: roles,
+      //       entity_id: hasil.entity_id,
+      //       max_reimburse_step: 3,
+      //       msg: "Sukses Login"
+      //     })
+      //   });
       }else{
         res.json({
           sukses: false,
