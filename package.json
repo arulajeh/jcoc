@@ -57,7 +57,8 @@
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "sequelize": "^6.0.0",
-    "ts-md5": "^1.2.4"
+    "ts-md5": "^1.2.4",
+    "body-parser": "^1.18.3"
   },
   "devDependencies": {
     "@angular-devkit/architect": "~0.801.2",
