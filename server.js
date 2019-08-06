@@ -44,56 +44,59 @@ var checkJWT = (args => {
 });
 
 app.post('/api/users/create', (req, res) => {
-  let args = req.body;
+  // let args = req.body;
   let token = req.headers.authorization;
-  token = token.replace('Bearer ',''); 
+  // token = token.replace('Bearer ',''); 
   let hasilJWT = checkJWT(token);
-  if (hasilJWT.hasura["x-hasura-allowed-roles"].indexOf('admin') > -1){
-    const pass1 = Md5.hashStr(args.password);
-    // let pass = Md5.hashStr(a.password + a.email);
-    const pass2 = Md5.hashStr(pass1 + args.email);
-    db.users.findOrCreate({where: {username: args.username}, defaults: {
-      name: args.name,
-      email: args.email,
-      username: args.username,
-      password: pass2,
-      position: args.position,
-      gender: args.gender,
-      image: args.image,
-      status: 1,
-      akses: 2,
-      createdAt: new Date(),
-      updatedAt: new Date().format('YYYY-MM-DD', 'id-ID')
-    }})
-    .then(([result, created]) => {
-      if (created){
-        res.json({
-          sukses: true,
-          msg: "sukses",
-          user: result
-        })
-      }else{
-        res.json({
-          sukses: false,
-          msg: "User Sudah Ada",
-          user: result
-        })
-      }
-    }).catch(err => {
-      console.log(err);
-      res.json({
-        sukses: false,
-        msg: JSON.stringify(err),
-        user: null
-      })
-    })
-  }else{
-    res.json({
-      sukses: false,
-      msg: "Not Authorize",
-      user: null
-    })
-  }
+  res.json({
+    hasil: hasilJWT
+  });
+  // if (hasilJWT.hasura["x-hasura-allowed-roles"].indexOf('admin') > -1){
+  //   const pass1 = Md5.hashStr(args.password);
+  //   // let pass = Md5.hashStr(a.password + a.email);
+  //   const pass2 = Md5.hashStr(pass1 + args.email);
+  //   db.users.findOrCreate({where: {username: args.username}, defaults: {
+  //     name: args.name,
+  //     email: args.email,
+  //     username: args.username,
+  //     password: pass2,
+  //     position: args.position,
+  //     gender: args.gender,
+  //     image: args.image,
+  //     status: 1,
+  //     akses: 2,
+  //     createdAt: new Date(),
+  //     updatedAt: new Date()
+  //   }})
+  //   .then(([result, created]) => {
+  //     if (created){
+  //       res.json({
+  //         sukses: true,
+  //         msg: "sukses",
+  //         user: result
+  //       })
+  //     }else{
+  //       res.json({
+  //         sukses: false,
+  //         msg: "User Sudah Ada",
+  //         user: result
+  //       })
+  //     }
+  //   }).catch(err => {
+  //     console.log(err);
+  //     res.json({
+  //       sukses: false,
+  //       msg: JSON.stringify(err),
+  //       user: null
+  //     })
+  //   })
+  // }else{
+  //   res.json({
+  //     sukses: false,
+  //     msg: "Not Authorize",
+  //     user: null
+  //   })
+  // }
 })
 
 app.post('/api/login', (req, res)=>{
@@ -109,15 +112,14 @@ app.post('/api/login', (req, res)=>{
         delete hasil.password;
         let token = jwt.sign(hasil, jwtSecret, {algorithm: "HS256"});
         res.json({
-          status: true,
+          sukses: true,
           token: token,
           data: {
             username: hasil.username,
             full_name: hasil.name,
             position: hasil.position,
             email: hasil.email,
-            akses: hasil.akses,
-            date: new Date().format('YYYY-MM-DD', 'id-ID')
+            akses: hasil.akses
           }
         });
       //   let hasil = hasil2.get({plain: true});
@@ -220,85 +222,23 @@ app.post('/api/login', (req, res)=>{
       }else{
         res.json({
           sukses: false,
-          msg: "Failed Login"
+          msg: "Invalid Username or Password"
         })
       }
     })
   }else{
     res.json({
       sukses: false,
-      msg: "Failed Login"
+      msg: "Input your username and password"
     })
   }
 })
 
-const request = require('request');
-
-app.post('/startgps/login', (req, res) => {
-  const headers = req.headers;
-  let url1 = 'https://devmobile.startgps.id/m.dev/login';
-  console.log(req.body);
-  request.post({
-    url: url1,
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    "rejectUnauthorized": false, 
-    body: JSON.stringify(req.body)}, function optionalCallback(err, httpResponse, body) {
-      if (err) {
-        return console.error('upload failed:', err);
-      }
-      console.log('Upload successful!');//  Server responded with:', JSON.stringify(body));
-      console.log(httpResponse);
-      console.log(body);
-      res.send(body);
-  })
-});
-app.get('/startgps/monitoring/position.geojson', (req, res) => {
-  const headers = req.headers;
-  let url1 = 'https://devmobile.startgps.id/m.dev/monitoring/position.geojson';
-  request.get({
-    url: url1,
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'X-Token': headers['x-token']
-    },
-    "rejectUnauthorized": false, 
-    }, function optionalCallback(err, httpResponse, body) {
-      if (err) {
-        return console.error('upload failed:', err);
-      }
-      console.log('Upload successful!');//  Server responded with:', JSON.stringify(body));
-      res.send(body);
-  })
-});
-
-app.get('/startgps/monitoring/route.geojson?*', (req, res) => {
-  const headers = req.headers;
-  console.log(headers);
-  let fullUrl = req.originalUrl.replace('/startgps','');
+app.get('/api/music', (req, res) => {
   
-  let url1 = 'https://devmobile.startgps.id/m.dev' + fullUrl;
-  console.log(url1);
-  request.get({
-    url: url1,
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'X-Token': headers['x-token']
-    },
-    "rejectUnauthorized": false, 
-    }, function optionalCallback(err, httpResponse, body) {
-      if (err) {
-        return console.error('upload failed:', err);
-      }
-      console.log('Upload successful!');//  Server responded with:', JSON.stringify(body));
-      res.send(body);
-  })
-});
+})
 
+const request = require('request');
 
 app.use(express.static('www'));
 app.get('/*', (req, res) => {
