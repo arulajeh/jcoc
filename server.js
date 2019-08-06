@@ -60,7 +60,10 @@ app.post('/api/users/create', (req, res) => {
       position: args.position,
       gender: args.gender,
       image: args.image,
-      status: 1
+      status: 1,
+      akses: 2,
+      createdAt: new Date(),
+      updatedAt: new Date().format('YYYY-MM-DD', 'id-ID')
     }})
     .then(([result, created]) => {
       if (created){
@@ -112,7 +115,8 @@ app.post('/api/login', (req, res)=>{
             username: hasil.username,
             full_name: hasil.name,
             position: hasil.position,
-            email: hasil.email
+            email: hasil.email,
+            akses: hasil.akses
           }
         });
       //   let hasil = hasil2.get({plain: true});
