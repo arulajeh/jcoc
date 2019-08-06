@@ -116,7 +116,8 @@ app.post('/api/login', (req, res)=>{
             full_name: hasil.name,
             position: hasil.position,
             email: hasil.email,
-            akses: hasil.akses
+            akses: hasil.akses,
+            date: new Date().format('YYYY-MM-DD', 'id-ID')
           }
         });
       //   let hasil = hasil2.get({plain: true});
