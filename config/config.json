@@ -1,0 +1,32 @@
+{
+    "development": {
+      "username": "oofynstrmbqxhy",
+      "password": "7f10c9abd9b8ce4ed484893e31b9b43a0a4c8cf51ce237a3359495b3ada13a7c",
+      "database": "daf3093jovs5k4",
+      "host": "ec2-107-22-222-161.compute-1.amazonaws.com",
+      "port":5432,
+      "dialect": "postgres",
+      "operatorsAliases": false,
+      "dialectOptions": {
+        "ssl":true
+      }
+    },
+    "test": {
+      "username": "root",
+      "password": "root",
+      "database": "api_node_demo",
+      "host": "127.0.0.1",
+      "port":8889,
+      "dialect": "mysql",
+      "operatorsAliases": false
+    },
+    "production": {
+      "username": "oofynstrmbqxhy",
+      "password": "7f10c9abd9b8ce4ed484893e31b9b43a0a4c8cf51ce237a3359495b3ada13a7c",
+      "database": "daf3093jovs5k4",
+      "host": "ec2-107-22-222-161.compute-1.amazonaws.com",
+      "port":5432,
+      "dialect": "postgres",
+      "operatorsAliases": false
+    }
+  }
