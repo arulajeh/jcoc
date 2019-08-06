@@ -102,8 +102,18 @@ app.post('/api/login', (req, res)=>{
     db.users.findOne({where:{username: a.username, password: a.password}})
     .then((hasil2) => {
       if (hasil2) {
+        let hasil = hasil2.get({plain: true});
+        delete hasil.password;
+        let token = jwt.sign(hasil, jwtSecret, {algorithm: "HS256"});
         res.json({
-          data: hasil2
+          status: true,
+          token: token,
+          data: {
+            username: hasil.username,
+            full_name: hasil.name,
+            position: hasil.position,
+            email: hasil.email
+          }
         });
       //   let hasil = hasil2.get({plain: true});
       //   delete hasil.password;
