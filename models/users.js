@@ -9,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -18,42 +23,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    nip: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      unique: true
-    },
-    date_of_birth: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    dayof: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    no_rek: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    entity_id: {
+    position: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    kepegawaian_id: {
+    gender: {
       type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    bank_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    probation_date: {
-      type: DataTypes.DATE,
-      allowNull: true,
-    },
-    join_date: {
-      type: DataTypes.DATE,
-      allowNull: true,
     },
     status: {
       type: DataTypes.INTEGER,
