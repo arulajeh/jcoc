@@ -58,7 +58,8 @@
     "morgan": "^1.9.1",
     "sequelize": "^6.0.0",
     "ts-md5": "^1.2.4",
-    "body-parser": "^1.18.3"
+    "body-parser": "^1.18.3",
+    "pg": "^7.10.0"
   },
   "devDependencies": {
     "@angular-devkit/architect": "~0.801.2",
