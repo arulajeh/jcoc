@@ -128,7 +128,7 @@ app.post('/api/login', (req, res)=>{
             full_name: hasil.name,
             position: hasil.position,
             email: hasil.email,
-            akses: hasil.akses
+            akses: hasil.akses_id
           }
         });
       //   let hasil = hasil2.get({plain: true});
@@ -254,7 +254,7 @@ app.get('/api/users', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT username, "name", email, image, akses, gender, "position" FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT username, "name", email, image, akses_id, gender, "position" FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
@@ -271,7 +271,7 @@ app.get('/api/users', (req, res) => {
             firstPage: 1,
             totalData: parseInt(row[0].count)
           },
-          userDetai: hasilJWT.data
+          userDetail: hasilJWT.data
         })
       });
     });  
