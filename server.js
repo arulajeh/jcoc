@@ -236,27 +236,32 @@ app.post('/api/login', (req, res)=>{
 
 app.get('/api/users', (req, res) => {
     const head = req.headers;
+    console.log(head);
     let pageNumber = head.page_number ? head.page_number : 1;
-    let pageSize = head.pageSize ? head.pageSize : 5;
+    let pageSize = head.page_size ? head.page_size : 5;
     let sortBy = head.sort_by ? head.sort_by : 'ASC';
     let orderBy = head.order_by ? head.order_by : 'name';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
     db.sequelize.query(`SELECT username, "name", email, image, akses, gender, "position" FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
-    .then((result) => {
-      let totalRow = result.length;
-      let totalPage = parseInt(totalRow / pageSize);
-      console.log(result);
-      res.json({
-        data: result,
-        page_information: {
-          currentPage: pageNumber,
-          pageSize: pageSize,
-          totalPage: totalPage > 0 ? totalPage : 1,
-          firstPage: 1,
-          totalData: totalRow
-        }
+    .then( async (result) => {
+      let resultDB = result;
+      let totalRow = db.sequelize.query(`SELECT COUNT("id") FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%'`,
+      { type: db.sequelize.QueryTypes.SELECT})
+      .then((row) => {
+        let totalPage = parseInt(totalRow / pageSize);
+        console.log(resultDB);
+        res.json({
+          data: resultDB,
+          page_information: {
+            currentPage: parseInt(pageNumber),
+            pageSize: pageSize,
+            totalPage: totalPage > 0 ? totalPage : 1,
+            firstPage: 1,
+            totalData: row
+          }
+        })
       });
     });
 })
