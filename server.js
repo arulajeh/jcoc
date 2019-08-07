@@ -53,6 +53,7 @@ app.post('/api/login', (req, res)=>{
       if (hasil2) {
         let hasil = hasil2.get({plain: true});
         delete hasil.password;
+        hasil.time = new Date();
         let token = jwt.sign(hasil, jwtSecret, {algorithm: "HS256"});
         res.json({
           sukses: true,
@@ -103,11 +104,12 @@ app.get('/api/users', (req, res) => {
       .then((row) => {
         let totalPage = parseInt(parseInt(row[0].count) / parseInt(pageSize));
         res.json({
+          sukses: true,
           data: resultDB,
           page_information: {
             currentPage: parseInt(pageNumber),
             pageSize: parseInt(pageSize),
-            totalPage: totalPage > 0 ? totalPage : 1,
+            totalPage: totalPage > 0 ? totalPage + 1 : 1,
             firstPage: 1,
             totalData: parseInt(row[0].count)
           }
@@ -241,7 +243,7 @@ app.get('/api/music', (req, res) => {
           page_information: {
             currentPage: parseInt(pageNumber),
             pageSize: parseInt(pageSize),
-            totalPage: totalPage > 0 ? totalPage : 1,
+            totalPage: totalPage > 0 ? totalPage + 1 : 1,
             firstPage: 1,
             totalData: parseInt(row[0].count)
           }
@@ -263,7 +265,7 @@ app.post('/api/music/create', (req, res) => {
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
     if (hasilJWT.data.akses_id === 1) {
-      db.users.create({
+      db.music.create({
         judul: args.judul,
         penyanyi: args.penyanyi,
         lirik: args.lirik,
