@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
     },
     password: {
       type: DataTypes.STRING,
@@ -29,15 +28,19 @@ module.exports = (sequelize, DataTypes) => {
     },
     position_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     gender_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
     status: {
       type: DataTypes.INTEGER,
       allowNull: true,
+    },
+    image: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   },
   {

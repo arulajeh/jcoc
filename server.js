@@ -58,110 +58,15 @@ app.post('/api/login', (req, res)=>{
           sukses: true,
           token: token,
           data: {
+            id: hasil.id,
             username: hasil.username,
             full_name: hasil.name,
             position: hasil.position,
             email: hasil.email,
-            akses: hasil.akses_id
+            akses: hasil.akses_id,
+            image: hasil.image
           }
         });
-      //   let hasil = hasil2.get({plain: true});
-      //   delete hasil.password;
-      //   db.sequelize.query(`SELECT * FROM view_user_roles where user_id=${hasil.id}`, 
-      //     { type: db.sequelize.QueryTypes.SELECT})
-      //   .then(view_user_roles =>{
-      //     let roles = view_user_roles[0].roles_name;
-      //     let hasura = {
-      //       "X-Hasura-User-Id": hasil.id.toString(),
-      //       "X-Hasura-Entity-Id": hasil.entity_id.toString(),
-      //       "x-hasura-default-role": "user",
-      //       "x-hasura-allowed-roles": roles
-      //     }
-      //     let token = jwt.sign({
-      //       hasura: hasura
-      //     }, jwtSecret, { algorithm: 'HS256'});
-      //     db.sequelize.query(`SELECT * FROM alur_reimburse where user_id=${hasil.id} and entity_id=${hasil.entity_id}`, 
-      //     { type: db.sequelize.QueryTypes.SELECT})
-      //     // db.alur_reimburse.findOne({where: {entity_id: hasil.entity_id, user_id: hasil.id}})
-      //     .then((hasil_alur2) => {
-      //       let hasil_alur = hasil_alur2[0]//.get({plain: true});
-      //       console.log(hasil_alur);
-      //       if (hasil_alur && hasil_alur.step) {
-      //         console.log(view_user_roles);
-      //         hasura['X-Hasura-Max-Step-Reimburse'] = hasil_alur.step.toString();
-      //         token = jwt.sign({
-      //           hasura: hasura
-      //         }, jwtSecret, { algorithm: 'HS256'});
-      //         res.json({
-      //           sukses: true,
-      //           token: token,
-      //           hasura: hasura,
-      //           roles: roles,
-      //           entity_id: hasil.entity_id,
-      //           max_reimburse_step: hasil_alur.step,
-      //           msg: "Sukses Login"
-      //         })
-      //       } else {
-      //         console.log(view_user_roles);
-      //         hasura['X-Hasura-Max-Step-Reimburse'] = '3';
-      //         token = jwt.sign({
-      //           hasura: hasura
-      //         }, jwtSecret, { algorithm: 'HS256'});
-      //         res.json({
-      //           sukses: true,
-      //           token: token,
-      //           hasura: hasura,
-      //           roles: roles,
-      //           entity_id: hasil.entity_id,
-      //           max_reimburse_step: 3,
-      //           msg: "Sukses Login"
-      //         })
-      //       }
-      //     }).catch(err => {
-      //       console.log('Error');
-      //       console.log(err);
-      //       let roles = view_user_roles[0].roles_name;
-      //       let hasura = {
-      //         "X-Hasura-User-Id": hasil.id.toString(),
-      //         "X-Hasura-Entity-Id": hasil.entity_id.toString(),
-      //         "x-hasura-default-role": "user",
-      //         "x-hasura-allowed-roles": roles,
-      //         "X-Hasura-Max-Step-Reimburse": '3'
-      //       }
-      //       let token = jwt.sign({
-      //         hasura: hasura
-      //       }, jwtSecret, { algorithm: 'HS256'});
-      //       res.json({
-      //         sukses: true,
-      //         token: token,
-      //         hasura: hasura,
-      //         roles: roles,
-      //         entity_id: hasil.entity_id,
-      //         max_reimburse_step: 3,
-      //         msg: "Sukses Login"
-      //       })
-      //     });
-      //   }).catch(err => {
-      //     let roles = ["user"];
-      //     let hasura = {
-      //       "X-Hasura-User-Id": hasil.id.toString(),
-      //       "x-hasura-default-role": "user",
-      //       "x-hasura-allowed-roles": roles,
-      //       "X-Hasura-Max-Step-Reimburse": '3'
-      //     }
-      //     let token = jwt.sign({
-      //       hasura: hasura
-      //     }, jwtSecret, { algorithm: 'HS256'});
-      //     res.json({
-      //       sukses: true,
-      //       token: token,
-      //       hasura: hasura,
-      //       roles: roles,
-      //       entity_id: hasil.entity_id,
-      //       max_reimburse_step: 3,
-      //       msg: "Sukses Login"
-      //     })
-      //   });
       }else{
         res.json({
           sukses: false,
@@ -201,7 +106,7 @@ app.get('/api/users', (req, res) => {
           page_information: {
             currentPage: parseInt(pageNumber),
             pageSize: parseInt(pageSize),
-            totalPage: totalPage,
+            totalPage: totalPage > 0 ? totalPage : 1,
             firstPage: 1,
             totalData: parseInt(row[0].count)
           },
@@ -231,8 +136,8 @@ app.post('/api/users/create', (req, res) => {
         email: args.email,
         username: args.username,
         password: pass2,
-        position_id: args.position,
-        gender_id: args.gender,
+        position_id: args.position_id,
+        gender_id: args.gender_id,
         image: args.image,
         status: 1,
         akses_id: 2,
@@ -276,7 +181,7 @@ app.post('/api/users/create', (req, res) => {
 
 app.post('/api/users/update/:id', (req,res) => {
   const args = req.body;
-  if (args.name && args.password && args.email && args.position_id && args.gender_id && args.image) {
+  if (args.name && args.email && args.position_id && args.gender_id && args.image) {
     db.sequelize.query(`SELECT "password" FROM users WHERE "id" = ${req.params.id}`, {type: db.sequelize.QueryTypes.SELECT})
     .then((pass) => {
       let pass1;
@@ -308,6 +213,49 @@ app.post('/api/users/update/:id', (req,res) => {
       msg: 'Data tidak lengkap'
     })
   }
+})
+
+// Get Music List
+app.get('/api/music', (req, res) => {
+  const head = req.headers;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    let pageNumber = head.page_number ? head.page_number : 1;
+    let pageSize = head.page_size ? head.page_size : 5;
+    let sortBy = head.sort_by ? head.sort_by : 'ASC';
+    let orderBy = head.order_by ? head.order_by : 'id';
+    let search = head.search ? head.search : '';
+    let offset = (pageNumber - 1) * pageSize;
+    db.sequelize.query(`SELECT judul, penyanyi, link, lirik, chord FROM music WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%' ORDER BY "${orderBy}" ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then( async (result) => {
+      let resultDB = result;
+      db.sequelize.query(`SELECT COUNT("id") FROM music WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%' ORDER BY "${orderBy}" ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+      { type: db.sequelize.QueryTypes.SELECT})
+      .then((row) => {
+        let totalPage = parseInt(parseInt(row[0].count) / parseInt(pageSize));
+        res.json({
+          sukses: true,
+          data: resultDB,
+          page_information: {
+            currentPage: parseInt(pageNumber),
+            pageSize: parseInt(pageSize),
+            totalPage: totalPage > 0 ? totalPage : 1,
+            firstPage: 1,
+            totalData: parseInt(row[0].count)
+          },
+          userDetail: hasilJWT.data
+        })
+      });
+    });  
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+  console.log(head);
 })
 
 const request = require('request');
