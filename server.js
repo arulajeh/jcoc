@@ -276,35 +276,46 @@ app.post('/api/users/create', (req, res) => {
 
 app.post('/api/users/update/:id', (req,res) => {
   const args = req.body;
-  // db.sequelize.query(`UPDATE users SET username = ${args.username}, "name" = ${args.name}, "password" = ${args.password}, "position_id" = ${args.position_id}, gender_id = ${args.gender_id}, image = ${args.image} WHERE "id" = ${req.params.id}`,
-  //   {type: db.sequelize.QueryTypes.UPDATE})
-  //   .then((res) => {
-  //     res.json({
-  //       data: res
-  //     })
-  //   })
-  const updateData = {
-    name: args.name,
-    username: args.username,
-    password: args.password || 'a',
-    position_id: args.position_id,
-    gender_id: args.gender_id,
-    image: args.image
-  };
-  db.users.findOneAndUpdate({id = req.params.id}, 
-    {$set: updateData},{new: true}, function(err, result) {
-    if (err) {
+  db.sequelize.query(`UPDATE users SET "name" = ${args.name}, "password" = ${args.password}, "position_id" = ${args.position_id}, gender_id = ${args.gender_id}, image = ${args.image} WHERE "id" = ${req.params.id}`,
+    {type: db.sequelize.QueryTypes.UPDATE})
+    .then((res) => {
       res.json({
-        sukses: false,
-        msg: "Failed update"
+        data: res
       })
-    } else {
+    })
+    .then((result) => {
       res.json({
         sukses: true,
-        msg: "Update user Successfully"
+        data: result
+      });
+    }).catch((err) => {
+      res.json({
+        sukses: false,
+        msg: err
       })
-    }
-  })
+    })
+  // const updateData = {
+  //   name: args.name,
+  //   username: args.username,
+  //   password: args.password || 'a',
+  //   position_id: args.position_id,
+  //   gender_id: args.gender_id,
+  //   image: args.image
+  // };
+  // db.users.findOneAndUpdate({id = req.params.id}, 
+  //   {$set: updateData},{new: true}, function(err, result) {
+  //   if (err) {
+  //     res.json({
+  //       sukses: false,
+  //       msg: "Failed update"
+  //     })
+  //   } else {
+  //     res.json({
+  //       sukses: true,
+  //       msg: "Update user Successfully"
+  //     })
+  //   }
+  // })
 })
 
 const request = require('request');
