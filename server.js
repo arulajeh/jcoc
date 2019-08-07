@@ -23,7 +23,7 @@ app.use(cors());
  
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+  res.header('Access-Control-Allow-Methods', 'DELETE, PUT', 'POST', 'GET');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, X-Token");
   next();
 });
@@ -44,13 +44,23 @@ var checkJWT = (args => {
 });
 
 app.post('/api/users/create', (req, res) => {
-  // let args = req.body;
+  let args = req.body;
   let token = req.headers.authorization;
-  // token = token.replace('Bearer ',''); 
   let hasilJWT = checkJWT(token);
-  res.json({
-    hasil: hasilJWT
-  });
+  // res.json({
+  //   hasil: hasilJWT
+  // });
+  if (hasilJWT) {
+    let decoded = jwt.decode(hasilJWT, jwtSecret);
+    res.json({
+      data: decoded
+    })
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
   // if (hasilJWT.hasura["x-hasura-allowed-roles"].indexOf('admin') > -1){
   //   const pass1 = Md5.hashStr(args.password);
   //   // let pass = Md5.hashStr(a.password + a.email);
@@ -240,7 +250,7 @@ app.get('/api/users', (req, res) => {
     let pageNumber = head.page_number ? head.page_number : 1;
     let pageSize = head.page_size ? head.page_size : 5;
     let sortBy = head.sort_by ? head.sort_by : 'ASC';
-    let orderBy = head.order_by ? head.order_by : 'name';
+    let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
     db.sequelize.query(`SELECT username, "name", email, image, akses, gender, "position" FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
@@ -250,16 +260,15 @@ app.get('/api/users', (req, res) => {
       let totalRow = db.sequelize.query(`SELECT COUNT("id") FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%'`,
       { type: db.sequelize.QueryTypes.SELECT})
       .then((row) => {
-        let totalPage = parseInt(totalRow / pageSize);
-        console.log(resultDB);
+        let totalPage = parseInt(parseInt(totalRow) / parseInt(pageSize));
         res.json({
           data: resultDB,
           page_information: {
             currentPage: parseInt(pageNumber),
-            pageSize: pageSize,
-            totalPage: totalPage > 0 ? totalPage : 1,
+            pageSize: parseInt(pageSize),
+            totalPage: totalPage,
             firstPage: 1,
-            totalData: row
+            totalData: row[0].count
           }
         })
       });
