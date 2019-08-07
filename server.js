@@ -93,11 +93,11 @@ app.get('/api/users', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT username, "name", email, image, akses_id, gender_id, position_id FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT username, "name", email, image, akses_id, gender_id, position_id, position_name FROM users INNER JOIN position ON position_id = "position"."id" WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%' ORDER BY users.${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
-      db.sequelize.query(`SELECT COUNT("id") FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%'`,
+      db.sequelize.query(`SELECT COUNT("id") FROM users INNER JOIN position ON position_id = "position"."id" WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%'`,
       { type: db.sequelize.QueryTypes.SELECT})
       .then((row) => {
         let totalPage = parseInt(parseInt(row[0].count) / parseInt(pageSize));
@@ -109,8 +109,7 @@ app.get('/api/users', (req, res) => {
             totalPage: totalPage > 0 ? totalPage : 1,
             firstPage: 1,
             totalData: parseInt(row[0].count)
-          },
-          userDetail: hasilJWT.data
+          }
         })
       });
     });  
@@ -140,7 +139,7 @@ app.post('/api/users/create', (req, res) => {
         gender_id: args.gender_id,
         image: args.image,
         status: 1,
-        akses_id: 2,
+        akses_id: args.akses_id ? args.akses_id : 2,
         createdAt: new Date(),
         updatedAt: new Date()
       }})
@@ -231,7 +230,7 @@ app.get('/api/music', (req, res) => {
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
-      db.sequelize.query(`SELECT COUNT('"id"') FROM music WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%'`,
+      db.sequelize.query(`SELECT COUNT("id") FROM music WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%'`,
       { type: db.sequelize.QueryTypes.SELECT})
       .then((row) => {
         let totalPage = parseInt(parseInt(row[0].count) / parseInt(pageSize));
@@ -244,11 +243,116 @@ app.get('/api/music', (req, res) => {
             totalPage: totalPage > 0 ? totalPage : 1,
             firstPage: 1,
             totalData: parseInt(row[0].count)
-          },
-          userDetail: hasilJWT.data
+          }
         })
       });
     });  
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+})
+
+// Add New Music
+app.post('/api/music/create', (req, res) => {
+  let args = req.body;
+  let token = req.headers.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    if (hasilJWT.data.akses_id === 1) {
+      db.users.create({
+        judul: args.judul,
+        penyanyi: args.penyanyi,
+        lirik: args.lirik,
+        chord: args.chord,
+        link: args.link,
+        user_id: hasilJWT.data.id,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }).then(([result, created]) => {
+        if (created) {
+          res.json({
+            sukses: true,
+            data: result
+          })
+        } else {
+          res.json({
+            sukses: false,
+            data: result
+          })
+        }
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          sukses: false,
+          msg: JSON.stringify(err),
+          user: null
+        })
+      })
+      // db.users.findOrCreate({where: {username: args.username}, defaults: {
+      //   name: args.name,
+      //   email: args.email,
+      //   username: args.username,
+      //   password: pass2,
+      //   position_id: args.position_id,
+      //   gender_id: args.gender_id,
+      //   image: args.image,
+      //   status: 1,
+      //   akses_id: 2,
+      //   createdAt: new Date(),
+      //   updatedAt: new Date()
+      // }})
+      // .then(([result, created]) => {
+      //   if (created){
+      //     res.json({
+      //       sukses: true,
+      //       msg: "sukses",
+      //       user: result
+      //     })
+      //   }else{
+      //     res.json({
+      //       sukses: false,
+      //       msg: "User Sudah Ada",
+      //       user: result
+      //     })
+      //   }
+      // }).catch(err => {
+      //   console.log(err);
+      //   res.json({
+      //     sukses: false,
+      //     msg: JSON.stringify(err),
+      //     user: null
+      //   })
+      // })
+    } else {
+      res.json({
+        data: "Unauthorized user"
+      });
+    }
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+})
+
+// Get Master Positions
+app.get('/api/position', (req, res) => {
+  const head = req.headers;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    db.sequelize.query(`SELECT "id", position_name FROM "position"`,
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then( async (result) => {
+      res.json({
+        sukses: true,
+        data: result
+      })
+    }); 
   } else {
     res.json({
       sukses: false,

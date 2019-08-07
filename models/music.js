@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       singer: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
       },
       link: {
         type: DataTypes.STRING,
