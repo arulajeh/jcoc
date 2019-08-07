@@ -231,7 +231,7 @@ app.get('/api/music', (req, res) => {
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
-      db.sequelize.query(`SELECT COUNT("id") FROM music WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+      db.sequelize.query(`SELECT COUNT('"id"') FROM music WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%'`,
       { type: db.sequelize.QueryTypes.SELECT})
       .then((row) => {
         let totalPage = parseInt(parseInt(row[0].count) / parseInt(pageSize));
