@@ -222,11 +222,45 @@ app.post('/api/users/create', (req, res) => {
   let token = req.headers.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    if (hasilJWT.akses_id === 1 || hasilJWT.akses_id === '1') {
-      res.json({
-        akses_id: hasilJWT.akses_id,
-        data: "kamu adalah admin"
-      });
+    if (hasilJWT.data.akses_id === 1) {
+      const pass1 = Md5.hashStr(args.password);
+    // let pass = Md5.hashStr(a.password + a.email);
+      const pass2 = Md5.hashStr(pass1 + args.email);
+      db.users.findOrCreate({where: {username: args.username}, defaults: {
+        name: args.name,
+        email: args.email,
+        username: args.username,
+        password: pass2,
+        position_id: args.position,
+        gender_id: args.gender,
+        image: args.image,
+        status: 1,
+        akses_id: 2,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }})
+      .then(([result, created]) => {
+        if (created){
+          res.json({
+            sukses: true,
+            msg: "sukses",
+            user: result
+          })
+        }else{
+          res.json({
+            sukses: false,
+            msg: "User Sudah Ada",
+            user: result
+          })
+        }
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          sukses: false,
+          msg: JSON.stringify(err),
+          user: null
+        })
+      })
     } else {
       res.json({
         data: "kamu bukan admin"
@@ -238,52 +272,39 @@ app.post('/api/users/create', (req, res) => {
       message: 'Invalid Token'
     });
   }
-  // if (hasilJWT.hasura["x-hasura-allowed-roles"].indexOf('admin') > -1){
-  //   const pass1 = Md5.hashStr(args.password);
-  //   // let pass = Md5.hashStr(a.password + a.email);
-  //   const pass2 = Md5.hashStr(pass1 + args.email);
-  //   db.users.findOrCreate({where: {username: args.username}, defaults: {
-  //     name: args.name,
-  //     email: args.email,
-  //     username: args.username,
-  //     password: pass2,
-  //     position: args.position,
-  //     gender: args.gender,
-  //     image: args.image,
-  //     status: 1,
-  //     akses: 2,
-  //     createdAt: new Date(),
-  //     updatedAt: new Date()
-  //   }})
-  //   .then(([result, created]) => {
-  //     if (created){
-  //       res.json({
-  //         sukses: true,
-  //         msg: "sukses",
-  //         user: result
-  //       })
-  //     }else{
-  //       res.json({
-  //         sukses: false,
-  //         msg: "User Sudah Ada",
-  //         user: result
-  //       })
-  //     }
-  //   }).catch(err => {
-  //     console.log(err);
+})
+
+app.post('/api/users/update/:id', (req,res) => {
+  const args = req.body;
+  // db.sequelize.query(`UPDATE users SET username = ${args.username}, "name" = ${args.name}, "password" = ${args.password}, "position_id" = ${args.position_id}, gender_id = ${args.gender_id}, image = ${args.image} WHERE "id" = ${req.params.id}`,
+  //   {type: db.sequelize.QueryTypes.UPDATE})
+  //   .then((res) => {
   //     res.json({
-  //       sukses: false,
-  //       msg: JSON.stringify(err),
-  //       user: null
+  //       data: res
   //     })
   //   })
-  // }else{
-  //   res.json({
-  //     sukses: false,
-  //     msg: "Not Authorize",
-  //     user: null
-  //   })
-  // }
+  const updateData = {
+    name: args.name,
+    username: args.username,
+    password: args.password || 'a',
+    position_id: args.position_id,
+    gender_id: args.gender_id,
+    image: args.image
+  };
+  db.users.findOneAndUpdate({id = req.params.id}, 
+    {$set: updateData},{new: true}, function(err, result) {
+    if (err) {
+      res.json({
+        sukses: false,
+        msg: "Failed update"
+      })
+    } else {
+      res.json({
+        sukses: true,
+        msg: "Update user Successfully"
+      })
+    }
+  })
 })
 
 const request = require('request');
