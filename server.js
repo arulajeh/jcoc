@@ -245,8 +245,11 @@ app.post('/api/login', (req, res)=>{
 })
 
 app.get('/api/users', (req, res) => {
-    const head = req.headers;
-    console.log(head);
+  const head = req.headers;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    let decoded = jwt.decode(hasilJWT, jwtSecret);
     let pageNumber = head.page_number ? head.page_number : 1;
     let pageSize = head.page_size ? head.page_size : 5;
     let sortBy = head.sort_by ? head.sort_by : 'ASC';
@@ -257,10 +260,10 @@ app.get('/api/users', (req, res) => {
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
-      let totalRow = db.sequelize.query(`SELECT COUNT("id") FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%'`,
+      db.sequelize.query(`SELECT COUNT("id") FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%'`,
       { type: db.sequelize.QueryTypes.SELECT})
       .then((row) => {
-        let totalPage = parseInt(parseInt(totalRow) / parseInt(pageSize));
+        let totalPage = parseInt(parseInt(row[0].count) / parseInt(pageSize));
         res.json({
           data: resultDB,
           page_information: {
@@ -268,11 +271,19 @@ app.get('/api/users', (req, res) => {
             pageSize: parseInt(pageSize),
             totalPage: totalPage,
             firstPage: 1,
-            totalData: row[0].count
-          }
+            totalData: parseInt(row[0].count)
+          },
+          userDetai: decoded
         })
       });
+    });  
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
     });
+  }
+  console.log(head);
 })
 
 const request = require('request');
