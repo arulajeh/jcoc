@@ -23,7 +23,7 @@ app.use(cors());
  
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'DELETE, PUT', 'POST', 'GET');
+  res.header('Access-Control-Allow-Methods', 'DELETE, PUT, POST, GET');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, X-Token");
   next();
 });
@@ -36,8 +36,7 @@ var checkJWT = (args => {
       throw new Error('Invalid Token');
     }else{
       return {
-        token: args,
-        hasura: decoded.hasura
+        data: decoded
       };
     }
   });
@@ -249,7 +248,6 @@ app.get('/api/users', (req, res) => {
   let token = head.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    let decoded = jwt.decode(hasilJWT, jwtSecret);
     let pageNumber = head.page_number ? head.page_number : 1;
     let pageSize = head.page_size ? head.page_size : 5;
     let sortBy = head.sort_by ? head.sort_by : 'ASC';
@@ -273,7 +271,7 @@ app.get('/api/users', (req, res) => {
             firstPage: 1,
             totalData: parseInt(row[0].count)
           },
-          userDetai: decoded
+          userDetai: hasilJWT.data
         })
       });
     });  
