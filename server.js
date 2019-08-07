@@ -82,6 +82,7 @@ app.post('/api/login', (req, res)=>{
   }
 })
 
+// Get List Users
 app.get('/api/users', (req, res) => {
   const head = req.headers;
   let token = head.authorization;
@@ -97,7 +98,7 @@ app.get('/api/users', (req, res) => {
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
-      db.sequelize.query(`SELECT COUNT("id") FROM users INNER JOIN position ON position_id = "position"."id" WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%'`,
+      db.sequelize.query(`SELECT COUNT(users."id") FROM users INNER JOIN position ON position_id = "position"."id" WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%'`,
       { type: db.sequelize.QueryTypes.SELECT})
       .then((row) => {
         let totalPage = parseInt(parseInt(row[0].count) / parseInt(pageSize));
