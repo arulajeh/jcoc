@@ -250,22 +250,22 @@ app.get('/api/users', (req, res) => {
      AND email LIKE '%${search}%'
      ORDER BY ${orderBy} ${sortBy}
      LIMIT ${pageSize} 
-     OFFSET ${pageNumber - 1}`,
+     OFFSET ${pageNumber * pageSize}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then(async (result) => {
-      let totalPage = await parseInt(result.length / pageSize);
       let totalRow = result.length;
+      let totalPage = await parseInt(totalRow / pageSize);
       res.json({
         data: result,
         page_information: {
-          currentPage: pageNumber,
+          currentPage: parseInt(pageNumber),
           pageSize: pageSize,
-          totalPage: totalPage,
+          totalPage: totalPage > 0 ? totalPage : 1,
           firstPage: 1,
           totalData: totalRow
         }
       });
-    })
+    });
 })
 
 const request = require('request');
