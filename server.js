@@ -241,15 +241,17 @@ app.get('/api/users', (req, res) => {
     let sortBy = head.sort_by ? head.sort_by : 'ASC';
     let orderBy = head.order_by ? head.order_by : 'name';
     let search = head.search ? head.search : '';
-    db.sequelize.query(`SELECT username, "name", email, image, akses, gender, "position" FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${pageNumber * pageSize}`,
+    let offset = (pageNumber - 1) * pageSize;
+    db.sequelize.query(`SELECT username, "name", email, image, akses, gender, "position" FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
-    .then(async (result) => {
+    .then((result) => {
       let totalRow = result.length;
-      let totalPage = await parseInt(totalRow / pageSize);
+      let totalPage = parseInt(totalRow / pageSize);
+      console.log(result);
       res.json({
         data: result,
         page_information: {
-          currentPage: parseInt(pageNumber),
+          currentPage: pageNumber,
           pageSize: pageSize,
           totalPage: totalPage > 0 ? totalPage : 1,
           firstPage: 1,
