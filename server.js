@@ -42,72 +42,6 @@ var checkJWT = (args => {
   });
 });
 
-app.post('/api/users/create', (req, res) => {
-  let args = req.body;
-  let token = req.headers.authorization;
-  let hasilJWT = checkJWT(token);
-  // res.json({
-  //   hasil: hasilJWT
-  // });
-  if (hasilJWT) {
-    let decoded = jwt.decode(hasilJWT, jwtSecret);
-    res.json({
-      data: decoded
-    })
-  } else {
-    res.json({
-      sukses: false,
-      message: 'Invalid Token'
-    });
-  }
-  // if (hasilJWT.hasura["x-hasura-allowed-roles"].indexOf('admin') > -1){
-  //   const pass1 = Md5.hashStr(args.password);
-  //   // let pass = Md5.hashStr(a.password + a.email);
-  //   const pass2 = Md5.hashStr(pass1 + args.email);
-  //   db.users.findOrCreate({where: {username: args.username}, defaults: {
-  //     name: args.name,
-  //     email: args.email,
-  //     username: args.username,
-  //     password: pass2,
-  //     position: args.position,
-  //     gender: args.gender,
-  //     image: args.image,
-  //     status: 1,
-  //     akses: 2,
-  //     createdAt: new Date(),
-  //     updatedAt: new Date()
-  //   }})
-  //   .then(([result, created]) => {
-  //     if (created){
-  //       res.json({
-  //         sukses: true,
-  //         msg: "sukses",
-  //         user: result
-  //       })
-  //     }else{
-  //       res.json({
-  //         sukses: false,
-  //         msg: "User Sudah Ada",
-  //         user: result
-  //       })
-  //     }
-  //   }).catch(err => {
-  //     console.log(err);
-  //     res.json({
-  //       sukses: false,
-  //       msg: JSON.stringify(err),
-  //       user: null
-  //     })
-  //   })
-  // }else{
-  //   res.json({
-  //     sukses: false,
-  //     msg: "Not Authorize",
-  //     user: null
-  //   })
-  // }
-})
-
 app.post('/api/login', (req, res)=>{
   let a = req.body;
   console.log(a);
@@ -254,7 +188,7 @@ app.get('/api/users', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT username, "name", email, image, akses_id, gender, "position" FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT username, "name", email, image, akses_id, gender_id, position_id FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
@@ -282,6 +216,73 @@ app.get('/api/users', (req, res) => {
     });
   }
   console.log(head);
+})
+app.post('/api/users/create', (req, res) => {
+  let args = req.body;
+  let token = req.headers.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    if (hasilJWT.akses_id === 1) {
+      res.json({
+        data: "kamu adalah admin"
+      });
+    } else {
+      res.json({
+        data: "kamu bukan admin"
+      });
+    }
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+  // if (hasilJWT.hasura["x-hasura-allowed-roles"].indexOf('admin') > -1){
+  //   const pass1 = Md5.hashStr(args.password);
+  //   // let pass = Md5.hashStr(a.password + a.email);
+  //   const pass2 = Md5.hashStr(pass1 + args.email);
+  //   db.users.findOrCreate({where: {username: args.username}, defaults: {
+  //     name: args.name,
+  //     email: args.email,
+  //     username: args.username,
+  //     password: pass2,
+  //     position: args.position,
+  //     gender: args.gender,
+  //     image: args.image,
+  //     status: 1,
+  //     akses: 2,
+  //     createdAt: new Date(),
+  //     updatedAt: new Date()
+  //   }})
+  //   .then(([result, created]) => {
+  //     if (created){
+  //       res.json({
+  //         sukses: true,
+  //         msg: "sukses",
+  //         user: result
+  //       })
+  //     }else{
+  //       res.json({
+  //         sukses: false,
+  //         msg: "User Sudah Ada",
+  //         user: result
+  //       })
+  //     }
+  //   }).catch(err => {
+  //     console.log(err);
+  //     res.json({
+  //       sukses: false,
+  //       msg: JSON.stringify(err),
+  //       user: null
+  //     })
+  //   })
+  // }else{
+  //   res.json({
+  //     sukses: false,
+  //     msg: "Not Authorize",
+  //     user: null
+  //   })
+  // }
 })
 
 const request = require('request');
