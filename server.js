@@ -278,17 +278,14 @@ app.post('/api/users/update/:id', (req,res) => {
   const args = req.body;
   db.sequelize.query(`UPDATE users SET "name" = '${args.name}', "password" = '${args.password}', "position_id" = ${args.position_id}, gender_id = ${args.gender_id}, image = '${args.image}' WHERE "id" = ${req.params.id}`,
     {type: db.sequelize.QueryTypes.UPDATE})
-    .then((res) => {
-      res.json({
-        data: res
-      })
-    })
     .then((result) => {
       res.json({
         sukses: true,
+        msg: 'Update Successfully',
         data: result
-      });
-    }).catch((err) => {
+      })
+    })
+    .catch((err) => {
       res.json({
         sukses: false,
         msg: err
