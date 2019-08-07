@@ -263,7 +263,7 @@ app.post('/api/users/create', (req, res) => {
       })
     } else {
       res.json({
-        data: "kamu bukan admin"
+        data: "Unauthorized user"
       });
     }
   } else {
@@ -276,43 +276,38 @@ app.post('/api/users/create', (req, res) => {
 
 app.post('/api/users/update/:id', (req,res) => {
   const args = req.body;
-  db.sequelize.query(`UPDATE users SET "name" = '${args.name}', "password" = '${args.password}', "position_id" = ${args.position_id}, gender_id = ${args.gender_id}, image = '${args.image}' WHERE "id" = ${req.params.id}`,
-    {type: db.sequelize.QueryTypes.UPDATE})
-    .then((result) => {
-      res.json({
-        sukses: true,
-        msg: 'Update Successfully',
-        data: result
+  if (args.name && args.password && args.email && args.position_id && args.gender_id && args.image) {
+    db.sequelize.query(`SELECT "password" FROM users WHERE "id" = ${req.params.id}`, {type: db.sequelize.QueryTypes.SELECT})
+    .then((pass) => {
+      let pass1;
+      let pass2;
+      if (args.password.length > 0) {
+        pass1 = Md5.hashStr(args.password);
+      // let pass = Md5.hashStr(a.password + a.email);
+        pass2 = Md5.hashStr(pass1 + args.email);
+      } 
+      db.sequelize.query(`UPDATE users SET "name" = '${args.name}', "password" = '${pass2 || args.password}', "position_id" = ${args.position_id}, gender_id = ${args.gender_id}, image = '${args.image}' WHERE "id" = ${req.params.id}`,
+      {type: db.sequelize.QueryTypes.UPDATE})
+      .then((result) => {
+        res.json({
+          sukses: true,
+          msg: 'Update Successfully',
+          data: result
+        })
       })
-    })
-    .catch((err) => {
-      res.json({
-        sukses: false,
-        msg: err
+      .catch((err) => {
+        res.json({
+          sukses: false,
+          msg: JSON.stringify(err)
+        })
       })
+    })  
+  } else {
+    res.json({
+      sukses: false,
+      msg: 'Data tidak lengkap'
     })
-  // const updateData = {
-  //   name: args.name,
-  //   username: args.username,
-  //   password: args.password || 'a',
-  //   position_id: args.position_id,
-  //   gender_id: args.gender_id,
-  //   image: args.image
-  // };
-  // db.users.findOneAndUpdate({id = req.params.id}, 
-  //   {$set: updateData},{new: true}, function(err, result) {
-  //   if (err) {
-  //     res.json({
-  //       sukses: false,
-  //       msg: "Failed update"
-  //     })
-  //   } else {
-  //     res.json({
-  //       sukses: true,
-  //       msg: "Update user Successfully"
-  //     })
-  //   }
-  // })
+  }
 })
 
 const request = require('request');
