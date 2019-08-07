@@ -241,16 +241,7 @@ app.get('/api/users', (req, res) => {
     let sortBy = head.sort_by ? head.sort_by : 'ASC';
     let orderBy = head.order_by ? head.order_by : 'name';
     let search = head.search ? head.search : '';
-    db.sequelize.query(`SELECT
-     username FROM users 
-     WHERE 
-     email LIKE '%${search}%' 
-     AND username LIKE '%${search}%' 
-     AND "name" LIKE '%${search}%'
-     AND email LIKE '%${search}%'
-     ORDER BY ${orderBy} ${sortBy}
-     LIMIT ${pageSize} 
-     OFFSET ${pageNumber * pageSize}`,
+    db.sequelize.query(`SELECT username, "name", email, image, akses, gender, "position" FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${pageNumber * pageSize}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then(async (result) => {
       let totalRow = result.length;
