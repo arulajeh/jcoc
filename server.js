@@ -102,14 +102,14 @@ app.get('/api/users', (req, res) => {
       db.sequelize.query(`SELECT COUNT(users."id") FROM users INNER JOIN position ON position_id = "position"."id" WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%'`,
       { type: db.sequelize.QueryTypes.SELECT})
       .then((row) => {
-        let totalPage = parseInt(parseInt(row[0].count) / parseInt(pageSize));
+        let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
         res.json({
           sukses: true,
           data: resultDB,
           page_information: {
             currentPage: parseInt(pageNumber),
             pageSize: parseInt(pageSize),
-            totalPage: totalPage > 0 ? totalPage + 1 : 1,
+            totalPage: totalPage > 0 ? totalPage : 1,
             firstPage: 1,
             totalData: parseInt(row[0].count)
           }
@@ -235,14 +235,14 @@ app.get('/api/music', (req, res) => {
       db.sequelize.query(`SELECT COUNT("id") FROM music WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%'`,
       { type: db.sequelize.QueryTypes.SELECT})
       .then((row) => {
-        let totalPage = parseInt(parseInt(row[0].count) / parseInt(pageSize));
+        let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
         res.json({
           sukses: true,
           data: resultDB,
           page_information: {
             currentPage: parseInt(pageNumber),
             pageSize: parseInt(pageSize),
-            totalPage: totalPage > 0 ? totalPage + 1 : 1,
+            totalPage: totalPage > 0 ? totalPage : 1,
             firstPage: 1,
             totalData: parseInt(row[0].count)
           }
