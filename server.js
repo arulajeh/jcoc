@@ -164,8 +164,7 @@ app.post('/api/users/create', (req, res) => {
         console.log(err);
         res.json({
           sukses: false,
-          msg: JSON.stringify(err),
-          user: null
+          msg: JSON.stringify(err)
         })
       })
     } else {
@@ -290,8 +289,7 @@ app.post('/api/music/create', (req, res) => {
         console.log(err);
         res.json({
           sukses: false,
-          msg: JSON.stringify(err),
-          user: null
+          msg: JSON.stringify(err)
         })
       })
       // db.users.findOrCreate({where: {username: args.username}, defaults: {
