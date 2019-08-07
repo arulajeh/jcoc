@@ -292,41 +292,6 @@ app.post('/api/music/create', (req, res) => {
           msg: JSON.stringify(err)
         })
       })
-      // db.users.findOrCreate({where: {username: args.username}, defaults: {
-      //   name: args.name,
-      //   email: args.email,
-      //   username: args.username,
-      //   password: pass2,
-      //   position_id: args.position_id,
-      //   gender_id: args.gender_id,
-      //   image: args.image,
-      //   status: 1,
-      //   akses_id: 2,
-      //   createdAt: new Date(),
-      //   updatedAt: new Date()
-      // }})
-      // .then(([result, created]) => {
-      //   if (created){
-      //     res.json({
-      //       sukses: true,
-      //       msg: "sukses",
-      //       user: result
-      //     })
-      //   }else{
-      //     res.json({
-      //       sukses: false,
-      //       msg: "User Sudah Ada",
-      //       user: result
-      //     })
-      //   }
-      // }).catch(err => {
-      //   console.log(err);
-      //   res.json({
-      //     sukses: false,
-      //     msg: JSON.stringify(err),
-      //     user: null
-      //   })
-      // })
     } else {
       res.json({
         data: "Unauthorized user"
