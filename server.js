@@ -273,16 +273,16 @@ app.post('/api/music/create', (req, res) => {
         user_id: hasilJWT.data.id,
         createdAt: new Date(),
         updatedAt: new Date()
-      }).then(([result, created]) => {
+      }).then((created) => {
         if (created) {
           res.json({
             sukses: true,
-            data: result
+            data: created
           })
         } else {
           res.json({
             sukses: false,
-            data: result
+            data: created
           })
         }
       }).catch(err => {
@@ -360,7 +360,6 @@ app.get('/api/position', (req, res) => {
       message: 'Invalid Token'
     });
   }
-  console.log(head);
 })
 
 const request = require('request');

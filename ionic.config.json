@@ -1,5 +1,7 @@
 {
   "name": "jcocmusic",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
