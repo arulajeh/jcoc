@@ -222,8 +222,9 @@ app.post('/api/users/create', (req, res) => {
   let token = req.headers.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    if (hasilJWT.akses_id === 1) {
+    if (hasilJWT.akses_id === 1 || hasilJWT.akses_id === '1') {
       res.json({
+        akses_id: hasilJWT.akses_id,
         data: "kamu adalah admin"
       });
     } else {
