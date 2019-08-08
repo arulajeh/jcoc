@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { ApiService } from "../../services/api.service";
 
 @Component({
   selector: 'app-login',
@@ -11,14 +12,18 @@ export class LoginPage implements OnInit {
   password: string = '';
 
   constructor(
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private api: ApiService
   ) { }
 
   ngOnInit() {
   }
 
   submit() {
-    this.navCtrl.navigateRoot('/home');
+    this.api.login(this.username, this.password).then((result) => {
+      console.log(result);
+    })
+    // this.navCtrl.navigateRoot('/home');
   }
 
 }

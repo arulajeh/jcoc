@@ -9,15 +9,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      date: {
+      event_date: {
         type: DataTypes.DATEONLY,
         allowNull: false
       },
-      pic: {
-        type: DataTypes.TEXT,
-        allowNull: false
-      },
       vokalis: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      song_leader: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

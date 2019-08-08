@@ -41,7 +41,11 @@ module.exports = (sequelize, DataTypes) => {
     image: {
       type: DataTypes.TEXT,
       allowNull: true
-    }
+    },
+    created_by: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
   },
   {
     freezeTableName: true,

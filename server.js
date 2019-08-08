@@ -46,7 +46,7 @@ app.post('/api/login', (req, res)=>{
   let a = req.body;
   console.log(a);
   if (a.username && a.password) {
-    const pass1 = Md5.hashStr(args.password);
+    const pass1 = Md5.hashStr(a.password);
     // let pass = Md5.hashStr(a.password + a.email);
     const pass2 = Md5.hashStr(pass1 + a.username);
     db.users.findOne({where:{username: a.username, password: pass2}})
@@ -144,6 +144,7 @@ app.post('/api/users/create', (req, res) => {
         image: args.image,
         status: 1,
         akses_id: args.akses_id ? args.akses_id : 2,
+        created_by: hasilJWT.data.id,
         createdAt: new Date(),
         updatedAt: new Date()
       }})
@@ -190,8 +191,7 @@ app.post('/api/users/update/:id', (req,res) => {
       let pass2;
       if (args.password.length > 0) {
         pass1 = Md5.hashStr(args.password);
-      // let pass = Md5.hashStr(a.password + a.email);
-        pass2 = Md5.hashStr(pass1 + args.email);
+        pass2 = Md5.hashStr(pass1 + args.username);
       } 
       db.sequelize.query(`UPDATE users SET "name" = '${args.name}', "password" = '${pass2 || args.password}', "position_id" = ${args.position_id}, gender_id = ${args.gender_id}, image = '${args.image}' WHERE "id" = ${req.params.id}`,
       {type: db.sequelize.QueryTypes.UPDATE})
@@ -217,8 +217,8 @@ app.post('/api/users/update/:id', (req,res) => {
   }
 })
 
-// Get Music List
-app.get('/api/music', (req, res) => {
+// Get Schedule List
+app.get('/api/schedule', (req, res) => {
   const head = req.headers;
   let token = head.authorization;
   let hasilJWT = checkJWT(token);
@@ -229,7 +229,7 @@ app.get('/api/music', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT judul, penyanyi, link, lirik, chord FROM music WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT * FROM v_schedule WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
