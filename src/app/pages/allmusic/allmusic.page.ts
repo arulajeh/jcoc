@@ -10,6 +10,8 @@ import { NavController } from '@ionic/angular';
 export class AllmusicPage implements OnInit {
 
   //trustedVideoUrl: SafeResourceUrl;
+  trustedVideoUrl: SafeResourceUrl;
+  safeUrl = [];
   
   music_lists =[
     {
@@ -49,12 +51,24 @@ export class AllmusicPage implements OnInit {
     },
   ]
 
+  
+
   constructor(public navCtrl: NavController,
     private domSanitizer: DomSanitizer) { }
 
   ngOnInit() {
   }
 
+  ionViewDidEnter() {
+    for (let index of this.music_lists) {
+      this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(index.link);
+      this.safeUrl.push({
+        url:this.trustedVideoUrl,
+        title: index.title,
+        artist: index.name
+      });
+    }
+  }
   // ionViewWillEnter(): void {
   //   for(let i of this.music_lists){
   //     this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(i.link);
