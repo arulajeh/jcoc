@@ -46,9 +46,10 @@ app.post('/api/login', (req, res)=>{
   let a = req.body;
   console.log(a);
   if (a.username && a.password) {
-    let pass = Md5.hashStr(a.password + a.username);
-    console.log(pass);
-    db.users.findOne({where:{username: a.username, password: a.password}})
+    const pass1 = Md5.hashStr(args.password);
+    // let pass = Md5.hashStr(a.password + a.email);
+    const pass2 = Md5.hashStr(pass1 + a.username);
+    db.users.findOne({where:{username: a.username, password: pass2}})
     .then((hasil2) => {
       if (hasil2) {
         let hasil = hasil2.get({plain: true});
@@ -132,7 +133,7 @@ app.post('/api/users/create', (req, res) => {
     if (hasilJWT.data.akses_id === 1) {
       const pass1 = Md5.hashStr(args.password);
     // let pass = Md5.hashStr(a.password + a.email);
-      const pass2 = Md5.hashStr(pass1 + args.email);
+      const pass2 = Md5.hashStr(pass1 + args.username);
       db.users.findOrCreate({where: {username: args.username}, defaults: {
         name: args.name,
         email: args.email,
@@ -292,41 +293,6 @@ app.post('/api/music/create', (req, res) => {
           msg: JSON.stringify(err)
         })
       })
-      // db.users.findOrCreate({where: {username: args.username}, defaults: {
-      //   name: args.name,
-      //   email: args.email,
-      //   username: args.username,
-      //   password: pass2,
-      //   position_id: args.position_id,
-      //   gender_id: args.gender_id,
-      //   image: args.image,
-      //   status: 1,
-      //   akses_id: 2,
-      //   createdAt: new Date(),
-      //   updatedAt: new Date()
-      // }})
-      // .then(([result, created]) => {
-      //   if (created){
-      //     res.json({
-      //       sukses: true,
-      //       msg: "sukses",
-      //       user: result
-      //     })
-      //   }else{
-      //     res.json({
-      //       sukses: false,
-      //       msg: "User Sudah Ada",
-      //       user: result
-      //     })
-      //   }
-      // }).catch(err => {
-      //   console.log(err);
-      //   res.json({
-      //     sukses: false,
-      //     msg: JSON.stringify(err),
-      //     user: null
-      //   })
-      // })
     } else {
       res.json({
         data: "Unauthorized user"
