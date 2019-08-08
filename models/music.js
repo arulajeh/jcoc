@@ -9,10 +9,9 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      singer: {
+      penyanyi: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
       },
       link: {
         type: DataTypes.STRING,
@@ -25,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
       chord: {
         type: DataTypes.TEXT,
         allowNull: false,
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false
       }
     },
     {

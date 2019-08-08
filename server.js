@@ -23,7 +23,7 @@ app.use(cors());
  
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
+  res.header('Access-Control-Allow-Methods', 'DELETE, PUT, POST, GET');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, X-Token");
   next();
 });
@@ -36,68 +36,11 @@ var checkJWT = (args => {
       throw new Error('Invalid Token');
     }else{
       return {
-        token: args,
-        hasura: decoded.hasura
+        data: decoded
       };
     }
   });
 });
-
-app.post('/api/users/create', (req, res) => {
-  // let args = req.body;
-  let token = req.headers.authorization;
-  // token = token.replace('Bearer ',''); 
-  let hasilJWT = checkJWT(token);
-  res.json({
-    hasil: hasilJWT
-  });
-  // if (hasilJWT.hasura["x-hasura-allowed-roles"].indexOf('admin') > -1){
-  //   const pass1 = Md5.hashStr(args.password);
-  //   // let pass = Md5.hashStr(a.password + a.email);
-  //   const pass2 = Md5.hashStr(pass1 + args.email);
-  //   db.users.findOrCreate({where: {username: args.username}, defaults: {
-  //     name: args.name,
-  //     email: args.email,
-  //     username: args.username,
-  //     password: pass2,
-  //     position: args.position,
-  //     gender: args.gender,
-  //     image: args.image,
-  //     status: 1,
-  //     akses: 2,
-  //     createdAt: new Date(),
-  //     updatedAt: new Date()
-  //   }})
-  //   .then(([result, created]) => {
-  //     if (created){
-  //       res.json({
-  //         sukses: true,
-  //         msg: "sukses",
-  //         user: result
-  //       })
-  //     }else{
-  //       res.json({
-  //         sukses: false,
-  //         msg: "User Sudah Ada",
-  //         user: result
-  //       })
-  //     }
-  //   }).catch(err => {
-  //     console.log(err);
-  //     res.json({
-  //       sukses: false,
-  //       msg: JSON.stringify(err),
-  //       user: null
-  //     })
-  //   })
-  // }else{
-  //   res.json({
-  //     sukses: false,
-  //     msg: "Not Authorize",
-  //     user: null
-  //   })
-  // }
-})
 
 app.post('/api/login', (req, res)=>{
   let a = req.body;
@@ -110,115 +53,21 @@ app.post('/api/login', (req, res)=>{
       if (hasil2) {
         let hasil = hasil2.get({plain: true});
         delete hasil.password;
+        hasil.time = new Date();
         let token = jwt.sign(hasil, jwtSecret, {algorithm: "HS256"});
         res.json({
           sukses: true,
           token: token,
           data: {
+            id: hasil.id,
             username: hasil.username,
             full_name: hasil.name,
             position: hasil.position,
             email: hasil.email,
-            akses: hasil.akses
+            akses: hasil.akses_id,
+            image: hasil.image
           }
         });
-      //   let hasil = hasil2.get({plain: true});
-      //   delete hasil.password;
-      //   db.sequelize.query(`SELECT * FROM view_user_roles where user_id=${hasil.id}`, 
-      //     { type: db.sequelize.QueryTypes.SELECT})
-      //   .then(view_user_roles =>{
-      //     let roles = view_user_roles[0].roles_name;
-      //     let hasura = {
-      //       "X-Hasura-User-Id": hasil.id.toString(),
-      //       "X-Hasura-Entity-Id": hasil.entity_id.toString(),
-      //       "x-hasura-default-role": "user",
-      //       "x-hasura-allowed-roles": roles
-      //     }
-      //     let token = jwt.sign({
-      //       hasura: hasura
-      //     }, jwtSecret, { algorithm: 'HS256'});
-      //     db.sequelize.query(`SELECT * FROM alur_reimburse where user_id=${hasil.id} and entity_id=${hasil.entity_id}`, 
-      //     { type: db.sequelize.QueryTypes.SELECT})
-      //     // db.alur_reimburse.findOne({where: {entity_id: hasil.entity_id, user_id: hasil.id}})
-      //     .then((hasil_alur2) => {
-      //       let hasil_alur = hasil_alur2[0]//.get({plain: true});
-      //       console.log(hasil_alur);
-      //       if (hasil_alur && hasil_alur.step) {
-      //         console.log(view_user_roles);
-      //         hasura['X-Hasura-Max-Step-Reimburse'] = hasil_alur.step.toString();
-      //         token = jwt.sign({
-      //           hasura: hasura
-      //         }, jwtSecret, { algorithm: 'HS256'});
-      //         res.json({
-      //           sukses: true,
-      //           token: token,
-      //           hasura: hasura,
-      //           roles: roles,
-      //           entity_id: hasil.entity_id,
-      //           max_reimburse_step: hasil_alur.step,
-      //           msg: "Sukses Login"
-      //         })
-      //       } else {
-      //         console.log(view_user_roles);
-      //         hasura['X-Hasura-Max-Step-Reimburse'] = '3';
-      //         token = jwt.sign({
-      //           hasura: hasura
-      //         }, jwtSecret, { algorithm: 'HS256'});
-      //         res.json({
-      //           sukses: true,
-      //           token: token,
-      //           hasura: hasura,
-      //           roles: roles,
-      //           entity_id: hasil.entity_id,
-      //           max_reimburse_step: 3,
-      //           msg: "Sukses Login"
-      //         })
-      //       }
-      //     }).catch(err => {
-      //       console.log('Error');
-      //       console.log(err);
-      //       let roles = view_user_roles[0].roles_name;
-      //       let hasura = {
-      //         "X-Hasura-User-Id": hasil.id.toString(),
-      //         "X-Hasura-Entity-Id": hasil.entity_id.toString(),
-      //         "x-hasura-default-role": "user",
-      //         "x-hasura-allowed-roles": roles,
-      //         "X-Hasura-Max-Step-Reimburse": '3'
-      //       }
-      //       let token = jwt.sign({
-      //         hasura: hasura
-      //       }, jwtSecret, { algorithm: 'HS256'});
-      //       res.json({
-      //         sukses: true,
-      //         token: token,
-      //         hasura: hasura,
-      //         roles: roles,
-      //         entity_id: hasil.entity_id,
-      //         max_reimburse_step: 3,
-      //         msg: "Sukses Login"
-      //       })
-      //     });
-      //   }).catch(err => {
-      //     let roles = ["user"];
-      //     let hasura = {
-      //       "X-Hasura-User-Id": hasil.id.toString(),
-      //       "x-hasura-default-role": "user",
-      //       "x-hasura-allowed-roles": roles,
-      //       "X-Hasura-Max-Step-Reimburse": '3'
-      //     }
-      //     let token = jwt.sign({
-      //       hasura: hasura
-      //     }, jwtSecret, { algorithm: 'HS256'});
-      //     res.json({
-      //       sukses: true,
-      //       token: token,
-      //       hasura: hasura,
-      //       roles: roles,
-      //       entity_id: hasil.entity_id,
-      //       max_reimburse_step: 3,
-      //       msg: "Sukses Login"
-      //     })
-      //   });
       }else{
         res.json({
           sukses: false,
@@ -234,31 +83,283 @@ app.post('/api/login', (req, res)=>{
   }
 })
 
+// Get List Users
 app.get('/api/users', (req, res) => {
-    const head = req.headers;
+  const head = req.headers;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
     let pageNumber = head.page_number ? head.page_number : 1;
-    let pageSize = head.pageSize ? head.pageSize : 5;
+    let pageSize = head.page_size ? head.page_size : 5;
     let sortBy = head.sort_by ? head.sort_by : 'ASC';
-    let orderBy = head.order_by ? head.order_by : 'name';
+    let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT username, "name", email, image, akses, gender, "position" FROM users WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT username, "name", email, image, akses_id, gender_id, position_id, position_name FROM users INNER JOIN position ON position_id = "position"."id" WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%' ORDER BY users.${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
-    .then((result) => {
-      let totalRow = result.length;
-      let totalPage = parseInt(totalRow / pageSize);
-      console.log(result);
-      res.json({
-        data: result,
-        page_information: {
-          currentPage: pageNumber,
-          pageSize: pageSize,
-          totalPage: totalPage > 0 ? totalPage : 1,
-          firstPage: 1,
-          totalData: totalRow
-        }
+    .then( async (result) => {
+      let resultDB = result;
+      db.sequelize.query(`SELECT COUNT(users."id") FROM users INNER JOIN position ON position_id = "position"."id" WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%'`,
+      { type: db.sequelize.QueryTypes.SELECT})
+      .then((row) => {
+        let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
+        res.json({
+          sukses: true,
+          data: resultDB,
+          page_information: {
+            currentPage: parseInt(pageNumber),
+            pageSize: parseInt(pageSize),
+            totalPage: totalPage > 0 ? totalPage : 1,
+            firstPage: 1,
+            totalData: parseInt(row[0].count)
+          }
+        })
       });
+    });  
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
     });
+  }
+  console.log(head);
+})
+app.post('/api/users/create', (req, res) => {
+  let args = req.body;
+  let token = req.headers.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    if (hasilJWT.data.akses_id === 1) {
+      const pass1 = Md5.hashStr(args.password);
+    // let pass = Md5.hashStr(a.password + a.email);
+      const pass2 = Md5.hashStr(pass1 + args.email);
+      db.users.findOrCreate({where: {username: args.username}, defaults: {
+        name: args.name,
+        email: args.email,
+        username: args.username,
+        password: pass2,
+        position_id: args.position_id,
+        gender_id: args.gender_id,
+        image: args.image,
+        status: 1,
+        akses_id: args.akses_id ? args.akses_id : 2,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }})
+      .then(([result, created]) => {
+        if (created){
+          res.json({
+            sukses: true,
+            msg: "sukses",
+            user: result
+          })
+        }else{
+          res.json({
+            sukses: false,
+            msg: "User Sudah Ada",
+            user: result
+          })
+        }
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          sukses: false,
+          msg: JSON.stringify(err)
+        })
+      })
+    } else {
+      res.json({
+        data: "Unauthorized user"
+      });
+    }
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+})
+
+app.post('/api/users/update/:id', (req,res) => {
+  const args = req.body;
+  if (args.name && args.email && args.position_id && args.gender_id && args.image) {
+    db.sequelize.query(`SELECT "password" FROM users WHERE "id" = ${req.params.id}`, {type: db.sequelize.QueryTypes.SELECT})
+    .then((pass) => {
+      let pass1;
+      let pass2;
+      if (args.password.length > 0) {
+        pass1 = Md5.hashStr(args.password);
+      // let pass = Md5.hashStr(a.password + a.email);
+        pass2 = Md5.hashStr(pass1 + args.email);
+      } 
+      db.sequelize.query(`UPDATE users SET "name" = '${args.name}', "password" = '${pass2 || args.password}', "position_id" = ${args.position_id}, gender_id = ${args.gender_id}, image = '${args.image}' WHERE "id" = ${req.params.id}`,
+      {type: db.sequelize.QueryTypes.UPDATE})
+      .then((result) => {
+        res.json({
+          sukses: true,
+          msg: 'Update Successfully',
+          data: result
+        })
+      })
+      .catch((err) => {
+        res.json({
+          sukses: false,
+          msg: JSON.stringify(err)
+        })
+      })
+    })  
+  } else {
+    res.json({
+      sukses: false,
+      msg: 'Data tidak lengkap'
+    })
+  }
+})
+
+// Get Music List
+app.get('/api/music', (req, res) => {
+  const head = req.headers;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    let pageNumber = head.page_number ? head.page_number : 1;
+    let pageSize = head.page_size ? head.page_size : 5;
+    let sortBy = head.sort_by ? head.sort_by : 'ASC';
+    let orderBy = head.order_by ? head.order_by : 'id';
+    let search = head.search ? head.search : '';
+    let offset = (pageNumber - 1) * pageSize;
+    db.sequelize.query(`SELECT judul, penyanyi, link, lirik, chord FROM music WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then( async (result) => {
+      let resultDB = result;
+      db.sequelize.query(`SELECT COUNT("id") FROM music WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%'`,
+      { type: db.sequelize.QueryTypes.SELECT})
+      .then((row) => {
+        let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
+        res.json({
+          sukses: true,
+          data: resultDB,
+          page_information: {
+            currentPage: parseInt(pageNumber),
+            pageSize: parseInt(pageSize),
+            totalPage: totalPage > 0 ? totalPage : 1,
+            firstPage: 1,
+            totalData: parseInt(row[0].count)
+          }
+        })
+      });
+    });  
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+})
+
+// Add New Music
+app.post('/api/music/create', (req, res) => {
+  let args = req.body;
+  let token = req.headers.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    if (hasilJWT.data.akses_id === 1) {
+      db.music.create({
+        judul: args.judul,
+        penyanyi: args.penyanyi,
+        lirik: args.lirik,
+        chord: args.chord,
+        link: args.link,
+        user_id: hasilJWT.data.id,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }).then((created) => {
+        if (created) {
+          res.json({
+            sukses: true,
+            data: created
+          })
+        } else {
+          res.json({
+            sukses: false,
+            data: created
+          })
+        }
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          sukses: false,
+          msg: JSON.stringify(err)
+        })
+      })
+      // db.users.findOrCreate({where: {username: args.username}, defaults: {
+      //   name: args.name,
+      //   email: args.email,
+      //   username: args.username,
+      //   password: pass2,
+      //   position_id: args.position_id,
+      //   gender_id: args.gender_id,
+      //   image: args.image,
+      //   status: 1,
+      //   akses_id: 2,
+      //   createdAt: new Date(),
+      //   updatedAt: new Date()
+      // }})
+      // .then(([result, created]) => {
+      //   if (created){
+      //     res.json({
+      //       sukses: true,
+      //       msg: "sukses",
+      //       user: result
+      //     })
+      //   }else{
+      //     res.json({
+      //       sukses: false,
+      //       msg: "User Sudah Ada",
+      //       user: result
+      //     })
+      //   }
+      // }).catch(err => {
+      //   console.log(err);
+      //   res.json({
+      //     sukses: false,
+      //     msg: JSON.stringify(err),
+      //     user: null
+      //   })
+      // })
+    } else {
+      res.json({
+        data: "Unauthorized user"
+      });
+    }
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+})
+
+// Get Master Positions
+app.get('/api/position', (req, res) => {
+  const head = req.headers;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    db.sequelize.query(`SELECT "id", position_name FROM "position"`,
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then( async (result) => {
+      res.json({
+        sukses: true,
+        data: result
+      })
+    }); 
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
 })
 
 const request = require('request');

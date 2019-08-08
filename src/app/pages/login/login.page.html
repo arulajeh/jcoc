@@ -1,9 +1,65 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>login</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-button routerLink="/add-music">Music</ion-button>
-</ion-content>
+  <ion-button (click)="submit()">Music</ion-button>
+</ion-content> -->
+
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+  
+      <ion-title>Login</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <!-- <div class="login-logo">
+      <img src="assets/img/appicon.svg" alt="Ionic logo">
+    </div> -->
+  
+    <form id="loginForm" novalidate>
+      <ion-list>
+        <ion-item>
+          <ion-label position="stacked" color="primary">Username</ion-label>
+          <ion-input [(ngModel)]="username" name="username" type="text" spellcheck="false" autocapitalize="off"
+            required>
+          </ion-input>
+        </ion-item>
+  
+        <!-- <ion-text color="danger">
+          <p [hidden]="username.valid || submitted == false" class="ion-padding-start">
+            Username is required
+          </p>
+        </ion-text> -->
+  
+        <ion-item>
+          <ion-label position="stacked" color="primary">Password</ion-label>
+          <ion-input [(ngModel)]="password" name="password" type="password" required>
+          </ion-input>
+        </ion-item>
+  
+        <!-- <ion-text color="danger">
+          <p [hidden]="password.valid || submitted == false" class="ion-padding-start">
+            Password is required
+          </p>
+        </ion-text> -->
+      </ion-list>
+  
+      <ion-row>
+        <ion-col>
+          <ion-button (click)="submit()" type="submit" expand="block" [disabled]="username === '' || password === ''">Login</ion-button>
+        </ion-col>
+        <!-- <ion-col>
+          <ion-button (click)="onSignup()" color="light" expand="block">Signup</ion-button>
+        </ion-col> -->
+      </ion-row>
+    </form>
+  
+  </ion-content>
+  

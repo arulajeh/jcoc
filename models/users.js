@@ -17,24 +17,31 @@ module.exports = (sequelize, DataTypes) => {
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
     },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    position: {
+    akses_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
     },
-    gender: {
+    position_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
+      allowNull: true,
+    },
+    gender_id: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
     },
     status: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
+    image: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    }
   },
   {
     freezeTableName: true,
