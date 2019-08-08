@@ -1,9 +1,32 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>allmusic</ion-title>
+  <ion-toolbar color="warning">
+    <ion-title>All Music</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-searchbar placeholder="Search Music"></ion-searchbar>
+  <ion-grid style="margin-right: 1.5%">
+    <ion-row>
+      <ion-col *ngFor ="let data of music_lists">
+  <ion-card class="card_music" >
+    <!-- <img src="./madison.jpg" /> -->
+    <!-- <iframe class="yt" height="315"
+      src="https://www.youtube.com/embed/tgbNymZ7vqY">
+    </iframe> -->
+    <iframe class="yt" height="315"
+      [src]="data.link | youtube">
+    </iframe>
+    <ion-card-header>
+      <ion-card-title>{{data.title}}</ion-card-title>
+      <ion-card-subtitle>{{data.name}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+        <ion-button color="warning">View Lyrics</ion-button>
+    </ion-card-content>
+  </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
