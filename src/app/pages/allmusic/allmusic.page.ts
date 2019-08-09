@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { NavController } from '@ionic/angular';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-allmusic',
@@ -53,13 +54,17 @@ export class AllmusicPage implements OnInit {
 
   
 
-  constructor(public navCtrl: NavController,
-    private domSanitizer: DomSanitizer) { }
+  constructor(
+    public navCtrl: NavController,
+    private domSanitizer: DomSanitizer,
+    private api: ApiService
+    ) { }
 
   ngOnInit() {
   }
 
   ionViewDidEnter() {
+    this.getDataMusic();
     for (let index of this.music_lists) {
       this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(index.link);
       this.safeUrl.push({
@@ -68,6 +73,12 @@ export class AllmusicPage implements OnInit {
         artist: index.name
       });
     }
+  }
+
+  getDataMusic() {
+    this.api.getListData('users').then((result) => {
+      console.log(result);
+    }).catch(err => {alert('Error Get Data')});
   }
   // ionViewWillEnter(): void {
   //   for(let i of this.music_lists){

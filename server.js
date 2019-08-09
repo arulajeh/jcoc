@@ -217,8 +217,8 @@ app.post('/api/users/update/:id', (req,res) => {
   }
 })
 
-// Get Schedule List
-app.get('/api/schedule', (req, res) => {
+// Get Music List
+app.get('/api/music', (req, res) => {
   const head = req.headers;
   let token = head.authorization;
   let hasilJWT = checkJWT(token);
@@ -229,7 +229,7 @@ app.get('/api/schedule', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT * FROM v_schedule WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT * FROM music WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
@@ -256,6 +256,15 @@ app.get('/api/schedule', (req, res) => {
       message: 'Invalid Token'
     });
   }
+})
+
+app.get('/api/test_schedule', (req, res) => {
+  db.sequelize.query(`SELECT * from v_schedule`, {type: db.sequelize.QueryTypes.SELECT})
+  .then((result) => {
+    res.json({
+      data: result
+    });
+  });
 })
 
 // Add New Music
@@ -298,6 +307,47 @@ app.post('/api/music/create', (req, res) => {
         data: "Unauthorized user"
       });
     }
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+})
+
+// Get Schedule List
+app.get('/api/schedule', (req, res) => {
+  const head = req.headers;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    let pageNumber = head.page_number ? head.page_number : 1;
+    let pageSize = head.page_size ? head.page_size : 5;
+    let sortBy = head.sort_by ? head.sort_by : 'ASC';
+    let orderBy = head.order_by ? head.order_by : 'id';
+    let search = head.search ? head.search : '';
+    let offset = (pageNumber - 1) * pageSize;
+    db.sequelize.query(`SELECT * FROM v_schedule WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then( async (result) => {
+      let resultDB = result;
+      db.sequelize.query(`SELECT COUNT("id") FROM music WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%'`,
+      { type: db.sequelize.QueryTypes.SELECT})
+      .then((row) => {
+        let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
+        res.json({
+          sukses: true,
+          data: resultDB,
+          page_information: {
+            currentPage: parseInt(pageNumber),
+            pageSize: parseInt(pageSize),
+            totalPage: totalPage > 0 ? totalPage : 1,
+            firstPage: 1,
+            totalData: parseInt(row[0].count)
+          }
+        })
+      });
+    });  
   } else {
     res.json({
       sukses: false,

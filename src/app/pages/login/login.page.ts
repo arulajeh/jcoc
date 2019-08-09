@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { ApiService } from "../../services/api.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,10 +11,12 @@ import { ApiService } from "../../services/api.service";
 export class LoginPage implements OnInit {
   username: string = '';
   password: string = '';
+  resData:any;
 
   constructor(
-    private navCtrl: NavController,
-    private api: ApiService
+    private api: ApiService,
+    private toastCtrl: ToastController,
+    private route: Router
   ) { }
 
   ngOnInit() {
@@ -21,9 +24,29 @@ export class LoginPage implements OnInit {
 
   submit() {
     this.api.login(this.username, this.password).then((result) => {
-      console.log(result);
+      this.resData = JSON.parse(JSON.stringify(result));
+      console.log(this.resData);
+      if (this.resData.sukses === true) {
+        localStorage.setItem('token', this.resData.token);
+        localStorage.setItem('data', JSON.stringify(this.resData.data));
+        this.showToast('Login Successfully');
+        this.route.navigateByUrl('/home');
+      } else {
+        this.showToast('Invalid username / password');
+      }
+    }).catch((err) => {
+      this.showToast('Invalid username / password');
     })
-    // this.navCtrl.navigateRoot('/home');
+  }
+
+  async showToast(msg) {
+    const t = await this.toastCtrl.create({
+      message: msg,
+      duration: 2000,
+      position: "bottom",
+      animated: true
+    });
+    t.present();
   }
 
 }
