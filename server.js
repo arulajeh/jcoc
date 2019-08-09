@@ -383,16 +383,16 @@ app.post('/api/schedule/create', (req, res) => {
             });
           })
 
-          res.json({
-            data: xa
-          })
-          
-          // db.m_vokalis.bulkCreate(xa, {fields: ['user_id', 'schedule_id'], returning: true})
-          // .then((result) => {
-          //   res.json({
-          //     data: result
-          //   })
+          // res.json({
+          //   data: xa
           // })
+          
+          db.m_vokalis.bulkCreate(xa, {fields: ['user_id', 'schedule_id'], returning: true, individualHooks: true})
+          .then((result) => {
+            res.json({
+              data: result
+            })
+          })
         } else {
           res.json({
             sukses: false,
