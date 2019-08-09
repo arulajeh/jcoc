@@ -376,19 +376,46 @@ app.post('/api/schedule/create', (req, res) => {
         const schedule_id = created.id
         if (created) {
           // db.sequelize.query(``)
-
-          res.json({
-            sukses: true,
-            data: created,
-            schedule_id: schedule_id,
-            vokalis_id: args.vokalis
+          let q = args.vokalis.forEach((value, index) => {
+            let y = '';
+            y += `SELECT ${value} FROM users; `;
           })
+          // for (i = 0; i < args.vokalis; i++) {
+          //   let text = ''
+          //   text += `SELECT ${cars[i]} from users; `;
+          //   if (i < args.vokalis) {
+          //     return text;
+          //   }
+          //   //text += cars[i] + "<br>";
+          // }
+          res.json({
+            query: q
+          })
+          let query = `INSERT INTO `
+          args.vokalis.forEach((value, index) => {
+            db.sequelize.query(`INSERT INTO `)
+          })
+          // res.json({
+          //   sukses: true,
+          //   data: created,
+          //   schedule_id: schedule_id,
+          //   vokalis_id: args.vokalis
+          // })
         } else {
           res.json({
             sukses: false,
             data: created
           });
         }
+        var a = [1,2,3,4,5,6,7,8]
+        for (const k in a) {
+          let x = `SELECT ${k} FROM users; `
+          let y = `SELECT ${k} FROM users; `
+          console.log(x + y)
+        }
+        a.forEach((value,index) => {
+          console.log(value)
+        })
       }).catch(err => {
         console.log(err);
         res.json({
