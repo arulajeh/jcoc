@@ -327,11 +327,11 @@ app.get('/api/schedule', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT * FROM v_schedule WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT * FROM v_schedule WHERE user_id = ${hasilJWT.data.id} AND event_name LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
-      db.sequelize.query(`SELECT COUNT("id") FROM music WHERE user_id = ${hasilJWT.data.id} AND judul LIKE '%${search}%' AND penyanyi LIKE '%${search}%' AND link LIKE '%${search}%'`,
+      db.sequelize.query(`SELECT COUNT("id") FROM v_schedule WHERE user_id = ${hasilJWT.data.id} AND event_name LIKE '%${search}%'`,
       { type: db.sequelize.QueryTypes.SELECT})
       .then((row) => {
         let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
@@ -348,6 +348,79 @@ app.get('/api/schedule', (req, res) => {
         })
       });
     });  
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+})
+
+app.post('/api/schedule/create', (req, res) => {
+  let args = req.body;
+  let token = req.headers.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    if (hasilJWT.data.akses_id === 1) {
+      db.schedule.create({
+        event_date: args.event_date,
+        event_name: args.event_name,
+        basis: args.basis,
+        gitaris: args.gitaris,
+        drummer: args.drummer,
+        user_id: hasilJWT.data.id,
+        pianis: args.pianis,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }).then((created) => {
+        const schedule_id = created.id
+        // db.users.findOrCreate({where: {username: args.username}, defaults: {
+        //   name: args.name,
+        //   email: args.email,
+        //   username: args.username,
+        //   password: pass2,
+        //   position_id: args.position_id,
+        //   gender_id: args.gender_id,
+        //   image: args.image,
+        //   status: 1,
+        //   akses_id: args.akses_id ? args.akses_id : 2,
+        //   created_by: hasilJWT.data.id,
+        //   createdAt: new Date(),
+        //   updatedAt: new Date()
+        // }})
+        // db.sequelize.findOrCreate({where: {schedule_id: schedule_id}, defaults: {
+          
+        // }}).then(([result, created]) => {
+        //   if (created) {
+            
+        //   } else {
+            
+        //   }
+        // })
+        if (created) {
+          res.json({
+            sukses: true,
+            data: created
+          })
+        } else {
+          res.json({
+            sukses: false,
+            data: created,
+            schedule_id: schedule_id
+          });
+        }
+      }).catch(err => {
+        console.log(err);
+        res.json({
+          sukses: false,
+          msg: JSON.stringify(err)
+        })
+      })
+    } else {
+      res.json({
+        data: "Unauthorized user"
+      });
+    }
   } else {
     res.json({
       sukses: false,
