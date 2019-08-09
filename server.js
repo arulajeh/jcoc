@@ -401,9 +401,9 @@ app.post('/api/schedule/create', (req, res) => {
           //   data: xa
           // })
           
-          await db.m_vokalis.bulkCreate(vl, {fields: ['user_id', 'schedule_id'], returning: true, individualHooks: true});
-          await db.m_song_leader.bulkCreate(sl, {fields: ['user_id', 'schedule_id'], returning: true, individualHooks: true});
-          await db.master_lagu.bulkCreate(al, {fields: ['music_name', 'schedule_id'], returning: true, individualHooks: true});
+          await db.m_vokalis.bulkCreate(vl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
+          await db.m_song_leader.bulkCreate(sl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
+          await db.master_lagu.bulkCreate(al, {fields: ['music_name', 'schedule_id'], individualHooks: true});
           // .then((result) => {
             
           // })
