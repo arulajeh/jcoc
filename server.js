@@ -374,39 +374,19 @@ app.post('/api/schedule/create', (req, res) => {
         updatedAt: new Date()
       }).then((created) => {
         const schedule_id = created.id
-        // db.users.findOrCreate({where: {username: args.username}, defaults: {
-        //   name: args.name,
-        //   email: args.email,
-        //   username: args.username,
-        //   password: pass2,
-        //   position_id: args.position_id,
-        //   gender_id: args.gender_id,
-        //   image: args.image,
-        //   status: 1,
-        //   akses_id: args.akses_id ? args.akses_id : 2,
-        //   created_by: hasilJWT.data.id,
-        //   createdAt: new Date(),
-        //   updatedAt: new Date()
-        // }})
-        // db.sequelize.findOrCreate({where: {schedule_id: schedule_id}, defaults: {
-          
-        // }}).then(([result, created]) => {
-        //   if (created) {
-            
-        //   } else {
-            
-        //   }
-        // })
         if (created) {
+          // db.sequelize.query(``)
+
           res.json({
             sukses: true,
-            data: created
+            data: created,
+            schedule_id: schedule_id,
+            vokalis_id: args.vokalis
           })
         } else {
           res.json({
             sukses: false,
-            data: created,
-            schedule_id: schedule_id
+            data: created
           });
         }
       }).catch(err => {

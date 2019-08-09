@@ -36,6 +36,10 @@ module.exports = (sequelize, DataTypes) => {
       drummer: {
         type: DataTypes.INTEGER,
         allowNull: false,
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
       }
       // lagu: {
       //   type: DataTypes.STRING,
