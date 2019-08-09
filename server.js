@@ -372,7 +372,7 @@ app.post('/api/schedule/create', (req, res) => {
         pianis: args.pianis,
         createdAt: new Date(),
         updatedAt: new Date()
-      }).then((created) => {
+      }).then( async (created) => {
         const id_schedule = created.id
         if (created) {
           // db.sequelize.query(``);
@@ -390,16 +390,24 @@ app.post('/api/schedule/create', (req, res) => {
           //   //text += cars[i] + "<br>";
           // }
           let xa = [];
-          args.vokalis.forEach((value, index) => {
-            let vokalis_id = value;
-            let schedule_id = id_schedule;
-            return xa.push(vokalis_id, schedule_id);
+          await args.vokalis.forEach((value, index) => {
+            // let vokalis_id = value;
+            // let schedule_id = id_schedule;
+            return xa.push({
+              user_id: value,
+              schedule_id: id_schedule
+            });
           })
           
           res.json({
             data: xa
           })
-          // db.sequelize.bulkCreate()
+          // db.sequelize.bulkCreate(xa, {fields: ['user_id', 'schedule_id'], returning: true})
+          // .then((result) => {
+          //   res.json({
+          //     data: result
+          //   })
+          // })
           // let query = `INSERT INTO `
           // args.vokalis.forEach((value, index) => {
           //   db.sequelize.query(`INSERT INTO `)
