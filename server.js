@@ -399,15 +399,15 @@ app.post('/api/schedule/create', (req, res) => {
             });
           })
           
-          res.json({
-            data: xa
-          })
-          // db.sequelize.bulkCreate(xa, {fields: ['user_id', 'schedule_id'], returning: true})
-          // .then((result) => {
-          //   res.json({
-          //     data: result
-          //   })
+          // res.json({
+          //   data: xa
           // })
+          db.m_vokalis.bulkCreate(xa, {fields: ['user_id', 'schedule_id'], returning: true})
+          .then((result) => {
+            res.json({
+              data: result
+            })
+          })
           // let query = `INSERT INTO `
           // args.vokalis.forEach((value, index) => {
           //   db.sequelize.query(`INSERT INTO `)
