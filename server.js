@@ -375,10 +375,24 @@ app.post('/api/schedule/create', (req, res) => {
       }).then( async (created) => {
         const id_schedule = created.id
         if (created) {
-          let xa = [];
+          let vl = [];
           await args.vokalis.forEach((value, index) => {
-            return xa.push({
+            return vl.push({
               user_id: value,
+              schedule_id: id_schedule
+            });
+          })
+          let sl = [];
+          await args.song_leader.forEach((value, index) => {
+            return sl.push({
+              user_id: value,
+              schedule_id: id_schedule
+            });
+          })
+          let al = [];
+          await args.lagu.forEach((value, index) => {
+            return al.push({
+              music_name: value,
               schedule_id: id_schedule
             });
           })
@@ -387,11 +401,15 @@ app.post('/api/schedule/create', (req, res) => {
           //   data: xa
           // })
           
-          db.m_vokalis.bulkCreate(xa, {fields: ['user_id', 'schedule_id'], returning: true, individualHooks: true})
-          .then((result) => {
-            res.json({
-              data: result
-            })
+          await db.m_vokalis.bulkCreate(vl, {fields: ['user_id', 'schedule_id'], returning: true, individualHooks: true});
+          await db.m_song_leader.bulkCreate(sl, {fields: ['user_id', 'schedule_id'], returning: true, individualHooks: true});
+          await db.master_lagu.bulkCreate(al, {fields: ['music_name', 'schedule_id'], returning: true, individualHooks: true});
+          // .then((result) => {
+            
+          // })
+          res.json({
+            sukses: true,
+            msg: 'Schedule Created'
           })
         } else {
           res.json({
