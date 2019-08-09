@@ -5,46 +5,14 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true
       },
-      event_name: {
-        type: DataTypes.STRING,
+      users_id: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      event_date: {
-        type: DataTypes.DATEONLY,
+      schedule_id: {
+        type: DataTypes.INTEGER,
         allowNull: false
-      },
-      // vokalis: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      // },
-      // song_leader: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      // },
-      gitaris: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      basis: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      pianis: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      drummer: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
       }
-      // lagu: {
-      //   type: DataTypes.STRING,
-      //   allowNull: false,
-      // }
     },
     {
       freezeTableName: true,

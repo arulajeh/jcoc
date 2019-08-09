@@ -375,64 +375,35 @@ app.post('/api/schedule/create', (req, res) => {
       }).then( async (created) => {
         const id_schedule = created.id
         if (created) {
-          // db.sequelize.query(``);
-          // let q = '';
-          // let y = ``;
-          // q = args.vokalis.forEach((value, index) => {  
-          //   return y += `SELECT ${value} FROM users; `;
-          // })
-          // for (i = 0; i < args.vokalis; i++) {
-          //   let text = ''
-          //   text += `SELECT ${cars[i]} from users; `;
-          //   if (i < args.vokalis) {
-          //     return text;
-          //   }
-          //   //text += cars[i] + "<br>";
-          // }
           let xa = [];
           await args.vokalis.forEach((value, index) => {
-            // let vokalis_id = value;
-            // let schedule_id = id_schedule;
             return xa.push({
               user_id: value,
               schedule_id: id_schedule
             });
           })
           
-          // res.json({
-          //   data: xa
-          // })
           db.m_vokalis.bulkCreate(xa, {fields: ['user_id', 'schedule_id'], returning: true})
           .then((result) => {
             res.json({
               data: result
             })
           })
-          // let query = `INSERT INTO `
-          // args.vokalis.forEach((value, index) => {
-          //   db.sequelize.query(`INSERT INTO `)
-          // })
-          // res.json({
-          //   sukses: true,
-          //   data: created,
-          //   schedule_id: schedule_id,
-          //   vokalis_id: args.vokalis
-          // })
         } else {
           res.json({
             sukses: false,
             data: created
           });
         }
-        var a = [1,2,3,4,5,6,7,8]
-        for (const k in a) {
-          let x = `SELECT ${k} FROM users; `
-          let y = `SELECT ${k} FROM users; `
-          console.log(x + y)
-        }
-        a.forEach((value,index) => {
-          console.log(value)
-        })
+        // var a = [1,2,3,4,5,6,7,8]
+        // for (const k in a) {
+        //   let x = `SELECT ${k} FROM users; `
+        //   let y = `SELECT ${k} FROM users; `
+        //   console.log(x + y)
+        // }
+        // a.forEach((value,index) => {
+        //   console.log(value)
+        // })
       }).catch(err => {
         console.log(err);
         res.json({
