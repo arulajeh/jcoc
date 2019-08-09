@@ -373,14 +373,14 @@ app.post('/api/schedule/create', (req, res) => {
         createdAt: new Date(),
         updatedAt: new Date()
       }).then((created) => {
-        const schedule_id = created.id
+        const id_schedule = created.id
         if (created) {
           // db.sequelize.query(``);
-          let q = '';
-          let y = ``;
-          q = args.vokalis.forEach((value, index) => {  
-            return y += `SELECT ${value} FROM users; `;
-          })
+          // let q = '';
+          // let y = ``;
+          // q = args.vokalis.forEach((value, index) => {  
+          //   return y += `SELECT ${value} FROM users; `;
+          // })
           // for (i = 0; i < args.vokalis; i++) {
           //   let text = ''
           //   text += `SELECT ${cars[i]} from users; `;
@@ -389,9 +389,17 @@ app.post('/api/schedule/create', (req, res) => {
           //   }
           //   //text += cars[i] + "<br>";
           // }
-          res.json({
-            data: q
+          let xa = [];
+          args.vokalis.forEach((value, index) => {
+            let vokalis_id = value;
+            let schedule_id = id_schedule;
+            return xa.push(vokalis_id, schedule_id);
           })
+          
+          res.json({
+            data: xa
+          })
+          // db.sequelize.bulkCreate()
           // let query = `INSERT INTO `
           // args.vokalis.forEach((value, index) => {
           //   db.sequelize.query(`INSERT INTO `)
