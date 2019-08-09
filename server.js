@@ -375,10 +375,11 @@ app.post('/api/schedule/create', (req, res) => {
       }).then((created) => {
         const schedule_id = created.id
         if (created) {
-          // db.sequelize.query(``)
-          let q = args.vokalis.forEach((value, index) => {
-            let y = '';
-            y += `SELECT ${value} FROM users; `;
+          // db.sequelize.query(``);
+          let q = '';
+          let y = ``;
+          q = args.vokalis.forEach((value, index) => {  
+            return y += `SELECT ${value} FROM users; `;
           })
           // for (i = 0; i < args.vokalis; i++) {
           //   let text = ''
@@ -389,12 +390,12 @@ app.post('/api/schedule/create', (req, res) => {
           //   //text += cars[i] + "<br>";
           // }
           res.json({
-            query: q
+            data: q
           })
-          let query = `INSERT INTO `
-          args.vokalis.forEach((value, index) => {
-            db.sequelize.query(`INSERT INTO `)
-          })
+          // let query = `INSERT INTO `
+          // args.vokalis.forEach((value, index) => {
+          //   db.sequelize.query(`INSERT INTO `)
+          // })
           // res.json({
           //   sukses: true,
           //   data: created,
