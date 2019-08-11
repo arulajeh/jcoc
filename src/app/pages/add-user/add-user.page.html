@@ -3,10 +3,99 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>add-user</ion-title>
+    <ion-title>Add Member</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <!-- <ion-img [src]="'assets/img/bg_4.jpg'" class="headerImg"></ion-img> -->
+  <img src="assets/img/bg_4.jpg" class="headerImg" alt="">
+  <ion-grid fixed>
+    <form id="loginForm" novalidate>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="stacked" color="primary">Name</ion-label>
+            <ion-input [(ngModel)]="dataUser.name" name="name" type="text" spellcheck="false" autocapitalize="off"
+              required>
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="stacked" color="primary">Username</ion-label>
+            <ion-input [(ngModel)]="dataUser.username" name="username" type="text" spellcheck="false" autocapitalize="off"
+              required>
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="stacked" color="primary">Password</ion-label>
+            <ion-input [(ngModel)]="pass" name="password" type="password" spellcheck="false" autocapitalize="off"
+              required>
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="stacked" color="primary">Phone</ion-label>
+            <ion-input [(ngModel)]="dataUser.phone" name="phone" type="text" spellcheck="false" autocapitalize="off"
+              required>
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-label color="primary" position="stacked">Position</ion-label>
+          <ionic-selectable
+          [(ngModel)]="dataUser.position"
+          [items]="listPostions"
+          itemValueField="id"
+          itemTextField="position_name"
+          [canSearch]="true"
+          name="position"
+          >
+          </ionic-selectable>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label color="primary" position="stacked">Gender</ion-label>
+          <ionic-selectable
+          [(ngModel)]="dataUser.gender"
+          [items]="gender"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          name="gender"
+          >
+          </ionic-selectable>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="stacked" color="primary">Email</ion-label>
+            <ion-input [(ngModel)]="dataUser.email" name="email" type="text" spellcheck="false" autocapitalize="off"
+              required>
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="stacked" color="primary">Photo</ion-label>
+            <ion-input type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button (click)="submit()" type="submit" expand="block">Login</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+  <ion-img [src]="dataUser.image.base64"></ion-img>
 </ion-content>

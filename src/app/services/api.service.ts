@@ -45,14 +45,22 @@ export class ApiService {
   }
 
   getMasterData(url) {
-    new Promise((res, rej) => {
-
+    return new Promise((resolve, reject) => {
+      this.headers = this.headers.set('authorization', localStorage.getItem('token') ? localStorage.getItem('token') : '');
+      this.httpClt.get(this.apiUrl + url, {headers: this.headers}).subscribe(
+        res => { resolve(res) },
+        err => { reject(err) }
+      );
     });
   }
 
   postData(url, data) {
-    new Promise((res, rej) => {
-
+    return new Promise((resolve, reject) => {
+      this.headers = this.headers.set('authorization', localStorage.getItem('token') ? localStorage.getItem('token') : '');
+      this.httpClt.post(this.apiUrl + url, data, {headers: this.headers}).subscribe(
+        res => { resolve(res) },
+        err => { reject(err) }
+      );
     });
   }
 }

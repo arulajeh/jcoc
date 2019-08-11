@@ -148,10 +148,27 @@ app.post('/api/users/create', (req, res) => {
       }})
       .then(([result, created]) => {
         if (created){
-          res.json({
-            sukses: true,
-            msg: "sukses",
-            user: result
+          const userResult = result;
+          const user_id = result.id;
+          db.m_files.create({
+            file: args.image.base64,
+            status: 1,
+            uploadBy: hasilJWT.data.id,
+            file_name: args.image.file_name,
+            file_size: args.image.file_size,
+            file_type: args.image.file_type,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          }).then(async (created) => {
+            await db.m_user_file.create({
+              user_id: user_id,
+              file_id: created.id
+            });
+            res.json({
+              sukses: true,
+              msg: "User created successfully",
+              user: userResult
+            })
           })
         }else{
           res.json({
