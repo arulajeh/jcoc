@@ -47,7 +47,6 @@ app.post('/api/login', (req, res)=>{
   console.log(a);
   if (a.username && a.password) {
     const pass1 = Md5.hashStr(a.password);
-    // let pass = Md5.hashStr(a.password + a.email);
     const pass2 = Md5.hashStr(pass1 + a.username);
     db.users.findOne({where:{username: a.username, password: pass2}})
     .then((hasil2) => {
@@ -132,7 +131,6 @@ app.post('/api/users/create', (req, res) => {
   if (hasilJWT) {
     if (hasilJWT.data.akses_id === 1) {
       const pass1 = Md5.hashStr(args.password);
-    // let pass = Md5.hashStr(a.password + a.email);
       const pass2 = Md5.hashStr(pass1 + args.username);
       db.users.findOrCreate({where: {username: args.username}, defaults: {
         name: args.name,
@@ -397,16 +395,10 @@ app.post('/api/schedule/create', (req, res) => {
             });
           })
 
-          // res.json({
-          //   data: xa
-          // })
-          
           await db.m_vokalis.bulkCreate(vl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
           await db.m_song_leader.bulkCreate(sl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
           await db.master_lagu.bulkCreate(al, {fields: ['music_name', 'schedule_id'], individualHooks: true});
-          // .then((result) => {
-            
-          // })
+
           res.json({
             sukses: true,
             msg: 'Schedule Created'
@@ -417,15 +409,6 @@ app.post('/api/schedule/create', (req, res) => {
             data: created
           });
         }
-        // var a = [1,2,3,4,5,6,7,8]
-        // for (const k in a) {
-        //   let x = `SELECT ${k} FROM users; `
-        //   let y = `SELECT ${k} FROM users; `
-        //   console.log(x + y)
-        // }
-        // a.forEach((value,index) => {
-        //   console.log(value)
-        // })
       }).catch(err => {
         console.log(err);
         res.json({
