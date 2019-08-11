@@ -139,7 +139,7 @@ app.post('/api/users/create', (req, res) => {
         password: pass2,
         position_id: args.position_id,
         gender_id: args.gender_id,
-        image: args.image,
+        // image: args.image,
         status: 1,
         akses_id: args.akses_id ? args.akses_id : 2,
         created_by: hasilJWT.data.id,
@@ -150,7 +150,7 @@ app.post('/api/users/create', (req, res) => {
         if (created){
           const userResult = result;
           const user_id = result.id;
-          db.m_files.create({
+          db.files.create({
             file: args.image.base64,
             status: 1,
             uploadBy: hasilJWT.data.id,

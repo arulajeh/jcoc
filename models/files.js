@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const M_files = sequelize.define('m_files', {
+    const Files = sequelize.define('m_files', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -33,6 +33,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       freezeTableName: true,
     });
-    return M_files;
+    return Files;
   }
   
