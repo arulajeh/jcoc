@@ -37,9 +37,9 @@ export class AllUserPage implements OnInit {
     console.log('member')
     this.api.getListData('users', this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
     .then((res) => {
-      console.log(res);
-      // this.listMembers = JSON.parse(JSON.stringify(res)).data;
-      // console.log(this.listMembers);
+      // console.log(res);
+      this.listMembers = JSON.parse(JSON.stringify(res)).data;
+      console.log(this.listMembers);
     })
   }
 
