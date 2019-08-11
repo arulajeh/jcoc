@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const M_user_file = sequelize.define('rel_user_file', {
+    const Rel_user_file = sequelize.define('rel_user_file', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -17,6 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       freezeTableName: true,
     });
-    return M_user_file;
+    return Rel_user_file;
   }
   

@@ -150,7 +150,8 @@ app.post('/api/users/create', (req, res) => {
         if (created){
           const userResult = result;
           const user_id = result.id;
-          db.files.create({
+          // db.m_files = 
+          db.m_files.create({
             file: args.image.base64,
             status: 1,
             uploadBy: hasilJWT.data.id,
@@ -160,7 +161,7 @@ app.post('/api/users/create', (req, res) => {
             createdAt: new Date(),
             updatedAt: new Date()
           }).then(async (created) => {
-            await db.m_user_file.create({
+            await db.rel_user_file.create({
               user_id: user_id,
               file_id: created.id
             });
@@ -208,7 +209,7 @@ app.post('/api/users/update/:id', (req,res) => {
         pass1 = Md5.hashStr(args.password);
         pass2 = Md5.hashStr(pass1 + args.username);
       } 
-      db.sequelize.query(`UPDATE users SET "name" = '${args.name}', "password" = '${pass2 || args.password}', "position_id" = ${args.position_id}, gender_id = ${args.gender_id}, image = '${args.image}' WHERE "id" = ${req.params.id}`,
+      db.sequelize.query(`UPDATE users SET "name" = '${args.name}', "password" = '${args.password || pass2}', "position_id" = ${args.position_id}, gender_id = ${args.gender_id}, image = '${args.image}' WHERE "id" = ${req.params.id}`,
       {type: db.sequelize.QueryTypes.UPDATE})
       .then((result) => {
         res.json({
