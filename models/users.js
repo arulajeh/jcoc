@@ -38,10 +38,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    image: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    },
+    // image: {
+    //   type: DataTypes.TEXT,
+    //   allowNull: true
+    // },
     created_by: {
       type: DataTypes.INTEGER,
       allowNull: false,
