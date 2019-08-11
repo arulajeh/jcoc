@@ -17,13 +17,13 @@ const jwtSecret = "ArgyiuehgHjhbehrg7853hgjngdyu4jkn7";
 const hash_md5 = "JunAjaYa";
  
 app.use(morgan('dev'));                                        
-app.use(bodyParser.urlencoded({'extended':'true'}));            
-app.use(bodyParser.json());                                     
+app.use(bodyParser.urlencoded({'extended':'true', 'limit': '50mb'}));
+app.use(bodyParser.json({'limit': '50mb'}));            
 app.use(cors());
  
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'DELETE, PUT, POST, GET');
+  res.header('Access-Control-Allow-Methods', 'DELETE, PUT');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, X-Token");
   next();
 });
