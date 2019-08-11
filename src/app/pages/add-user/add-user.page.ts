@@ -18,13 +18,15 @@ export class AddUserPage implements OnInit {
     gender: null,
     email: '',
     image: {
-      name: '',
-      size: '',
-      type: '',
+      file_name: '',
+      file_size: '',
+      file_type: '',
       base64: null,
       isImage: null
     }
   }
+  position: any;
+  selectGender:any;
   pass = '';
   isFilled = false;
   gender = [
@@ -41,6 +43,59 @@ export class AddUserPage implements OnInit {
   files = [];
   stillUploading = false;
   base64File = '';
+  ionSelect = null;
+  listUsers = [
+    {
+      name: 'Udin Komarudin',
+      username: 'udinkomarudin',
+      email: 'udinkomarudin@gmail.com',
+      position: 'Drummer',
+      file: 'assets/img/bg_4.jpg',
+      phone: '0888888'
+    },{
+      name: 'Udin Komarudin',
+      username: 'udinkomarudin',
+      email: 'udinkomarudin@gmail.com',
+      position: 'Drummer',
+      file: 'assets/img/bg_4.jpg',
+      phone: '0888888'
+    },{
+      name: 'Udin Komarudin',
+      username: 'udinkomarudin',
+      email: 'udinkomarudin@gmail.com',
+      position: 'Drummer',
+      file: 'assets/img/bg_4.jpg',
+      phone: '0888888'
+    },{
+      name: 'Udin Komarudin',
+      username: 'udinkomarudin',
+      email: 'udinkomarudin@gmail.com',
+      position: 'Drummer',
+      file: 'assets/img/bg_4.jpg',
+      phone: '0888888'
+    },{
+      name: 'Udin Komarudin',
+      username: 'udinkomarudin',
+      email: 'udinkomarudin@gmail.com',
+      position: 'Drummer',
+      file: 'assets/img/bg_4.jpg',
+      phone: '0888888'
+    },{
+      name: 'Udin Komarudin',
+      username: 'udinkomarudin',
+      email: 'udinkomarudin@gmail.com',
+      position: 'Drummer',
+      file: 'assets/img/bg_4.jpg',
+      phone: '0888888'
+    },{
+      name: 'Udin Komarudin',
+      username: 'udinkomarudin',
+      email: 'udinkomarudin@gmail.com',
+      position: 'Drummer',
+      file: 'assets/img/bg_4.jpg',
+      phone: '0888888'
+    }
+  ]
 
   constructor(
     private api: ApiService,
@@ -65,14 +120,21 @@ export class AddUserPage implements OnInit {
     x.present();
   }
 
+  changeSelect() {
+    console.log(this.ionSelect);
+  }
+
   ngOnInit() {
   }
 
   async submit() {
-    // await md5(this.dataUser.password);
-    // this.dataUser.password = '1345';
     this.dataUser.password = md5(this.pass);
-    // md5(this.dataUser.password);
+    this.dataUser.position = this.position.id;
+    this.dataUser.gender = this.selectGender.id;
+    this.api.postData('users/create', this.dataUser)
+    .then((res) => {
+      console.log(res);
+    })
     console.log(this.dataUser);
   }
 
@@ -82,22 +144,16 @@ export class AddUserPage implements OnInit {
 
   getDataPosition() {
     this.api.getMasterData('position').then( async (res) => {
-      // console.log(res);
       this.listPostions = await JSON.parse(JSON.stringify(res)).data;
       return console.log(this.listPostions);
     })
   }
 
   async changeFile(e) {
-    // this.stillUploading = true;
     const files = e.target.files;
     for (const a of files) {
       const b = await this.fileToBase64(a);
     }
-    // for (const a of this.files) {
-    //   a.id = await this.upload(a);
-    // }
-    // this.stillUploading = false;
   }
 
   async fileToBase64(file) {
@@ -110,53 +166,21 @@ export class AddUserPage implements OnInit {
           resolve(file);
         } else {
           this.dataUser.image = {
-            name: file.name,
-            size: file.size,
-            type: file.type,
+            file_name: file.name,
+            file_size: file.size,
+            file_type: file.type,
             base64: reader.result,
             isImage: file.type.includes('image')
           };
-          // const data = {
-          //   name: file.name,
-          //   size: file.size,
-          //   type: file.type,
-          //   base64: reader.result,
-          //   uploadComplete: 0,
-          //   id: 9999999,
-          //   isImage: file.type.includes('image')
-          // };
-          // this.files.push(data);
-          console.log(this.dataUser);
           resolve(this.dataUser.image);
         }
       };
       reader.onerror = (error) => {
         reject(`error: ${error}`);
       };
-      // resolve();
     });
   }
 
-  // async upload(file) {
-  //   console.log('Uploading File', file);
-  //   return new Promise((resolve, reject) => {
-  //     return this.projectAllocationApi.uploadFile(file).then(res => {
-  //       if (res.insert_master_file.returning.length === 1) {
-  //         file.uploadComplete = 1;
-  //         file.id = res.insert_master_file.returning[0].id;
-  //         resolve(file.id);
-  //       } else {
-  //         // this.presentToast('Failed Uploading', 'danger');
-  //         file.uploadComplete = 2;
-  //         reject('Failed Upload');
-  //       }
-  //     }).catch(err => {
-  //       file.uploadComplete = 2;
-  //       // this.presentToast(`Failed Uploading ${err}`, 'danger');
-  //       reject(err);
-  //     });
-  //   });
-  // }
   deleteImg(e) {
     this.files = this.files.filter(file => file.id !== parseInt(e, 10));
   }

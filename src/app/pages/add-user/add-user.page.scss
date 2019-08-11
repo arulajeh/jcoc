@@ -4,3 +4,14 @@
     min-width: 150px;
     position: relative;
 }
+
+.forecast_container{
+    overflow-x: scroll !important;
+    overflow-y: hidden;
+    word-wrap: break-word;
+    margin: 15px;
+    border-bottom: 1px black solid;
+    // height:20vw;
+    font-size:1em;
+    // font-weight:300;
+}
