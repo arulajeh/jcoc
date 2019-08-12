@@ -506,7 +506,7 @@ app.post('/api/schedule/detail', (req, res) => {
   const body = req.body;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    db.sequelize.query(`SELECT * FROM v_schedule WHERE "id" = ${body.id}`)
+    db.sequelize.query(`SELECT * FROM v_schedule WHERE "id" = ${body.id}`, { type: db.sequelize.QueryTypes.SELECT})
     .then((result) => {
       if(result) {
         res.json({
