@@ -274,6 +274,31 @@ app.get('/api/music', (req, res) => {
   }
 })
 
+app.post('/api/music/detail', (req, res) => {
+  const head = req.headers;
+  const body = req.body;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    db.music.findByPk(body.id).then((result) => {
+      res.json({
+        sukses: true,
+        data: result
+      });
+    }).catch((err) => {
+      res.json({
+        sukses:false,
+        msg: JSON.stringify(err)
+      })
+    })
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+})
+
 app.get('/api/test_schedule', (req, res) => {
   db.sequelize.query(`SELECT * from v_schedule`, {type: db.sequelize.QueryTypes.SELECT})
   .then((result) => {
@@ -281,7 +306,7 @@ app.get('/api/test_schedule', (req, res) => {
       data: result
     });
   });
-})
+});
 
 // Add New Music
 app.post('/api/music/create', (req, res) => {

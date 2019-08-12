@@ -31,22 +31,11 @@ export class ApiService {
 
   async getListData(url, page_size?, page_number?, order_by?, sort_by?, search?) {
     return new Promise( async (resolve, reject) => {
-      
-      // this.headers.append('page_number', page_number);
-      // this.headers.append('page_size', page_size);
-      // this.headers.append('order_by', order_by);
-      // this.headers.append('sort_by', sort_by);
-      // this.headers.append('search', search);
       page_number ? this.headers = this.headers.set('page_number', page_number) : '';
       page_size ? this.headers = this.headers.set('page_size', page_size) : '';
       order_by ? this.headers = this.headers.set('order_by', order_by) : '';
       sort_by ? this.headers = this.headers.set('sort_by', sort_by) : '';
       search ? this.headers = this.headers.set('search', search) : '';
-      // this.headers = page_size ? this.headers.set('page_size', page_size) : this.headers;
-      // this.headers = page_number ? this.headers.set('page_number', page_number) : this.headers;
-      // this.headers = order_by ? this.headers.set('order_by', order_by) : this.headers;
-      // this.headers = sort_by ? this.headers.set('sort_by', sort_by) : this.headers;
-      // this.headers = search ? this.headers.set('search', search) : this.headers;
       this.headers = await this.headers.set('authorization', localStorage.getItem('token'));
       this.httpClt.get(this.apiUrl + url, {headers: this.headers}).subscribe(
         res => { resolve(res) },
