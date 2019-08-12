@@ -459,9 +459,9 @@ app.post('/api/schedule/create', (req, res) => {
             createdAt: new Date(),
             updatedAt: new Date()
           }).then(async (created) => {
-            await db.rel_user_file.create({
-              user_id: user_id,
-              file_id: created.id
+            await db.rel_schedule_files.create({
+              schedule_id: id_schedule,
+              files_id: created.id
             });
             res.json({
               sukses: true,
