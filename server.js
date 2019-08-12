@@ -139,6 +139,7 @@ app.post('/api/users/create', (req, res) => {
         password: pass2,
         position_id: args.position_id,
         gender_id: args.gender_id,
+        phone: args.phone,
         // image: args.image,
         status: 1,
         akses_id: args.akses_id ? args.akses_id : 2,
