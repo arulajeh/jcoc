@@ -14,8 +14,8 @@ export class AddUserPage implements OnInit {
     name: '',
     password: '',
     phone: '',
-    position: null,
-    gender: null,
+    position_id: null,
+    gender_id: null,
     email: '',
     image: {
       file_name: '',
@@ -44,58 +44,13 @@ export class AddUserPage implements OnInit {
   stillUploading = false;
   base64File = '';
   ionSelect = null;
-  listUsers = [
-    {
-      name: 'Udin Komarudin',
-      username: 'udinkomarudin',
-      email: 'udinkomarudin@gmail.com',
-      position: 'Drummer',
-      file: 'assets/img/bg_4.jpg',
-      phone: '0888888'
-    },{
-      name: 'Udin Komarudin',
-      username: 'udinkomarudin',
-      email: 'udinkomarudin@gmail.com',
-      position: 'Drummer',
-      file: 'assets/img/bg_4.jpg',
-      phone: '0888888'
-    },{
-      name: 'Udin Komarudin',
-      username: 'udinkomarudin',
-      email: 'udinkomarudin@gmail.com',
-      position: 'Drummer',
-      file: 'assets/img/bg_4.jpg',
-      phone: '0888888'
-    },{
-      name: 'Udin Komarudin',
-      username: 'udinkomarudin',
-      email: 'udinkomarudin@gmail.com',
-      position: 'Drummer',
-      file: 'assets/img/bg_4.jpg',
-      phone: '0888888'
-    },{
-      name: 'Udin Komarudin',
-      username: 'udinkomarudin',
-      email: 'udinkomarudin@gmail.com',
-      position: 'Drummer',
-      file: 'assets/img/bg_4.jpg',
-      phone: '0888888'
-    },{
-      name: 'Udin Komarudin',
-      username: 'udinkomarudin',
-      email: 'udinkomarudin@gmail.com',
-      position: 'Drummer',
-      file: 'assets/img/bg_4.jpg',
-      phone: '0888888'
-    },{
-      name: 'Udin Komarudin',
-      username: 'udinkomarudin',
-      email: 'udinkomarudin@gmail.com',
-      position: 'Drummer',
-      file: 'assets/img/bg_4.jpg',
-      phone: '0888888'
-    }
-  ]
+
+  page_size = null
+  page_number = null
+  order_by = 'id'
+  sort_by = 'ASC'
+  search = ''
+  listMembers:any;
 
   constructor(
     private api: ApiService,
@@ -129,8 +84,8 @@ export class AddUserPage implements OnInit {
 
   async submit() {
     this.dataUser.password = md5(this.pass);
-    this.dataUser.position = this.position.id;
-    this.dataUser.gender = this.selectGender.id;
+    this.dataUser.position_id = this.position.id;
+    this.dataUser.gender_id = this.selectGender.id;
     this.api.postData('users/create', this.dataUser)
     .then((res) => {
       console.log(res);
@@ -140,6 +95,7 @@ export class AddUserPage implements OnInit {
 
   initData() {
     this.getDataPosition();
+    this.getMemberList();
   }
 
   getDataPosition() {
@@ -154,6 +110,7 @@ export class AddUserPage implements OnInit {
     for (const a of files) {
       const b = await this.fileToBase64(a);
     }
+    console.log(this.dataUser, this.pass, this.position, this.selectGender);
   }
 
   async fileToBase64(file) {
@@ -183,6 +140,16 @@ export class AddUserPage implements OnInit {
 
   deleteImg(e) {
     this.files = this.files.filter(file => file.id !== parseInt(e, 10));
+  }
+
+  getMemberList() {
+    console.log('member')
+    this.api.getListData('users', this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
+    .then((res) => {
+      // console.log(res);
+      this.listMembers = JSON.parse(JSON.stringify(res)).data;
+      console.log(this.listMembers);
+    });
   }
 
 }

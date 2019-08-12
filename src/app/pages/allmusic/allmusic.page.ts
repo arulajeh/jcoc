@@ -51,6 +51,7 @@ export class AllmusicPage implements OnInit {
       "link" : "https://www.youtube.com/embed/OHXf7wEpBPI"
     },
   ]
+  listMusics = [];
 
   
 
@@ -63,21 +64,23 @@ export class AllmusicPage implements OnInit {
   ngOnInit() {
   }
 
-  ionViewDidEnter() {
-    this.getDataMusic();
-    for (let index of this.music_lists) {
+  async ionViewDidEnter() {
+    await this.getDataMusic();
+    for (let index of this.listMusics) {
       this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(index.link);
       this.safeUrl.push({
         url:this.trustedVideoUrl,
-        title: index.title,
-        artist: index.name
+        title: index.judul,
+        artist: index.penyanyi
       });
     }
   }
 
   getDataMusic() {
-    this.api.getListData('users').then((result) => {
+    return this.api.getListData('music').then((result) => {
       console.log(result);
+      return this.listMusics = JSON.parse(JSON.stringify(result)).data;
+      // console.log(this.listMusics)
     }).catch(err => {alert('Error Get Data')});
   }
   // ionViewWillEnter(): void {

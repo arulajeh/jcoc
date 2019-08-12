@@ -19,7 +19,7 @@
     </ion-col>
   </ion-row>
   <ion-grid fixed>
-    <form id="loginForm" novalidate>
+    <form id="loginForm">
       <ion-row>
         <ion-col size="6">
           <ion-item>
@@ -100,7 +100,13 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-button (click)="submit()" type="submit" expand="block">Add Member</ion-button>
+          <ion-button 
+          (click)="submit()" 
+          type="submit" 
+          [disabled]="!dataUser.username || !dataUser.name || !pass || !dataUser.name || !dataUser.email || !dataUser.phone || !dataUser.image.isImage || !position.id || !selectGender.id"
+          expand="block">
+          Add Member
+          </ion-button>
         </ion-col>
       </ion-row>
     </form>
@@ -110,7 +116,7 @@
       <ion-col size="4">
         <ion-item>
           <ion-label>Show</ion-label>
-          <ion-select interface="popover" [(ngModel)]="ionSelect" (ionChange)="changeSelect()">
+          <ion-select interface="popover" [(ngModel)]="ionSelect" (ionChange)="getMemberList()">
             <ion-select-option value="5">10</ion-select-option>
             <ion-select-option value="15">15</ion-select-option>
             <ion-select-option value="20">20</ion-select-option>
@@ -118,7 +124,7 @@
         </ion-item>
       </ion-col>
       <ion-col size="8">
-        <ion-searchbar showCancelButton="focus" placeholder="Search Members..." debounce="500"></ion-searchbar>
+        <ion-searchbar showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getMemberList()"></ion-searchbar>
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
@@ -152,13 +158,13 @@
           Picture
         </ion-row>
       </ion-col>
-      <ion-col size="1">
+      <ion-col size="2">
         <ion-row justify-content-center>
           Action
         </ion-row>
       </ion-col>
     </ion-row>
-    <ion-row *ngFor="let user of listUsers; index as i" class="forecast_container" nowrap>
+    <ion-row *ngFor="let user of listMembers; index as i" class="forecast_container" nowrap>
       <ion-col size="1" align-self-center>
         <ion-row justify-content-center>
         {{i + 1}}
@@ -181,7 +187,7 @@
       </ion-col>
       <ion-col align-self-center>
         <ion-row justify-content-center>
-          {{user?.position}}
+          {{user?.position_name}}
         </ion-row>
       </ion-col>
       <ion-col size="1" align-self-center>
@@ -189,7 +195,7 @@
           <ion-img [src]="'assets/img/bg_4.jpg'" style="width: 100%; height: 100%"></ion-img>
         </ion-row>
       </ion-col>
-      <ion-col size="1" align-self-center>
+      <ion-col size="2" align-self-center>
         <ion-row justify-content-center>
           <ion-row>
             <ion-col size="12">
