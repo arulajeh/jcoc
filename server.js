@@ -281,16 +281,23 @@ app.post('/api/music/detail', (req, res) => {
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
     db.music.findByPk(body.id).then((result) => {
-      res.json({
-        sukses: true,
-        data: result
-      });
+      if (result) {
+        res.json({
+          sukses: true,
+          data: result
+        });  
+      } else {
+       res.json({
+         sukses: false,
+         msg: "Music Not Found"
+       });
+      }
     }).catch((err) => {
       res.json({
         sukses:false,
         msg: JSON.stringify(err)
-      })
-    })
+      });
+    });
   } else {
     res.json({
       sukses: false,
@@ -415,6 +422,7 @@ app.post('/api/schedule/create', (req, res) => {
         updatedAt: new Date()
       }).then( async (created) => {
         const id_schedule = created.id
+        const schedule = created;
         if (created) {
           let vl = [];
           await args.vokalis.forEach((value, index) => {
@@ -441,11 +449,36 @@ app.post('/api/schedule/create', (req, res) => {
           await db.m_vokalis.bulkCreate(vl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
           await db.m_song_leader.bulkCreate(sl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
           await db.master_lagu.bulkCreate(al, {fields: ['music_name', 'schedule_id'], individualHooks: true});
+          await db.m_files.create({
+            file: args.image.base64,
+            status: 1,
+            uploadBy: hasilJWT.data.id,
+            file_name: args.image.file_name,
+            file_size: args.image.file_size,
+            file_type: args.image.file_type,
+            createdAt: new Date(),
+            updatedAt: new Date()
+          }).then(async (created) => {
+            await db.rel_user_file.create({
+              user_id: user_id,
+              file_id: created.id
+            });
+            res.json({
+              sukses: true,
+              msg: "Schedule created successfully",
+              schedule: schedule
+            })
+          }).catch((err) => {
+            res.json({
+              sukses: false,
+              msg: JSON.stringify(err)
+            });
+          });
 
-          res.json({
-            sukses: true,
-            msg: 'Schedule Created'
-          })
+          // res.json({
+          //   sukses: true,
+          //   msg: 'Schedule Created'
+          // })
         } else {
           res.json({
             sukses: false,
