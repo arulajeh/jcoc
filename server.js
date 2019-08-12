@@ -506,7 +506,8 @@ app.post('/api/schedule/detail', (req, res) => {
   const body = req.body;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    db.v_schedule.findByPk(body.id).then((result) => {
+    db.sequelize.query(`SELECT * FROM v_schedule WHERE "id" = ${body.id}`)
+    .then((result) => {
       if(result) {
         res.json({
           sukses: true,
@@ -524,6 +525,24 @@ app.post('/api/schedule/detail', (req, res) => {
         msg: JSON.stringify(err)
       });
     }); 
+    // db.v_schedule.findByPk(body.id).then((result) => {
+    //   if(result) {
+    //     res.json({
+    //       sukses: true,
+    //       data: result
+    //     });
+    //   } else {
+    //     res.json({
+    //       sukses: false,
+    //       msg: 'Schedule not found'
+    //     })
+    //   }
+    // }).catch((err) => {
+    //   res.json({
+    //     sukses: false,
+    //     msg: JSON.stringify(err)
+    //   });
+    // }); 
   } else {
     res.json({
       sukses: false,
