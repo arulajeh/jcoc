@@ -474,11 +474,6 @@ app.post('/api/schedule/create', (req, res) => {
               msg: JSON.stringify(err)
             });
           });
-
-          // res.json({
-          //   sukses: true,
-          //   msg: 'Schedule Created'
-          // })
         } else {
           res.json({
             sukses: false,
@@ -497,6 +492,38 @@ app.post('/api/schedule/create', (req, res) => {
         data: "Unauthorized user"
       });
     }
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+})
+
+app.post('/api/schedule/detail', (req, res) => {
+  const head = req.headers;
+  let token = head.authorization;
+  const body = req.body;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    db.v_schedule.findByPk(body.id).then((result) => {
+      if(result) {
+        res.json({
+          sukses: true,
+          data: result
+        });
+      } else {
+        res.json({
+          sukses: false,
+          msg: 'Schedule not found'
+        })
+      }
+    }).catch((err) => {
+      res.json({
+        sukses: false,
+        msg: JSON.stringify(err)
+      });
+    }); 
   } else {
     res.json({
       sukses: false,
