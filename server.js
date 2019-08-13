@@ -204,8 +204,8 @@ app.post('/api/users/update', (req,res) => {
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
     if (hasilJWT.data.akses_id === 1) {
-      db.sequelize.query(`UPDATE users SET status = 0 WHERE id = ${args.id}`, {type: db.sequelize.QueryTypes.UPDATE})
-      .then((result) => {
+      db.sequelize.query(`UPDATE users SET status = 0 WHERE id = ${args.id}`)
+      .then(([result, metadata]) => {
         if (result) {
           db.users.create({
             name: args.name,
