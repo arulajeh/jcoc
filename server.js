@@ -222,9 +222,10 @@ app.post('/api/users/update', (req,res) => {
             akses_id: args.akses_id ? args.akses_id : 2,
             created_by: hasilJWT.data.id
           }).then((users) => {
+            const new_user_id = users.id;
             if (users) {
               if (args.image && args.image.file_name) {
-                db.sequelize.query(`UPDATE rel_user_file SET status = 0 WHERE user_id = ${args.id}`, {type: db.sequelize.QueryTypes.UPDATE})
+                db.sequelize.query(`UPDATE rel_user_file SET status = 0 WHERE user_id = ${args.id}`)
                 .then(() => {
                   // if (x) {
                     db.m_files.create({
@@ -260,9 +261,27 @@ app.post('/api/users/update', (req,res) => {
                   // }
                 })
               } else {
-                res.json({
-                  sukses: false,
-                  msg: 'Update user successfully'
+                db.sequelize.query(`SELECT * from SELECT * from rel_user_file WHERE user_id = ${args.id}`, {type: db.sequelize.QueryTypes.SELECT})
+                .then((rel) => {
+                  db.rel_user_file.create({
+                    user_id: new_user_id,
+                    file_id = rel.file_id
+                  }).then(() => {
+                    res.json({
+                      sukses: true,
+                      msg: 'Update user Succesfully'
+                    })
+                  }).catch((err) => {
+                    res.json({
+                      sukses:false,
+                      msg: JSON.stringify(err)
+                    })
+                  })
+                }).catch((err) => {
+                  res.json({
+                    sukses:false,
+                    msg: JSON.stringify(err)
+                  })
                 })
               }
             } else {
