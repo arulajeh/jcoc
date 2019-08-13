@@ -205,9 +205,9 @@ app.post('/api/users/update', (req,res) => {
   if (hasilJWT) {
     if (hasilJWT.data.akses_id === 1) {
       db.sequelize.query(`UPDATE users SET status = 0 WHERE id = ${args.id}`)
-      .then(([xyz, metadata]) => {
-        console.log(xyz);
-        if (result) {
+      .then(() => {
+        // console.log(xyz);
+        // if (xyz) {
           db.users.create({
             name: args.name,
             email: args.email,
@@ -223,8 +223,8 @@ app.post('/api/users/update', (req,res) => {
             if (users) {
               if (args.image.file_name) {
                 db.sequelize.query(`UPDATE rel_user_file SET status = 0 WHERE user_id = ${args.id}`, {type: db.sequelize.QueryTypes.UPDATE})
-                .then((x) => {
-                  if (x) {
+                .then(() => {
+                  // if (x) {
                     db.m_files.create({
                       file: args.image.base64,
                       status: 1,
@@ -250,12 +250,12 @@ app.post('/api/users/update', (req,res) => {
                         msg: JSON.stringify(err)
                       })
                     })
-                  } else {
-                    res.json({
-                      sukses: false,
-                      msg: 'Failed update file'
-                    })
-                  }
+                  // } else {
+                  //   res.json({
+                  //     sukses: false,
+                  //     msg: 'Failed update file'
+                  //   })
+                  // }
                 })
               } else {
                 res.json({
@@ -270,12 +270,12 @@ app.post('/api/users/update', (req,res) => {
               })
             }
           })
-        } else {
-          res.json({
-            sukses: false,
-            msg: 'Failed update user'
-          });
-        }
+        // } else {
+        //   res.json({
+        //     sukses: false,
+        //     msg: 'Failed update user'
+        //   });
+        // }
       }).catch((err) => {
         console.log(err);
         res.json({
