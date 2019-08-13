@@ -150,7 +150,6 @@ app.post('/api/users/create', (req, res) => {
         if (created){
           const userResult = result;
           const user_id = result.id;
-          // db.m_files = 
           db.m_files.create({
             file: args.image.base64,
             status: 1,
@@ -206,8 +205,6 @@ app.post('/api/users/update', (req,res) => {
     if (hasilJWT.data.akses_id === 1) {
       db.sequelize.query(`UPDATE users SET status = 0 WHERE id = ${args.id}`)
       .then(() => {
-        // console.log(xyz);
-        // if (xyz) {
           const pass1 = Md5.hashStr(args.password);
           const pass2 = Md5.hashStr(pass1 + args.username);
           db.users.create({
@@ -227,7 +224,6 @@ app.post('/api/users/update', (req,res) => {
               if (args.image && args.image.file_name) {
                 db.sequelize.query(`UPDATE rel_user_file SET status = 0 WHERE user_id = ${args.id}`)
                 .then(() => {
-                  // if (x) {
                     db.m_files.create({
                       file: args.image.base64,
                       status: 1,
@@ -253,25 +249,11 @@ app.post('/api/users/update', (req,res) => {
                         msg: JSON.stringify(err)
                       })
                     })
-                  // } else {
-                  //   res.json({
-                  //     sukses: false,
-                  //     msg: 'Failed update file'
-                  //   })
-                  // }
                 })
               } else {
                 db.sequelize.query(`SELECT * from rel_user_file WHERE user_id = ${args.id}`, {type: db.sequelize.QueryTypes.SELECT})
                 .then((rel) => {
                   const rel_music_id = rel[0];
-                  // res.json({
-                  //   sukses:  false
-                  // })
-                  console.log(rel_music_id)
-                  // res.json({
-                  //   sukses: false,
-                  //   data: rel_music_id.file_id
-                  // });
                   db.rel_user_file.create({
                     user_id: new_user_id,
                     file_id: rel_music_id.file_id
@@ -300,12 +282,6 @@ app.post('/api/users/update', (req,res) => {
               })
             }
           })
-        // } else {
-        //   res.json({
-        //     sukses: false,
-        //     msg: 'Failed update user'
-        //   });
-        // }
       }).catch((err) => {
         console.log(err);
         res.json({
@@ -572,6 +548,7 @@ app.get('/api/schedule', (req, res) => {
   }
 })
 
+// Create Schedule
 app.post('/api/schedule/create', (req, res) => {
   let args = req.body;
   let token = req.headers.authorization;
@@ -668,6 +645,7 @@ app.post('/api/schedule/create', (req, res) => {
   }
 })
 
+// Schedule Detail
 app.post('/api/schedule/detail', (req, res) => {
   const head = req.headers;
   let token = head.authorization;
@@ -692,25 +670,7 @@ app.post('/api/schedule/detail', (req, res) => {
         sukses: false,
         msg: JSON.stringify(err)
       });
-    }); 
-    // db.v_schedule.findByPk(body.id).then((result) => {
-    //   if(result) {
-    //     res.json({
-    //       sukses: true,
-    //       data: result
-    //     });
-    //   } else {
-    //     res.json({
-    //       sukses: false,
-    //       msg: 'Schedule not found'
-    //     })
-    //   }
-    // }).catch((err) => {
-    //   res.json({
-    //     sukses: false,
-    //     msg: JSON.stringify(err)
-    //   });
-    // }); 
+    });
   } else {
     res.json({
       sukses: false,
@@ -718,6 +678,9 @@ app.post('/api/schedule/detail', (req, res) => {
     });
   }
 })
+
+// Update Schedule
+
 
 // Get Master Positions
 app.get('/api/position', (req, res) => {
