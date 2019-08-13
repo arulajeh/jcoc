@@ -208,6 +208,8 @@ app.post('/api/users/update', (req,res) => {
       .then(() => {
         // console.log(xyz);
         // if (xyz) {
+          const pass1 = Md5.hashStr(args.password);
+          const pass2 = Md5.hashStr(pass1 + args.username);
           db.users.create({
             name: args.name,
             email: args.email,
