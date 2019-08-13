@@ -6,22 +6,23 @@
 
 <ion-content>
   <ion-card>
-    <ion-card-title>(Judul Lagu)</ion-card-title>
+    <ion-card-title>{{data_music?.judul}}</ion-card-title>
     <ion-grid>
       <ion-row>
-        <ion-col><ion-card-subtitle>(Nama Penyanyi)</ion-card-subtitle></ion-col>
+        <ion-col><ion-card-subtitle>{{data_music?.penyanyi}}</ion-card-subtitle></ion-col>
         <ion-col><ion-card-subtitle>Created by : (Nama Author)</ion-card-subtitle></ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
-          <iframe class="yt" height="250">
+          <iframe class="yt" height="250"
+          [src]='data_music?.link'>
           </iframe>
           <ion-card-title>Lyric</ion-card-title>
-          <ion-card-content>Lorem ipsum dolor sit, amet consectetur adipisicing elit. At est reiciendis sit voluptates voluptatem libero sint? Nostrum soluta sit quas eos alias. Saepe quis qui, numquam ab necessitatibus doloribus laborum.</ion-card-content>
+          <ion-card-content>{{data_music?.lirik}}</ion-card-content>
         </ion-col>
         <ion-col>
           <ion-card-title>Chord</ion-card-title>
-          <ion-card-content>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maxime quo error repudiandae modi voluptatum suscipit, reiciendis, possimus necessitatibus unde ipsa eos iure recusandae explicabo excepturi quae amet, eaque illo sint.</ion-card-content>
+          <ion-card-content>{{data_music?.chord}}</ion-card-content>
         </ion-col>
       </ion-row>
     </ion-grid>

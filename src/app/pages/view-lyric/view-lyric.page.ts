@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { ApiService } from 'src/app/services/api.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-view-lyric',
@@ -9,7 +10,45 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class ViewLyricPage implements OnInit {
 
-  constructor() { }
+  trustedVideoUrl: SafeResourceUrl;
+  id;
+  data_music:any;
+  safeUrl = [];
+  constructor(
+    private route: ActivatedRoute,
+    private api: ApiService,
+    private domSanitizer: DomSanitizer
+  ) { }
+
+  async ionViewDidEnter(){
+    await this.getIdMusic();
+    await this.getDataMusic();
+    this.data_music.link = this.domSanitizer.bypassSecurityTrustResourceUrl(this.data_music.link);
+    // this.safeUrl.push({
+    //   url: this.trustedVideoUrl,
+    //   title: this.data_music.judul,
+    //   artis: this.data_music.penyanyi,
+    //   lyrics: this.data_music.lirik,
+    //   chord: this.data_music.chord
+    // });
+
+    //console.log(this.safeUrl);
+  }
+
+  getDataMusic(){
+    return this.api.postData('music/detail', {"id": this.id}).then((result) =>{
+      console.log(result);
+       this.data_music = JSON.parse(JSON.stringify(result)).data;
+      console.log(this.data_music)
+    }).catch(err => {alert('Error Get Data!')});
+  }
+
+  getIdMusic(){
+    this.route.queryParams.subscribe(params => {
+      this.id = JSON.parse(params['id']);
+    })
+    console.log(this.id);
+  }
 
   ngOnInit() {
   }
