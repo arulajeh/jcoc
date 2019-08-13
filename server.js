@@ -261,9 +261,13 @@ app.post('/api/users/update', (req,res) => {
                   // }
                 })
               } else {
-                db.sequelize.query(`SELECT * from SELECT * from rel_user_file WHERE user_id = ${args.id}`, {type: db.sequelize.QueryTypes.SELECT})
+                db.sequelize.query(`SELECT * from rel_user_file WHERE user_id = ${args.id}`, {type: db.sequelize.QueryTypes.SELECT})
                 .then((rel) => {
                   const rel_music_id = rel
+                  // res.json({
+                  //   sukses:  false
+                  // })
+                  console.log(rel)
                   db.rel_user_file.create({
                     user_id: new_user_id,
                     file_id = rel_music_id.file_id
