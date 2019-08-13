@@ -278,7 +278,7 @@ app.post('/api/users/update', (req,res) => {
       }).catch((err) => {
         res.json({
           sukses:false,
-          msg: JSON.stringify(err)
+          msg: 'ERROR CHANGE STATUS USERS'
         });
       })
     } else {
