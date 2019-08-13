@@ -248,6 +248,7 @@ app.post('/api/users/update', (req,res) => {
                         user: created
                       })
                     }).catch((err) => {
+                      console.log(err);
                       res.json({
                         sukses: false,
                         msg: JSON.stringify(err)
