@@ -223,7 +223,7 @@ app.post('/api/users/update', (req,res) => {
             created_by: hasilJWT.data.id
           }).then((users) => {
             if (users) {
-              if (args.image.file_name) {
+              if (args.image && args.image.file_name) {
                 db.sequelize.query(`UPDATE rel_user_file SET status = 0 WHERE user_id = ${args.id}`, {type: db.sequelize.QueryTypes.UPDATE})
                 .then(() => {
                   // if (x) {
