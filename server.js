@@ -198,38 +198,152 @@ app.post('/api/users/create', (req, res) => {
   }
 })
 
-app.post('/api/users/update/:id', (req,res) => {
+app.post('/api/users/update', (req,res) => {
   const args = req.body;
-  if (args.name && args.email && args.position_id && args.gender_id && args.image) {
-    db.sequelize.query(`SELECT "password" FROM users WHERE "id" = ${req.params.id}`, {type: db.sequelize.QueryTypes.SELECT})
-    .then((pass) => {
-      let pass1;
-      let pass2;
-      if (args.password.length > 0) {
-        pass1 = Md5.hashStr(args.password);
-        pass2 = Md5.hashStr(pass1 + args.username);
-      } 
-      db.sequelize.query(`UPDATE users SET "name" = '${args.name}', "password" = '${args.password || pass2}', "position_id" = ${args.position_id}, gender_id = ${args.gender_id}, image = '${args.image}' WHERE "id" = ${req.params.id}`,
-      {type: db.sequelize.QueryTypes.UPDATE})
+  let token = req.headers.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    if (hasilJWT.data.akses_id === 1) {
+      db.sequelize.query(`UPDATE users SET status = 0 WHERE id = ${args.id}`, {type: db.sequelize.QueryTypes.UPDATE})
       .then((result) => {
+        if (result) {
+          db.users.create({
+            name: args.name,
+            email: args.email,
+            username: args.username,
+            password: pass2,
+            position_id: args.position_id,
+            gender_id: args.gender_id,
+            phone: args.phone,
+            status: 1,
+            akses_id: args.akses_id ? args.akses_id : 2,
+            created_by: hasilJWT.data.id
+          }).then(users => {
+            if (users) {
+              if (args.image.file_name) {
+                db.sequelize.query(`UPDATE rel_user_file SET status = 0 WHERE user_id = ${args.id}`, {type: db.sequelize.QueryTypes.UPDATE})
+                .then((x) => {
+                  if (x) {
+                    db.m_files.create({
+                      file: args.image.base64,
+                      status: 1,
+                      uploadBy: hasilJWT.data.id,
+                      file_name: args.image.file_name,
+                      file_size: args.image.file_size,
+                      file_type: args.image.file_type,
+                      createdAt: new Date(),
+                      updatedAt: new Date()
+                    }).then(async (created) => {
+                      await db.rel_user_file.create({
+                        user_id: user_id,
+                        file_id: created.id
+                      });
+                      res.json({
+                        sukses: true,
+                        msg: "Update user successfully",
+                        user: userResult
+                      })
+                    }).catch((err) => {
+                      res.json({
+                        sukses: false,
+                        msg: JSON.stringify(err)
+                      })
+                    })
+                  } else {
+                    res.json({
+                      sukses: false,
+                      msg: 'Failed update file'
+                    })
+                  }
+                })
+              } else {
+                res.json({
+                  sukses: false,
+                  msg: 'Update user successfully'
+                })
+              }
+            } else {
+              res.json({
+                sukses: false,
+                msg: 'Failed update user'
+              })
+            }
+          })
+          // db.sequelize.query(`UPDATE rel_user_file SET status = 0 WHERE user_id = ${args.id}`, {type: db.sequelize.QueryTypes.UPDATE})
+          // .then((x) => {
+          //   if (x) {
+          //     const pass1 = Md5.hashStr(args.password);
+          //     const pass2 = Md5.hashStr(pass1 + args.username);
+          //     db.users.create({
+          //       name: args.name,
+          //       email: args.email,
+          //       username: args.username,
+          //       password: pass2,
+          //       position_id: args.position_id,
+          //       gender_id: args.gender_id,
+          //       phone: args.phone,
+          //       status: 1,
+          //       akses_id: args.akses_id ? args.akses_id : 2,
+          //       created_by: hasilJWT.data.id
+          //     }).then(users => {
+          //       if (users) {
+          //         db.m_files.create({
+          //           file: args.image.base64,
+          //           status: 1,
+          //           uploadBy: hasilJWT.data.id,
+          //           file_name: args.image.file_name,
+          //           file_size: args.image.file_size,
+          //           file_type: args.image.file_type,
+          //           createdAt: new Date(),
+          //           updatedAt: new Date()
+          //         }).then(async (created) => {
+          //           await db.rel_user_file.create({
+          //             user_id: user_id,
+          //             file_id: created.id
+          //           });
+          //           res.json({
+          //             sukses: true,
+          //             msg: "Update user successfully",
+          //             user: userResult
+          //           })
+          //         })
+          //       } else {
+          //         res.json({
+          //           sukses: false,
+          //           msg: 'Failed update user'
+          //         })
+          //       }
+          //     })
+          //   } else {
+          //     res.json({
+          //       sukses: false,
+          //       msg: 'Failed update user'
+          //     })
+          //   }
+          // })
+        } else {
+          res.json({
+            sukses: false,
+            msg: 'Failed update user'
+          });
+        }
+      }).catch((err) => {
         res.json({
-          sukses: true,
-          msg: 'Update Successfully',
-          data: result
-        })
-      })
-      .catch((err) => {
-        res.json({
-          sukses: false,
+          sukses:false,
           msg: JSON.stringify(err)
-        })
+        });
       })
-    })  
+    } else {
+      res.json({
+        sukses: false,
+        msg: 'Unauthorized User'
+      })
+    }
   } else {
     res.json({
       sukses: false,
-      msg: 'Data tidak lengkap'
-    })
+      message: 'Invalid Token'
+    });
   }
 })
 
