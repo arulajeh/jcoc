@@ -205,7 +205,8 @@ app.post('/api/users/update', (req,res) => {
   if (hasilJWT) {
     if (hasilJWT.data.akses_id === 1) {
       db.sequelize.query(`UPDATE users SET status = 0 WHERE id = ${args.id}`)
-      .then(([result, metadata]) => {
+      .then(([xyz, metadata]) => {
+        console.log(xyz);
         if (result) {
           db.users.create({
             name: args.name,
@@ -276,6 +277,7 @@ app.post('/api/users/update', (req,res) => {
           });
         }
       }).catch((err) => {
+        console.log(err);
         res.json({
           sukses:false,
           msg: 'ERROR CHANGE STATUS USERS'
