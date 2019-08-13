@@ -239,7 +239,7 @@ app.post('/api/users/update', (req,res) => {
                       updatedAt: new Date()
                     }).then(async (created) => {
                       await db.rel_user_file.create({
-                        user_id: user_id,
+                        user_id: new_user_id,
                         file_id: created.id
                       });
                       res.json({
