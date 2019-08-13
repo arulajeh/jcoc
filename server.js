@@ -140,7 +140,6 @@ app.post('/api/users/create', (req, res) => {
         position_id: args.position_id,
         gender_id: args.gender_id,
         phone: args.phone,
-        // image: args.image,
         status: 1,
         akses_id: args.akses_id ? args.akses_id : 2,
         created_by: hasilJWT.data.id,
@@ -231,6 +230,45 @@ app.post('/api/users/update/:id', (req,res) => {
       sukses: false,
       msg: 'Data tidak lengkap'
     })
+  }
+})
+
+app.post('/api/users/delete', (req,res) => {
+  const args = req.body;
+  let token = req.headers.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    if (hasilJWT.data.akses_id === 1) {
+      db.sequelize.query(`UPDATE users SET status = 0 WHERE id = ${args.id}`, {type: db.sequelize.QueryTypes.UPDATE})
+      .then((result) => {
+        if (result) {
+          res.json({
+            sukses: true,
+            msg: 'Delete user successfully'
+          });
+        } else {
+          res.json({
+            sukses: false,
+            msg: 'Failed Delete user'
+          });
+        }
+      }).catch((err) => {
+        res.json({
+          sukses:false,
+          msg: JSON.stringify(err)
+        });
+      })
+    } else {
+      res.json({
+        sukses: false,
+        msg: 'Unauthorized User'
+      })
+    }
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
   }
 })
 
