@@ -95,11 +95,11 @@ app.get('/api/users', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT akses_id, email, file, gender_id, id, name, position_id, position_name, username FROM v_user WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT akses_id, email, file, gender_id, id, name, position_id, position_name, username FROM v_user WHERE email LIKE '%${search}%' OR username LIKE '%${search}%' OR "name" LIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
-      db.sequelize.query(`SELECT COUNT(*) from v_user WHERE email LIKE '%${search}%' AND username LIKE '%${search}%' AND "name" LIKE '%${search}%' AND email LIKE '%${search}%'`,
+      db.sequelize.query(`SELECT COUNT(*) from v_user WHERE email LIKE '%${search}%' OR username LIKE '%${search}%' OR "name" LIKE '%${search}%'`,
       { type: db.sequelize.QueryTypes.SELECT})
       .then((row) => {
         let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
@@ -263,34 +263,34 @@ app.post('/api/users/update', (req,res) => {
               } else {
                 db.sequelize.query(`SELECT * from rel_user_file WHERE user_id = ${args.id}`, {type: db.sequelize.QueryTypes.SELECT})
                 .then((rel) => {
-                  const rel_music_id = rel
+                  const rel_music_id = rel[0];
                   // res.json({
                   //   sukses:  false
                   // })
                   console.log(rel_music_id)
+                  // res.json({
+                  //   sukses: false,
+                  //   data: rel_music_id.file_id
+                  // });
+                  db.rel_user_file.create({
+                    user_id: new_user_id,
+                    file_id = rel_music_id.file_id
+                  }).then(() => {
+                    res.json({
+                      sukses: true,
+                      msg: 'Update user Succesfully'
+                    })
+                  }).catch((err) => {
+                    res.json({
+                      sukses:false,
+                      msg: JSON.stringify(err)
+                    })
+                  })
+                }).catch((err) => {
                   res.json({
-                    sukses: false,
-                    data: rel_music_id
-                  });
-                //   db.rel_user_file.create({
-                //     user_id: new_user_id,
-                //     file_id = rel_music_id.file_id
-                //   }).then(() => {
-                //     res.json({
-                //       sukses: true,
-                //       msg: 'Update user Succesfully'
-                //     })
-                //   }).catch((err) => {
-                //     res.json({
-                //       sukses:false,
-                //       msg: JSON.stringify(err)
-                //     })
-                //   })
-                // }).catch((err) => {
-                //   res.json({
-                //     sukses:false,
-                //     msg: JSON.stringify(err)
-                //   })
+                    sukses:false,
+                    msg: JSON.stringify(err)
+                  })
                 })
               }
             } else {
