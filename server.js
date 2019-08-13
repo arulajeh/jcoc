@@ -267,26 +267,30 @@ app.post('/api/users/update', (req,res) => {
                   // res.json({
                   //   sukses:  false
                   // })
-                  console.log(rel)
-                  db.rel_user_file.create({
-                    user_id: new_user_id,
-                    file_id = rel_music_id.file_id
-                  }).then(() => {
-                    res.json({
-                      sukses: true,
-                      msg: 'Update user Succesfully'
-                    })
-                  }).catch((err) => {
-                    res.json({
-                      sukses:false,
-                      msg: JSON.stringify(err)
-                    })
-                  })
-                }).catch((err) => {
+                  console.log(rel_music_id)
                   res.json({
-                    sukses:false,
-                    msg: JSON.stringify(err)
-                  })
+                    sukses: false,
+                    data: rel_music_id
+                  });
+                //   db.rel_user_file.create({
+                //     user_id: new_user_id,
+                //     file_id = rel_music_id.file_id
+                //   }).then(() => {
+                //     res.json({
+                //       sukses: true,
+                //       msg: 'Update user Succesfully'
+                //     })
+                //   }).catch((err) => {
+                //     res.json({
+                //       sukses:false,
+                //       msg: JSON.stringify(err)
+                //     })
+                //   })
+                // }).catch((err) => {
+                //   res.json({
+                //     sukses:false,
+                //     msg: JSON.stringify(err)
+                //   })
                 })
               }
             } else {
