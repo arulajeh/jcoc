@@ -21,47 +21,7 @@ export class AllmusicPage implements OnInit {
   search = '';
 
   safeUrl = [];
-  
-  music_lists =[
-    {
-      "name" : "Skip The Use",
-      "title" : "Nameless World",
-      "link" : "https://www.youtube.com/embed/OHXf7wEpBPI"
-    },
-    {
-      "name" : "Skip The Use",
-      "title" : "Nameless World",
-      "link" : "https://www.youtube.com/embed/OHXf7wEpBPI"
-    },
-    {
-      "name" : "Skip The Use",
-      "title" : "Nameless World",
-      "link" : "https://www.youtube.com/embed/OHXf7wEpBPI"
-    },
-    {
-      "name" : "Skip The Use",
-      "title" : "Nameless World",
-      "link" : "https://www.youtube.com/embed/OHXf7wEpBPI"
-    },
-    {
-      "name" : "Skip The Use",
-      "title" : "Nameless World",
-      "link" : "https://www.youtube.com/embed/OHXf7wEpBPI"
-    },
-    {
-      "name" : "Skip The Use",
-      "title" : "Nameless World",
-      "link" : "https://www.youtube.com/embed/OHXf7wEpBPI"
-    },
-    {
-      "name" : "Skip The Use",
-      "title" : "Nameless World",
-      "link" : "https://www.youtube.com/embed/OHXf7wEpBPI"
-    },
-  ]
   listMusics = [];
-
-  
 
   constructor(
     public navCtrl: NavController,
@@ -75,7 +35,11 @@ export class AllmusicPage implements OnInit {
 
   async ionViewDidEnter() {
     await this.getDataMusic();
-    for (let index of this.listMusics) {
+    this.convertSafeUrl(this.listMusics);
+  }
+
+  convertSafeUrl(data){
+    for (let index of data) {
       this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(index.link);
       this.safeUrl.push({
         url:this.trustedVideoUrl,
@@ -83,17 +47,24 @@ export class AllmusicPage implements OnInit {
         artist: index.penyanyi,
         id: index.id
       });
-      //console.log(this.safeUrl);
     }
   }
 
   getDataMusic() {
     console.log('music');
-    return this.api.getListData('music/all', this.page_size, this.page_number, this.order_by, this.sort_by, this.search).then((result) => {
+    return this.api.getListData('music/all', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ').then((result) => {
       console.log(result);
       return this.listMusics = JSON.parse(JSON.stringify(result)).data;
-      // console.log(this.listMusics)
     }).catch(err => {alert('Error Get Data')});
+  }
+
+  async searchData() {
+    console.log('value search ',this.search)
+    await this.getDataMusic().then((res) => {
+      this.safeUrl = [];
+      console.log('list music baru', res);
+      return this.convertSafeUrl(res)
+    });
   }
 
   sendIdMusic(id){
