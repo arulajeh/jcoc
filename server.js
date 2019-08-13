@@ -404,24 +404,37 @@ app.post('/api/music/detail', (req, res) => {
   let token = head.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    db.music.findByPk(body.id).then((result) => {
+    db.sequelize.query(`SELECT * FROM v_music_detail where id = ${body.id}`).then((result) => {
       if (result) {
         res.json({
           sukses: true,
           data: result
-        });  
+        });
       } else {
-       res.json({
-         sukses: false,
-         msg: "Music Not Found"
-       });
+        res.json({
+          sukses: false,
+          msg: 'Music Not Found'
+        });
       }
-    }).catch((err) => {
-      res.json({
-        sukses:false,
-        msg: JSON.stringify(err)
-      });
-    });
+    })
+    // db.music.findByPk(body.id).then((result) => {
+    //   if (result) {
+    //     res.json({
+    //       sukses: true,
+    //       data: result
+    //     });  
+    //   } else {
+    //    res.json({
+    //      sukses: false,
+    //      msg: "Music Not Found"
+    //    });
+    //   }
+    // }).catch((err) => {
+    //   res.json({
+    //     sukses:false,
+    //     msg: JSON.stringify(err)
+    //   });
+    // });
   } else {
     res.json({
       sukses: false,
