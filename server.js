@@ -99,7 +99,7 @@ app.get('/api/users', (req, res) => {
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
-      db.sequelize.query(`SELECT COUNT(*) from v_user WHERE email ILIKE '%${search}%' OR username ILIKE '%${search}%' OR "name" ILIKE '%${search}%'`,
+      db.sequelize.query(`SELECT COUNT(*) from v_user WHERE v_user.created_by = ${hasilJWT.data.id} AND (email ILIKE '%${search}%' OR username ILIKE '%${search}%' OR "name" ILIKE '%${search}%')`,
       { type: db.sequelize.QueryTypes.SELECT})
       .then((row) => {
         let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
@@ -221,7 +221,7 @@ app.post('/api/users/update', (req,res) => {
           }).then((users) => {
             const new_user_id = users.id;
             if (users) {
-              if (args.image && args.image.file_name) {
+              if (args.image && args.image.file_name != '') {
                 db.sequelize.query(`UPDATE rel_user_file SET status = 0 WHERE user_id = ${args.id}`)
                 .then(() => {
                     db.m_files.create({
@@ -251,9 +251,10 @@ app.post('/api/users/update', (req,res) => {
                     })
                 })
               } else {
-                db.sequelize.query(`SELECT * from rel_user_file WHERE user_id = ${args.id}`, {type: db.sequelize.QueryTypes.SELECT})
+                db.rel_user_file.findOne({where:{user_id: args.id, status: 1}})
+                // db.sequelize.query(`SELECT * from rel_user_file WHERE user_id = ${args.id}`, {type: db.sequelize.QueryTypes.SELECT})
                 .then((rel) => {
-                  const rel_music_id = rel[0];
+                  const rel_music_id = rel;
                   db.rel_user_file.create({
                     user_id: new_user_id,
                     file_id: rel_music_id.file_id
@@ -429,11 +430,11 @@ app.post('/api/music/detail', (req, res) => {
   let token = head.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    db.sequelize.query(`SELECT * FROM v_music_detail where id = ${body.id}`).then((result) => {
+    db.sequelize.query(`SELECT * FROM v_music_detail where id = ${body.id}`, {type: db.Sequelize.QueryTypes.SELECT}).then((result) => {
       if (result) {
         res.json({
           sukses: true,
-          data: result
+          data: result[0]
         });
       } else {
         res.json({
@@ -449,15 +450,6 @@ app.post('/api/music/detail', (req, res) => {
     });
   }
 })
-
-app.get('/api/test_schedule', (req, res) => {
-  db.sequelize.query(`SELECT * from v_schedule`, {type: db.sequelize.QueryTypes.SELECT})
-  .then((result) => {
-    res.json({
-      data: result
-    });
-  });
-});
 
 // Add New Music
 app.post('/api/music/create', (req, res) => {
@@ -679,8 +671,181 @@ app.post('/api/schedule/detail', (req, res) => {
   }
 })
 
+// DELETE Schedule
+
+app.post('/api/schedule/delete', (req,res) => {
+  const args = req.body;
+  let token = req.headers.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    if (hasilJWT.data.akses_id === 1) {
+      db.sequelize.query(`UPDATE schedule SET status = 0 WHERE id = ${args.id}`, {type: db.sequelize.QueryTypes.UPDATE})
+      .then((result) => {
+        if (result) {
+          res.json({
+            sukses: true,
+            msg: 'Delete user successfully'
+          });
+        } else {
+          res.json({
+            sukses: false,
+            msg: 'Failed Delete user'
+          });
+        }
+      }).catch((err) => {
+        res.json({
+          sukses:false,
+          msg: JSON.stringify(err)
+        });
+      })
+    } else {
+      res.json({
+        sukses: false,
+        msg: 'Unauthorized User'
+      })
+    }
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+})
+
 // Update Schedule
 
+app.post('/api/schedule/update', (req,res) => {
+  const args = req.body;
+  let token = req.headers.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    if (hasilJWT.data.akses_id === 1) {
+      db.sequelize.query(`UPDATE schedule SET status = 0 WHERE id = ${args.id}`)
+      .then(async () => {
+        db.sequelize.query(`UPDATE rel_schedule_files SET status = 0 WHERE rel_schedule_files.schedule_id = ${args.id}`).then(() => {
+          db.sequelize.query(`UPDATE m_vokalis SET status = 0 WHERE m_vokalis.schedule_id = ${args.id}`).then(() => {
+            db.sequelize.query(`UPDATE m_song_leader SET status = 0 WHERE m_song_leader.schedule_id = ${args.id}`).then(() => {
+              db.sequelize.query(`UPDATE master_lagu SET status = 0 WHERE master_lagu.schedule_id = ${args.id}`).then(() => {
+                db.schedule.create({
+                  event_date: args.event_date,
+                  event_name: args.event_name,
+                  basis: args.basis,
+                  gitaris: args.gitaris,
+                  drummer: args.drummer,
+                  user_id: hasilJWT.data.id,
+                  pianis: args.pianis,
+                  createdAt: new Date(),
+                  updatedAt: new Date()
+                }).then( async (created) => {
+                  const id_schedule = created.id
+                  const schedule = created;
+                  if (created) {
+                    let vl = [];
+                    await args.vokalis.forEach((value, index) => {
+                      return vl.push({
+                        user_id: value,
+                        schedule_id: id_schedule
+                      });
+                    })
+                    let sl = [];
+                    await args.song_leader.forEach((value, index) => {
+                      return sl.push({
+                        user_id: value,
+                        schedule_id: id_schedule
+                      });
+                    })
+                    let al = [];
+                    await args.lagu.forEach((value, index) => {
+                      return al.push({
+                        music_name: value,
+                        schedule_id: id_schedule
+                      });
+                    })
+                    await db.m_vokalis.bulkCreate(vl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
+                    await db.m_song_leader.bulkCreate(sl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
+                    await db.master_lagu.bulkCreate(al, {fields: ['music_name', 'schedule_id'], individualHooks: true});
+                    if (args.image && args.image.file_name != '') {
+                      await db.m_files.create({
+                        file: args.image.base64,
+                        status: 1,
+                        uploadBy: hasilJWT.data.id,
+                        file_name: args.image.file_name,
+                        file_size: args.image.file_size,
+                        file_type: args.image.file_type,
+                        createdAt: new Date(),
+                        updatedAt: new Date()
+                      }).then(async (created) => {
+                        await db.rel_schedule_files.create({
+                          schedule_id: id_schedule,
+                          files_id: created.id
+                        });
+                        res.json({
+                          sukses: true,
+                          msg: "Schedule update successfully",
+                          schedule: schedule
+                        })
+                      }).catch((err) => {
+                        res.json({
+                          sukses: false,
+                          msg: JSON.stringify(err)
+                        });
+                      });  
+                    } else {
+                      db.rel_schedule_files.findOne({where: {schedule_id: id_schedule, status: 1}}).then((rel) => {
+                        db.rel_schedule_files.create({
+                          file_id: rel.file_id,
+                          schedule_id: id_schedule
+                        }).then(() => {
+                          res.json({
+                            sukses: true,
+                            msg: 'Update Schedule successfully'
+                          });
+                        }).catch((err) => {
+                          console.log(err);
+                          res.json({
+                            sukses: false,
+                            msg: JSON.stringify(err)
+                          });
+                        });
+                      }).catch((err) => {
+                        console.log(err);
+                        res.json({
+                          sukses: false,
+                          msg: JSON.stringify(err)
+                        });
+                      });
+                    }
+                  } else {
+                    res.json({
+                      sukses: false,
+                      data: created
+                    });
+                  }
+                }).catch(err => {
+                  console.log(err);
+                  res.json({
+                    sukses: false,
+                    msg: JSON.stringify(err)
+                  });
+                });
+              });
+            });
+          });
+        });
+      });
+    } else {
+      res.json({
+        sukses: false,
+        msg: 'Unauthorized User'
+      })
+    }
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+})
 
 // Get Master Positions
 app.get('/api/position', (req, res) => {
@@ -701,6 +866,148 @@ app.get('/api/position', (req, res) => {
       sukses: false,
       message: 'Invalid Token'
     });
+  }
+})
+
+// Get Content List
+
+app.get('/api/content', (req, res) => {
+  const head = req.headers;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    let pageNumber = head.page_number ? head.page_number : 1;
+    let pageSize = head.page_size ? head.page_size : 5;
+    let sortBy = head.sort_by ? head.sort_by : 'ASC';
+    let orderBy = head.order_by ? head.order_by : 'id';
+    let search = head.search ? head.search : '';
+    let offset = (pageNumber - 1) * pageSize;
+    db.sequelize.query(`SELECT * FROM v_content WHERE user_id = ${hasilJWT.data.id} AND (title ILIKE '%${search}%') ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then( async (result) => {
+      let resultDB = result;
+      db.sequelize.query(`SELECT COUNT(*) from v_content WHERE user_id = ${hasilJWT.data.id} AND (title ILIKE '%${search}%')`,
+      { type: db.sequelize.QueryTypes.SELECT})
+      .then((row) => {
+        let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
+        res.json({
+          sukses: true,
+          data: resultDB,
+          page_information: {
+            currentPage: parseInt(pageNumber),
+            pageSize: parseInt(pageSize),
+            totalPage: totalPage > 0 ? totalPage : 1,
+            firstPage: 1,
+            totalData: parseInt(row[0].count)
+          }
+        })
+      });
+    });  
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+  console.log(head);
+})
+
+// Create new Content
+
+app.post('/api/content/create', (req, res) => {
+  const head = req.headers;
+  const args = req.body;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    db.sequelize.query(`SELECT COUNT(*) FROM v_content WHERE user_id = ${hasilJWT.data.id}`, {type: db.Sequelize.QueryTypes.SELECT})
+    .then((count) => {
+      if (count[0].count >= 5) {
+        res.json({
+          sukses: false,
+          msg: 'limit'
+        });
+      } else {
+        db.m_files.create({
+          file: args.image.base64,
+          status: 1,
+          uploadBy: hasilJWT.data.id,
+          file_name: args.image.file_name,
+          file_size: args.image.file_size,
+          file_type: args.image.file_type
+        }).then((result) => {
+          if (result) {
+            db.content.create({
+              file_id: result.id,
+              title: args.title,
+              status: 1,
+              user_id: hasilJWT.data.id
+            }).then((cResult) => {
+              res.json({
+                sukses: true,
+                msg: 'Create content successfully'
+              });
+            }).catch((err) => {
+              console.log(err)
+              res.json({
+                sukses: false,
+                msg: JSON.stringify(err)
+              })
+            }).catch((err) => {
+              console.log(err)
+              res.json({
+                sukses: false,
+                msg: JSON.stringify(err)
+              })
+            })
+          } else {
+            res.json({
+              sukses: false,
+              msg: 'Failed create content'
+            });
+          }
+        });
+      }
+    })
+  } else {
+    res.json({
+      sukses: false,
+      msg: 'Unauthrized user'
+    })
+  }
+})
+
+app.post('/api/content/delete', (req, res) => {
+  const head = req.headers;
+  const args = req.body;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token)
+  if (hasilJWT) {
+    db.sequelize.query(`UPDATE content SET status = 0 WHERE id = ${args.id}`, {type: db.Sequelize.QueryTypes.UPDATE})
+    .then((result) => {
+      if (result) {
+        res.json({
+          sukses: true,
+          msg: 'Delete content successfully'
+        });
+      } else {
+        res.json({
+          sukses: true,
+          msg: 'Delete content failed'
+        });
+      };
+    }).catch((err) => {
+      console.log(err)
+      res.json({
+        sukses: true,
+        msg: 'Delete content failed'
+      });
+    });
+  } else {
+    res.json({
+      sukses: false,
+      msg: 'Unauthrized user'
+    })
   }
 })
 
