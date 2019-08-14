@@ -918,47 +918,57 @@ app.post('/api/content/create', (req, res) => {
   const head = req.headers;
   const args = req.body;
   let token = head.authorization;
-  let hasilJWT = checkJWT(token)
+  let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    db.m_files.create({
-      file: args.image.base64,
-      status: 1,
-      uploadBy: hasilJWT.data.id,
-      file_name: args.image.file_name,
-      file_size: args.image.file_size,
-      file_type: args.image.file_type
-    }).then((result) => {
-      if (result) {
-        db.content.create({
-          file_id: result.id,
-          title: args.title,
-          status: 1,
-          user_id: hasilJWT.data.id
-        }).then((cResult) => {
-          res.json({
-            sukses: true,
-            msg: 'Create content successfully'
-          });
-        }).catch((err) => {
-          console.log(err)
-          res.json({
-            sukses: false,
-            msg: JSON.stringify(err)
-          })
-        }).catch((err) => {
-          console.log(err)
-          res.json({
-            sukses: false,
-            msg: JSON.stringify(err)
-          })
-        })
-      } else {
+    db.sequelize.query(`SELECT COUNT(*) FROM v_content WHERE user_id = ${hasilJWT.data.id}`, {type: db.Sequelize.QueryTypes.SELECT})
+    .then((count) => {
+      if (count[0].count >= 5) {
         res.json({
           sukses: false,
-          msg: 'Failed create content'
+          msg: 'limit'
+        });
+      } else {
+        db.m_files.create({
+          file: args.image.base64,
+          status: 1,
+          uploadBy: hasilJWT.data.id,
+          file_name: args.image.file_name,
+          file_size: args.image.file_size,
+          file_type: args.image.file_type
+        }).then((result) => {
+          if (result) {
+            db.content.create({
+              file_id: result.id,
+              title: args.title,
+              status: 1,
+              user_id: hasilJWT.data.id
+            }).then((cResult) => {
+              res.json({
+                sukses: true,
+                msg: 'Create content successfully'
+              });
+            }).catch((err) => {
+              console.log(err)
+              res.json({
+                sukses: false,
+                msg: JSON.stringify(err)
+              })
+            }).catch((err) => {
+              console.log(err)
+              res.json({
+                sukses: false,
+                msg: JSON.stringify(err)
+              })
+            })
+          } else {
+            res.json({
+              sukses: false,
+              msg: 'Failed create content'
+            });
+          }
         });
       }
-    });
+    })
   } else {
     res.json({
       sukses: false,

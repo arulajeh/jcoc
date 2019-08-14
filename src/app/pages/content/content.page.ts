@@ -25,6 +25,7 @@ export class ContentPage implements OnInit {
 
   search = '';
   listContent = [];
+  inputForm = false;
 
   constructor(
     private api: ApiService,
@@ -94,6 +95,8 @@ export class ContentPage implements OnInit {
           }
         }
         this.getData();
+      } else if(res.sukses === false && res.msg === 'limit') {
+        this.showToast('You have reached content limit');
       } else {
         this.showToast('Failed upload content');
       }
