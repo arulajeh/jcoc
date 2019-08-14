@@ -384,6 +384,40 @@ app.get('/api/music', (req, res) => {
   }
 })
 
+app.post('/api/music/delete', (req, res) => {
+  const head = req.headers;
+  const args = req.body;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token)
+  if (hasilJWT) {
+    db.sequelize.query(`UPDATE music SET status = 0 WHERE id = ${args.id}`, {type: db.Sequelize.QueryTypes.UPDATE})
+    .then((result) => {
+      if (result) {
+        res.json({
+          sukses: true,
+          msg: 'Delete music successfully'
+        });
+      } else {
+        res.json({
+          sukses: true,
+          msg: 'Delete music failed'
+        });
+      };
+    }).catch((err) => {
+      console.log(err)
+      res.json({
+        sukses: true,
+        msg: 'Delete music failed'
+      });
+    });
+  } else {
+    res.json({
+      sukses: false,
+      msg: 'Unauthrized user'
+    })
+  }
+})
+
 app.get('/api/music/all', (req, res) => {
   const head = req.headers;
   let token = head.authorization;

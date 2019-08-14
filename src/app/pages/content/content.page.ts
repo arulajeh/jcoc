@@ -19,6 +19,8 @@ export class ContentPage implements OnInit {
     }
   }
 
+  listImage = [];
+
   files = [];
   stillUploading = false;
   base64File = '';
@@ -110,7 +112,8 @@ export class ContentPage implements OnInit {
       this.api.getListData('content', null, null, null, null, this.search ? this.search : ' ')
       .then((result) => {
         console.log(result)
-        return this.listContent = JSON.parse(JSON.stringify(result)).data;
+        this.listContent = JSON.parse(JSON.stringify(result)).data;
+        this.insertImage();
       }).then(() => {
         this.loadingCtrl.dismiss();
       }).catch((err) => {
@@ -161,4 +164,9 @@ export class ContentPage implements OnInit {
     });
   }
 
+  insertImage() {
+    this.listContent.map((value, index) => {
+      console.log(value.file_id);
+    })
+  }
 }
