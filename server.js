@@ -430,7 +430,7 @@ app.post('/api/music/detail', (req, res) => {
   let token = head.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    db.sequelize.query(`SELECT * FROM v_music_detail where id = ${body.id}`).then((result) => {
+    db.sequelize.query(`SELECT * FROM v_music_detail where id = ${body.id}`, {type: db.Sequelize.QueryTypes.SELECT}).then((result) => {
       if (result) {
         res.json({
           sukses: true,
@@ -999,7 +999,7 @@ app.post('/api/content/update', (req, res) => {
               res.json({
                 sukses: false,
                 msg: JSON.stringify(err)
-              })
+              });
             }).catch((err) => {
               console.log(err)
               res.json({
