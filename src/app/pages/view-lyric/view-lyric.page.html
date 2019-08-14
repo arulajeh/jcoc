@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar color="warning">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>Review Music</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -10,7 +13,7 @@
     <ion-grid>
       <ion-row>
         <ion-col><ion-card-subtitle>{{data_music?.penyanyi}}</ion-card-subtitle></ion-col>
-        <ion-col><ion-card-subtitle>Created by : (Nama Author)</ion-card-subtitle></ion-col>
+        <ion-col><ion-card-subtitle>Created by : {{data_music?.created_by}}</ion-card-subtitle></ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
