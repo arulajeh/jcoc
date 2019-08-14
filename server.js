@@ -967,7 +967,7 @@ app.post('/api/content/create', (req, res) => {
   }
 })
 
-app.post('/api/content/update', (req, res) => {
+app.post('/api/content/delete', (req, res) => {
   const head = req.headers;
   const args = req.body;
   let token = head.authorization;
@@ -975,63 +975,24 @@ app.post('/api/content/update', (req, res) => {
   if (hasilJWT) {
     db.sequelize.query(`UPDATE content SET status = 0 WHERE user_id = ${hasilJWT.data.id}`, {type: db.Sequelize.QueryTypes.UPDATE})
     .then((result) => {
-      if (args.image && args.image.file_name != '') {
-        db.m_files.create({
-          file: args.image.base64,
-          status: 1,
-          uploadBy: hasilJWT.data.id,
-          file_name: args.image.file_name,
-          file_size: args.image.file_size,
-          file_type: args.image.file_type
-        }).then((result) => {
-          if (result) {
-            db.content.create({
-              file_id: result.id,
-              title: args.title,
-              status: 1
-            }).then((cResult) => {
-              res.json({
-                sukses: true,
-                msg: 'Update content successfully'
-              });
-            }).catch((err) => {
-              console.log(err)
-              res.json({
-                sukses: false,
-                msg: JSON.stringify(err)
-              });
-            }).catch((err) => {
-              console.log(err)
-              res.json({
-                sukses: false,
-                msg: JSON.stringify(err)
-              })
-            })
-          } else {
-            res.json({
-              sukses: false,
-              msg: 'Failed create content'
-            });
-          }
+      if (result) {
+        res.json({
+          sukses: true,
+          msg: 'Delete content successfully'
         });
       } else {
-        db.content.create({
-          file_id: args.file_id,
-          title: args.title
-        }).then((ress) => {
-          res.json({
-            sukses: true,
-            msg: 'Update Content Successfully'
-          })
-        }).catch((err) => {
-          console.log(err);
-          res.json({
-            sukses: false,
-            msg: JSON.stringify(err)
-          });
+        res.json({
+          sukses: true,
+          msg: 'Delete content failed'
         });
-      }
-    })
+      };
+    }).catch((err) => {
+      console.log(err)
+      res.json({
+        sukses: true,
+        msg: 'Delete content failed'
+      });
+    });
   } else {
     res.json({
       sukses: false,
