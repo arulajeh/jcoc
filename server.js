@@ -932,7 +932,8 @@ app.post('/api/content/create', (req, res) => {
         db.content.create({
           file_id: result.id,
           title: args.title,
-          status: 1
+          status: 1,
+          user_id: hasilJWT.data.id
         }).then((cResult) => {
           res.json({
             sukses: true,
