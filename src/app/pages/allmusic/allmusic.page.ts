@@ -74,7 +74,7 @@ export class AllmusicPage implements OnInit {
         id: JSON.stringify(id)
       }
     };
-    this.navCtrl.navigateForward(['view-lyric'], navigationExtras);
+    this.navCtrl.navigateForward(['/view-lyric'], navigationExtras);
 
   }
 

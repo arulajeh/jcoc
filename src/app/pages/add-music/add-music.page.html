@@ -1,40 +1,124 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="warning">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>AddMusic</ion-title>
+    <ion-title>Add Music</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form>
+  <form style="margin-left: 15px; margin-right: 15px;">
     <ion-item>
-      <ion-label position="floating">Judul</ion-label>
-      <ion-input name="judul"></ion-input>
+      <ion-label position="floating">Title</ion-label>
+      <ion-input [(ngModel)]="dataMusic.judul" name="title" type="text" spellcheck="false" autocapitalize="off" required></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Penyanyi</ion-label>
-      <ion-input name="penyanyi"></ion-input>
+      <ion-label position="floating">Artist</ion-label>
+      <ion-input [(ngModel)]="dataMusic.penyanyi" name="artist" type="text" spellcheck="false" autocaptalize="off" required></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Lirik</ion-label>
-      <ion-textarea name="judul"></ion-textarea>
+      <ion-label position="floating">Lyrics</ion-label>
+      <ion-textarea [(ngModel)]="dataMusic.lirik" name="lyric" spellcheck="false" autocapitalize="off" required></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Chord</ion-label>
-      <ion-textarea name="chord"></ion-textarea>
+      <ion-textarea [(ngModel)]="dataMusic.chord" name="chord" spellcheck="false" autocapitalize="off" required></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Link</ion-label>
-      <ion-input name="link"></ion-input>
+      <ion-input [(ngModel)]="dataMusic.link" name="link" spellcheck="false" autocapitalize="off" required></ion-input>
     </ion-item>
+    <ion-card-subtitle>*format input ex : https://www.youtube.com/embed/mw5VIEIvuMI (replace '/watch?v=' with '/embed/')</ion-card-subtitle>
     <ion-row>
       <ion-col text-center>
-        <ion-button ion-button block color="primary">
-          Submit
+        <ion-button ion-button block color="warning"
+        (click)="submit()"
+        type="submit"
+        [disabled]="">
+          Add Music
         </ion-button>
       </ion-col>
     </ion-row>
 </form>
+<ion-grid fixed>
+    <ion-row>
+      <ion-col size="4">
+        <ion-item>
+          <ion-label>Show</ion-label>
+          <ion-select interface="popover" [(ngModel)]="ionSelect" name="ionSelect" (ionChange)="getMusicList()">
+            <ion-select-option value="5">10</ion-select-option>
+            <ion-select-option value="15">15</ion-select-option>
+            <ion-select-option value="20">20</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="8">
+        <ion-searchbar showCancelButton="focus" placeholder="Search Music" debounce="500" [(ngModel)]="search" (ionChange)="getMusicList()"></ion-searchbar>
+      </ion-col>
+    </ion-row>
+    <ion-row class="forecast_container" nowrap>
+      <ion-col size="1">
+        <ion-row justify-content-center>
+          No.
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          Title
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          Artist
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          Created By
+        </ion-row>
+      </ion-col>
+      <ion-col size="2">
+        <ion-row justify-content-center>
+          Action
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let data  of listMusic ; index as i" class="forecast_container" nowrap>
+      <ion-col size="1" align-self-center>
+        <ion-row justify-content-center>
+        {{i + 1}}
+        </ion-row>
+      </ion-col>
+      <ion-col align-self-center>
+        <ion-row justify-content-center>
+          {{data?.judul}}
+        </ion-row>
+      </ion-col>
+      <ion-col align-self-center>
+        <ion-row justify-content-center>
+          {{data?.penyanyi}}
+        </ion-row>
+      </ion-col>
+      <ion-col align-self-center>
+        <ion-row justify-content-center>
+          Created By
+        </ion-row>
+      </ion-col>
+      <ion-col size="2" align-self-center>
+        <ion-row justify-content-center>
+          <ion-row>
+            <ion-col size="12">
+              <ion-icon name="trash"></ion-icon>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-icon name="create"></ion-icon>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

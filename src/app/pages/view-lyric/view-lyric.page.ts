@@ -32,14 +32,14 @@ export class ViewLyricPage implements OnInit {
     //   chord: this.data_music.chord
     // });
 
-    //console.log(this.safeUrl);
+    console.log('data music ' + this.data_music);
   }
 
   getDataMusic(){
     return this.api.postData('music/detail', {"id": this.id}).then((result) =>{
-      console.log(result);
-       this.data_music = JSON.parse(JSON.stringify(result)).data;
-      console.log(this.data_music)
+      console.log('result ' + result);
+       return this.data_music = JSON.parse(JSON.stringify(result)).data;
+      //console.log('data music ' + this.data_music)
     }).catch(err => {alert('Error Get Data!')});
   }
 
