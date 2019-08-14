@@ -973,7 +973,7 @@ app.post('/api/content/delete', (req, res) => {
   let token = head.authorization;
   let hasilJWT = checkJWT(token)
   if (hasilJWT) {
-    db.sequelize.query(`UPDATE content SET status = 0 WHERE user_id = ${hasilJWT.data.id}`, {type: db.Sequelize.QueryTypes.UPDATE})
+    db.sequelize.query(`UPDATE content SET status = 0 WHERE id = ${args.id}`, {type: db.Sequelize.QueryTypes.UPDATE})
     .then((result) => {
       if (result) {
         res.json({
