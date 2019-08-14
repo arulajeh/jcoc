@@ -55,7 +55,7 @@ export class AllmusicPage implements OnInit {
     return this.api.getListData('music/all', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ').then((result) => {
       console.log(result);
       return this.listMusics = JSON.parse(JSON.stringify(result)).data;
-    }).catch(err => {alert('Error Get Data')});
+    }).catch(err => {console.log(err)});
   }
 
   async searchData() {
