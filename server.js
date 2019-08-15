@@ -632,50 +632,50 @@ app.post('/api/music/update', (req, res) => {
         msg: JSON.stringify(err)
       })
     })
-    db.sequelize.query(`UPDATE music SET status = 0 WHERE id = ${args.id}`, {type: db.Sequelize.QueryTypes.UPDATE})
-    .then((result) => {
-      if (result) {
-        db.music.create({
-          judul: args.judul,
-          penyanyi: args.penyanyi,
-          lirik: args.lirik,
-          chord: args.chord,
-          link: args.link,
-          user_id: hasilJWT.data.id,
-          createdAt: new Date(),
-          updatedAt: new Date()
-        }).then((created) => {
-          if (created) {
-            res.json({
-              sukses: true,
-              data: created
-            })
-          } else {
-            res.json({
-              sukses: false,
-              data: created
-            })
-          }
-        }).catch(err => {
-          console.log(err);
-          res.json({
-            sukses: false,
-            msg: JSON.stringify(err)
-          });
-        });
-      } else {
-        res.json({
-          sukses: true,
-          msg: 'Update music failed'
-        });
-      };
-    }).catch((err) => {
-      console.log(err)
-      res.json({
-        sukses: true,
-        msg: 'Update music failed'
-      });
-    });
+    // db.sequelize.query(`UPDATE music SET status = 0 WHERE id = ${args.id}`, {type: db.Sequelize.QueryTypes.UPDATE})
+    // .then((result) => {
+    //   if (result) {
+    //     db.music.create({
+    //       judul: args.judul,
+    //       penyanyi: args.penyanyi,
+    //       lirik: args.lirik,
+    //       chord: args.chord,
+    //       link: args.link,
+    //       user_id: hasilJWT.data.id,
+    //       createdAt: new Date(),
+    //       updatedAt: new Date()
+    //     }).then((created) => {
+    //       if (created) {
+    //         res.json({
+    //           sukses: true,
+    //           data: created
+    //         })
+    //       } else {
+    //         res.json({
+    //           sukses: false,
+    //           data: created
+    //         })
+    //       }
+    //     }).catch(err => {
+    //       console.log(err);
+    //       res.json({
+    //         sukses: false,
+    //         msg: JSON.stringify(err)
+    //       });
+    //     });
+    //   } else {
+    //     res.json({
+    //       sukses: true,
+    //       msg: 'Update music failed'
+    //     });
+    //   };
+    // }).catch((err) => {
+    //   console.log(err)
+    //   res.json({
+    //     sukses: true,
+    //     msg: 'Update music failed'
+    //   });
+    // });
     } else {
       res.json({
         data: "Unauthorized user"
@@ -952,6 +952,7 @@ app.post('/api/schedule/update', (req,res) => {
                 if (args.image && args.image.file_name) {
                   db.rel_schedule_files.findOne({where: {schedule_id: args.id, status: 1}})
                   .then((resFile) => {
+                    console.log(resFile)
                     db.m_files.update({
                       file: args.image.base64,
                       status: 1,
