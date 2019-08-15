@@ -952,7 +952,8 @@ app.post('/api/schedule/update', (req,res) => {
                 if (args.image && args.image.file_name) {
                   db.rel_schedule_files.findOne({where: {schedule_id: args.id, status: 1}})
                   .then((resFile) => {
-                    console.log(resFile)
+                    let file = resFile.get({plain: true});
+                    console.log(file);
                     db.m_files.update({
                       file: args.image.base64,
                       status: 1,
@@ -960,7 +961,26 @@ app.post('/api/schedule/update', (req,res) => {
                       file_name: args.image.file_name,
                       file_size: args.image.file_size,
                       file_type: args.image.file_type
-                    }, {where: {id: resFile.files_id}})
+                    }, {where: {id: file.files_id}})
+                    .then((updateImg) => {
+                      if (updateImg) {
+                        res.json({
+                          sukses: true,
+                          msg: 'Sukses update schedule'
+                        });
+                      } else {
+                        res.json({
+                          sukses: false,
+                          msg: 'Failed update schedule'
+                        });
+                      }
+                    }).catch((err) => {
+                      console.log(err);
+                      res.json({
+                        sukses: false,
+                        msg: JSON.stringify(err)
+                      });
+                    })
                   }).catch((err) => {
                     console.log(err);
                     res.json({
