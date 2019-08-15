@@ -12,7 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false
-      }
+      },
+      primary_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
     },
     {
       freezeTableName: true,

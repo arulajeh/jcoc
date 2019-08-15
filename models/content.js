@@ -20,7 +20,11 @@ module.exports = (sequelize, DataTypes) => {
       title: {
         type: DataTypes.STRING,
         allowNull: false
-      }
+      },
+      primary_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
     },
     {
       freezeTableName: true,

@@ -13,14 +13,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATEONLY,
         allowNull: false
       },
-      // vokalis: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      // },
-      // song_leader: {
-      //   type: DataTypes.INTEGER,
-      //   allowNull: false,
-      // },
       gitaris: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -40,11 +32,11 @@ module.exports = (sequelize, DataTypes) => {
       user_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
-      }
-      // lagu: {
-      //   type: DataTypes.STRING,
-      //   allowNull: false,
-      // }
+      },
+      primary_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
     },
     {
       freezeTableName: true,
