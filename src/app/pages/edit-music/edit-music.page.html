@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Music</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form style="margin-left: 15px; margin-right: 15px;">
+    <ion-item>
+      <ion-label position="stacked">Title</ion-label>
+      <ion-input [(ngModel)]="dataMusic.judul" name="title" type="text" spellcheck="false" autocapitalize="off">{{data_music?.judul}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Artist</ion-label>
+      <ion-input [(ngModel)]="dataMusic.penyanyi" name="artist" type="text" spellcheck="false" autocaptalize="off">{{data_music?.penyanyi}}</ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Lyrics</ion-label>
+      <ion-textarea [(ngModel)]="dataMusic.lirik" rows="6" cols="20" name="lyric" spellcheck="false" autocapitalize="off">{{data_music?.lirik}}</ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Chord</ion-label>
+      <ion-textarea [(ngModel)]="dataMusic.chord" rows="6" cols="20" name="chord" spellcheck="false" autocapitalize="off">{{data_music?.chord}}</ion-textarea>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Link</ion-label>
+      <ion-input [(ngModel)]="dataMusic.link" name="link" spellcheck="false" autocapitalize="off">{{data_music?.link}}</ion-input>
+    </ion-item>
+    <ion-card-subtitle>*format input ex : https://www.youtube.com/embed/U06jlgpMtQs (replace '/watch?v=' with '/embed/')</ion-card-subtitle>
+    <ion-row>
+      <ion-col text-center>
+        <ion-button ion-button block color="warning"
+        (click)="submit()"
+        type="submit"
+        [disabled]="">
+          Update Music
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    </form>
+</ion-content>

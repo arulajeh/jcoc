@@ -152,4 +152,12 @@ export class AddUserPage implements OnInit {
     });
   }
 
+  deleteUser(id){
+
+  }
+
+  sendIdUser(id){
+    
+  }
+
 }

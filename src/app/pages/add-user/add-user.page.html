@@ -199,12 +199,16 @@
         <ion-row justify-content-center>
           <ion-row>
             <ion-col size="12">
-              <ion-icon name="trash"></ion-icon>
+              <ion-button color="warning" (click)="deleteUser(data?.id)" type="submit">
+                  <ion-icon name="trash"></ion-icon>
+              </ion-button>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              <ion-icon name="create"></ion-icon>
+              <ion-button color="warning" (click)="sendIdUser(data?.id)" type="submit">
+                  <ion-icon name="create"></ion-icon>
+              </ion-button>
             </ion-col>
           </ion-row>
         </ion-row>

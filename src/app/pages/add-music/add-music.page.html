@@ -11,25 +11,25 @@
   <form style="margin-left: 15px; margin-right: 15px;">
     <ion-item>
       <ion-label position="floating">Title</ion-label>
-      <ion-input [(ngModel)]="dataMusic.judul" name="title" type="text" spellcheck="false" autocapitalize="off" required></ion-input>
+      <ion-input [(ngModel)]="dataMusic.judul" name="title" type="text" spellcheck="false" autocapitalize="off"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Artist</ion-label>
-      <ion-input [(ngModel)]="dataMusic.penyanyi" name="artist" type="text" spellcheck="false" autocaptalize="off" required></ion-input>
+      <ion-input [(ngModel)]="dataMusic.penyanyi" name="artist" type="text" spellcheck="false" autocaptalize="off"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Lyrics</ion-label>
-      <ion-textarea [(ngModel)]="dataMusic.lirik" name="lyric" spellcheck="false" autocapitalize="off" required></ion-textarea>
+      <ion-textarea rows="6" cols="20" [(ngModel)]="dataMusic.lirik" name="lyric" spellcheck="false" autocapitalize="off"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Chord</ion-label>
-      <ion-textarea [(ngModel)]="dataMusic.chord" name="chord" spellcheck="false" autocapitalize="off" required></ion-textarea>
+      <ion-textarea rows="6" cols="20" [(ngModel)]="dataMusic.chord" name="chord" spellcheck="false" autocapitalize="off"></ion-textarea>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Link</ion-label>
-      <ion-input [(ngModel)]="dataMusic.link" name="link" spellcheck="false" autocapitalize="off" required></ion-input>
+      <ion-input [(ngModel)]="dataMusic.link" name="link" spellcheck="false" autocapitalize="off"></ion-input>
     </ion-item>
-    <ion-card-subtitle>*format input ex : https://www.youtube.com/embed/mw5VIEIvuMI (replace '/watch?v=' with '/embed/')</ion-card-subtitle>
+    <ion-card-subtitle>*format input ex : https://www.youtube.com/embed/U06jlgpMtQs (replace '/watch?v=' with '/embed/')</ion-card-subtitle>
     <ion-row>
       <ion-col text-center>
         <ion-button ion-button block color="warning"
@@ -109,12 +109,16 @@
         <ion-row justify-content-center>
           <ion-row>
             <ion-col size="12">
-              <ion-icon name="trash"></ion-icon>
+              <ion-button color="warning" (click)="deleteMusic(data?.id)" type="submit">
+                  <ion-icon name="trash"></ion-icon>
+              </ion-button>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              <ion-icon name="create"></ion-icon>
+              <ion-button color="warning" (click)="sendIdMusic(data?.id)" type="submit">
+                  <ion-icon name="create"></ion-icon>
+              </ion-button>
             </ion-col>
           </ion-row>
         </ion-row>
