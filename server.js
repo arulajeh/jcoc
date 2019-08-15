@@ -543,7 +543,7 @@ app.post('/api/music/detail', (req, res) => {
           msg: 'Music Not Found'
         });
       }
-    })
+    });
   } else {
     res.json({
       sukses: false,
@@ -921,58 +921,67 @@ app.post('/api/schedule/update', (req,res) => {
         pianis: args.pianis,
       }, {where: {id: args.id}}).then((updated) => {
         if (updated) {
-          // let a = [1,2,3,4,5,6];
-          // let b = '';
-          // a.forEach((val, index) => {
-          //   let x = `UPDATE users set singer = ${val} where id = 1; `
-          //   return b += x;
-          // });
-          // console.log(b);
-          if (args.image && args.image.file_name) {
-            db.rel_schedule_files.findOne({where: {schedule_id: args.id, status: 1}})
-            .then((resFile) => {
-              db.m_files.update({
-                file: args.image.base64,
-                status: 1,
-                uploadBy: hasilJWT.data.id,
-                file_name: args.image.file_name,
-                file_size: args.image.file_size,
-                file_type: args.image.file_type
-              }, {where: {id: resFile.file_id}})
-            }).catch((err) => {
-              console.log(err);
-              res.json({
-                sukses: false,
-                msg: JSON.stringify(err)
+          db.sequelize.query(`UPDATE m_vokalis SET status = 0 WHERE m_vokalis.schedule_id = ${args.id}`).then(() => {
+            db.sequelize.query(`UPDATE m_song_leader SET status = 0 WHERE m_song_leader.schedule_id = ${args.id}`).then(() => {
+              db.sequelize.query(`UPDATE master_lagu SET status = 0 WHERE master_lagu.schedule_id = ${args.id}`).then(() => {
+                const id_schedule = args.id
+                let vl = [];
+                await args.vokalis.forEach((value, index) => {
+                  return vl.push({
+                    user_id: value,
+                    schedule_id: id_schedule
+                  });
+                })
+                let sl = [];
+                await args.song_leader.forEach((value, index) => {
+                  return sl.push({
+                    user_id: value,
+                    schedule_id: id_schedule
+                  });
+                })
+                let al = [];
+                await args.lagu.forEach((value, index) => {
+                  return al.push({
+                    music_name: value,
+                    schedule_id: id_schedule
+                  });
+                })
+                await db.m_vokalis.bulkCreate(vl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
+                await db.m_song_leader.bulkCreate(sl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
+                await db.master_lagu.bulkCreate(al, {fields: ['music_name', 'schedule_id'], individualHooks: true});
+                if (args.image && args.image.file_name) {
+                  db.rel_schedule_files.findOne({where: {schedule_id: args.id, status: 1}})
+                  .then((resFile) => {
+                    db.m_files.update({
+                      file: args.image.base64,
+                      status: 1,
+                      uploadBy: hasilJWT.data.id,
+                      file_name: args.image.file_name,
+                      file_size: args.image.file_size,
+                      file_type: args.image.file_type
+                    }, {where: {id: resFile.file_id}})
+                  }).catch((err) => {
+                    console.log(err);
+                    res.json({
+                      sukses: false,
+                      msg: JSON.stringify(err)
+                    });
+                  });
+                } else {
+                res.json({
+                  sukses: true,
+                  msg: 'Update schedule successfully'
+                });
+                }
+                }).catch(err => {
+                  console.log(err);
+                  res.json({
+                    sukses: false,
+                    msg: JSON.stringify(err)
+                  });
+                });
               });
-            });  
-          } else {
-           res.json({
-             sukses: true,
-             msg: 'Update schedule successfully'
-           });
-          }
-          let queryVokalis = '';
-          args.vokalis.forEach((value, index) => {
-            return vl.push({
-              user_id: value,
-              schedule_id: id_schedule
             });
-          })
-          let sl = [];
-          args.song_leader.forEach((value, index) => {
-            return sl.push({
-              user_id: value,
-              schedule_id: id_schedule
-            });
-          })
-          let al = [];
-          args.lagu.forEach((value, index) => {
-            return al.push({
-              music_name: value,
-              schedule_id: id_schedule
-            });
-          })
         } else {
           res.json({
             sukses: false,
@@ -980,119 +989,6 @@ app.post('/api/schedule/update', (req,res) => {
           });
         }
       })
-      // db.sequelize.query(`UPDATE schedule SET status = 0 WHERE id = ${args.id}`)
-      // .then(async () => {
-      //   db.sequelize.query(`UPDATE rel_schedule_files SET status = 0 WHERE rel_schedule_files.schedule_id = ${args.id}`).then(() => {
-      //     db.sequelize.query(`UPDATE m_vokalis SET status = 0 WHERE m_vokalis.schedule_id = ${args.id}`).then(() => {
-      //       db.sequelize.query(`UPDATE m_song_leader SET status = 0 WHERE m_song_leader.schedule_id = ${args.id}`).then(() => {
-      //         db.sequelize.query(`UPDATE master_lagu SET status = 0 WHERE master_lagu.schedule_id = ${args.id}`).then(() => {
-      //           db.schedule.create({
-      //             event_date: args.event_date,
-      //             event_name: args.event_name,
-      //             basis: args.basis,
-      //             gitaris: args.gitaris,
-      //             drummer: args.drummer,
-      //             user_id: hasilJWT.data.id,
-      //             pianis: args.pianis,
-      //             createdAt: new Date(),
-      //             updatedAt: new Date()
-      //           }).then( async (created) => {
-      //             const id_schedule = created.id
-      //             const schedule = created;
-      //             if (created) {
-      //               let vl = [];
-      //               await args.vokalis.forEach((value, index) => {
-      //                 return vl.push({
-      //                   user_id: value,
-      //                   schedule_id: id_schedule
-      //                 });
-      //               })
-      //               let sl = [];
-      //               await args.song_leader.forEach((value, index) => {
-      //                 return sl.push({
-      //                   user_id: value,
-      //                   schedule_id: id_schedule
-      //                 });
-      //               })
-      //               let al = [];
-      //               await args.lagu.forEach((value, index) => {
-      //                 return al.push({
-      //                   music_name: value,
-      //                   schedule_id: id_schedule
-      //                 });
-      //               })
-      //               await db.m_vokalis.bulkCreate(vl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
-      //               await db.m_song_leader.bulkCreate(sl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
-      //               await db.master_lagu.bulkCreate(al, {fields: ['music_name', 'schedule_id'], individualHooks: true});
-      //               if (args.image && args.image.file_name != '') {
-      //                 await db.m_files.create({
-      //                   file: args.image.base64,
-      //                   status: 1,
-      //                   uploadBy: hasilJWT.data.id,
-      //                   file_name: args.image.file_name,
-      //                   file_size: args.image.file_size,
-      //                   file_type: args.image.file_type,
-      //                   createdAt: new Date(),
-      //                   updatedAt: new Date()
-      //                 }).then(async (created) => {
-      //                   await db.rel_schedule_files.create({
-      //                     schedule_id: id_schedule,
-      //                     files_id: created.id
-      //                   });
-      //                   res.json({
-      //                     sukses: true,
-      //                     msg: "Schedule update successfully",
-      //                     schedule: schedule
-      //                   })
-      //                 }).catch((err) => {
-      //                   res.json({
-      //                     sukses: false,
-      //                     msg: JSON.stringify(err)
-      //                   });
-      //                 });  
-      //               } else {
-      //                 db.rel_schedule_files.findOne({where: {schedule_id: id_schedule, status: 1}}).then((rel) => {
-      //                   db.rel_schedule_files.create({
-      //                     file_id: rel.file_id,
-      //                     schedule_id: id_schedule
-      //                   }).then(() => {
-      //                     res.json({
-      //                       sukses: true,
-      //                       msg: 'Update Schedule successfully'
-      //                     });
-      //                   }).catch((err) => {
-      //                     console.log(err);
-      //                     res.json({
-      //                       sukses: false,
-      //                       msg: JSON.stringify(err)
-      //                     });
-      //                   });
-      //                 }).catch((err) => {
-      //                   console.log(err);
-      //                   res.json({
-      //                     sukses: false,
-      //                     msg: JSON.stringify(err)
-      //                   });
-      //                 });
-      //               }
-      //             } else {
-      //               res.json({
-      //                 sukses: false,
-      //                 data: created
-      //               });
-      //             }
-      //           }).catch(err => {
-      //             console.log(err);
-      //             res.json({
-      //               sukses: false,
-      //               msg: JSON.stringify(err)
-      //             });
-      //           });
-      //         });
-      //       });
-      //     });
-      //   });
-      // });
     } else {
       res.json({
         sukses: false,
