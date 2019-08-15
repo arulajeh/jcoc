@@ -12,7 +12,11 @@ module.exports = (sequelize, DataTypes) => {
       schedule_id: {
         type: DataTypes.INTEGER,
         allowNull: false
-      }
+      },
+      primary_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
     },
     {
       freezeTableName: true,

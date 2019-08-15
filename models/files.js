@@ -28,7 +28,11 @@ module.exports = (sequelize, DataTypes) => {
       file_size: {
         type: DataTypes.INTEGER,
         allowNull: false
-      }
+      },
+      primary_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true
+      },
     },
     {
       freezeTableName: true,
