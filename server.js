@@ -953,21 +953,21 @@ app.post('/api/schedule/update', (req,res) => {
            });
           }
           let queryVokalis = '';
-          await args.vokalis.forEach((value, index) => {
+          args.vokalis.forEach((value, index) => {
             return vl.push({
               user_id: value,
               schedule_id: id_schedule
             });
           })
           let sl = [];
-          await args.song_leader.forEach((value, index) => {
+          args.song_leader.forEach((value, index) => {
             return sl.push({
               user_id: value,
               schedule_id: id_schedule
             });
           })
           let al = [];
-          await args.lagu.forEach((value, index) => {
+          args.lagu.forEach((value, index) => {
             return al.push({
               music_name: value,
               schedule_id: id_schedule
