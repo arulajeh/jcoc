@@ -959,7 +959,7 @@ app.post('/api/schedule/update', (req,res) => {
                       file_name: args.image.file_name,
                       file_size: args.image.file_size,
                       file_type: args.image.file_type
-                    }, {where: {id: resFile.file_id}})
+                    }, {where: {id: resFile.files_id}})
                   }).catch((err) => {
                     console.log(err);
                     res.json({
