@@ -923,7 +923,7 @@ app.post('/api/schedule/update', (req,res) => {
         if (updated) {
           db.sequelize.query(`UPDATE m_vokalis SET status = 0 WHERE m_vokalis.schedule_id = ${args.id}`).then(() => {
             db.sequelize.query(`UPDATE m_song_leader SET status = 0 WHERE m_song_leader.schedule_id = ${args.id}`).then(() => {
-              db.sequelize.query(`UPDATE master_lagu SET status = 0 WHERE master_lagu.schedule_id = ${args.id}`).then(() => {
+              db.sequelize.query(`UPDATE master_lagu SET status = 0 WHERE master_lagu.schedule_id = ${args.id}`).then(async () => {
                 const id_schedule = args.id
                 let vl = [];
                 await args.vokalis.forEach((value, index) => {
