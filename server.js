@@ -919,7 +919,7 @@ app.post('/api/schedule/update', (req,res) => {
         drummer: args.drummer,
         user_id: hasilJWT.data.id,
         pianis: args.pianis,
-      }, {where: {id: args.id}}).then((updated) => {
+      }, {where: {id: args.id}}).then(async (updated) => {
         if (updated) {
           db.sequelize.query(`UPDATE m_vokalis SET status = 0 WHERE m_vokalis.schedule_id = ${args.id}`).then(() => {
             db.sequelize.query(`UPDATE m_song_leader SET status = 0 WHERE m_song_leader.schedule_id = ${args.id}`).then(() => {
