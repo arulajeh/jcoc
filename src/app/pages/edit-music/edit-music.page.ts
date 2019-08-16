@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
-import { ToastController } from '@ionic/angular';
+import { ToastController, NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-edit-music',
@@ -25,7 +25,9 @@ export class EditMusicPage implements OnInit {
   constructor(
     private route : ActivatedRoute,
     private api : ApiService,
-    private toastController : ToastController
+    private toastController : ToastController,
+    private navCtrl: NavController,
+    private router: Router
   ) { }
 
   async ionViewDidEnter(){
@@ -33,6 +35,11 @@ export class EditMusicPage implements OnInit {
     await this.getDataMusic();
     console.log(this.id);
     // console.log('data music ' + this.data_music);
+  }
+
+  backPage(){
+    // this.navCtrl.navigateBack('home/add-music');
+    this.router.navigateByUrl('/home/add-music');
   }
 
   // initData(){

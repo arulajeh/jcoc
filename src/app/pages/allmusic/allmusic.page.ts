@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
-import { NavController } from '@ionic/angular';
+import { NavController, LoadingController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationExtras } from '@angular/router';
 
@@ -14,19 +14,21 @@ export class AllmusicPage implements OnInit {
   //trustedVideoUrl: SafeResourceUrl;
   trustedVideoUrl: SafeResourceUrl;
 
-  page_size = null;
-  page_number = null;
+  page_size = '5';
+  page_number = '1';
   order_by = 'id';
   sort_by = 'ASC';
   search = '';
 
   safeUrl = [];
   listMusics = [];
+  resp:any;
 
   constructor(
     public navCtrl: NavController,
     private domSanitizer: DomSanitizer,
-    private api: ApiService
+    private api: ApiService,
+    private loadingCtrl: LoadingController
   ) { }
 
   ngOnInit() {
@@ -35,7 +37,6 @@ export class AllmusicPage implements OnInit {
 
   async ionViewDidEnter() {
     await this.getDataMusic();
-    this.convertSafeUrl(this.listMusics);
   }
 
   convertSafeUrl(data){
@@ -52,42 +53,63 @@ export class AllmusicPage implements OnInit {
 
   getDataMusic() {
     console.log('music');
-    return this.api.getListData('music/all', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ').then((result) => {
-      console.log(result);
-      return this.listMusics = JSON.parse(JSON.stringify(result)).data;
-    }).catch(err => {console.log(err)});
-  }
-
-  async searchData() {
-    console.log('value search ',this.search)
-    await this.getDataMusic().then((res) => {
-      this.safeUrl = [];
-      console.log('list music baru', res);
-      return this.convertSafeUrl(res)
-    });
+    return this.showLoading().then(() => {
+      return this.api.getListData('music/all', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
+      .then((result) => {
+        this.safeUrl = []
+        this.loadingCtrl.dismiss();
+        this.resp = JSON.parse(JSON.stringify(result));
+        if (parseInt(this.page_number) > this.resp.page_information.totalPage) {
+          this.page_number = this.resp.page_information.totalPage.toString();
+          this.getDataMusic();
+        } else {
+          this.listMusics = JSON.parse(JSON.stringify(result)).data;
+          return this.convertSafeUrl(this.listMusics);
+        }
+      }).catch(err => {
+        this.loadingCtrl.dismiss();
+        console.log(err);
+      });
+    })
   }
 
   sendIdMusic(id){
-    //console.log(id);
     let navigationExtras: NavigationExtras = {
       queryParams: {
         id: JSON.stringify(id)
       }
     };
     this.navCtrl.navigateForward(['/view-lyric'], navigationExtras);
-
   }
 
-  // getMusicList(){
-  //   this.api.getListData('music')
-  // }
+  async nextPrev(nav){
+    if (nav === 'next') {
+      let a = parseInt(this.page_number) + 1;
+      this.page_number = a.toString();
+      await this.getDataMusic();
+    } else {
+      let a = parseInt(this.page_number) - 1;
+      this.page_number = a.toString();
+      await this.getDataMusic();
+    }
+  }
 
-  // ionViewWillEnter(): void {
-  //   for(let i of this.music_lists){
-  //     this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(i.link);
-  //   }
-  // } 
+  async showLoading() {
+    const a = await this.loadingCtrl.create({
+      animated: true,
+      backdropDismiss: false,
+      message: "Getting data..",
+      spinner: "dots"
+    });
 
-  
+    a.present();
+  }
+
+  doRefresh(event) {
+    this.getDataMusic()
+    .then(() => {
+      event.target.complete();
+    });
+  }
 
 }

@@ -8,6 +8,14 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <img src="assets/img/bg_4.jpg" class="headerImg" alt="JCOC Music Banner">
   <ion-row>
     <ion-col size="12">
@@ -116,10 +124,10 @@
       <ion-col size="4">
         <ion-item>
           <ion-label>Show</ion-label>
-          <ion-select interface="popover" [(ngModel)]="ionSelect" (ionChange)="getMemberList()">
-            <ion-select-option value="5">10</ion-select-option>
+          <ion-select interface="popover" [(ngModel)]="page_size" (ionChange)="getMemberList()">
+            <ion-select-option value="5">5</ion-select-option>
+            <ion-select-option value="10">10</ion-select-option>
             <ion-select-option value="15">15</ion-select-option>
-            <ion-select-option value="20">20</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -192,25 +200,70 @@
       </ion-col>
       <ion-col size="1" align-self-center>
         <ion-row justify-content-center>
-          <ion-img [src]="'assets/img/bg_4.jpg'" style="width: 100%; height: 100%"></ion-img>
+          <ion-img [src]="user?.file" style="width: 100%; height: 100%"></ion-img>
         </ion-row>
       </ion-col>
       <ion-col size="2" align-self-center>
         <ion-row justify-content-center>
           <ion-row>
             <ion-col size="12">
-              <ion-button color="warning" (click)="deleteUser(data?.id)" type="submit">
+              <ion-button color="warning" (click)="deleteUser(user?.id)" type="submit">
                   <ion-icon name="trash"></ion-icon>
               </ion-button>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              <ion-button color="warning" (click)="sendIdUser(data?.id)" type="submit">
+              <ion-button color="warning" (click)="sendIdUser(user?.id)" type="submit">
                   <ion-icon name="create"></ion-icon>
               </ion-button>
             </ion-col>
           </ion-row>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-row justify-content-start>
+          <ion-button 
+          (click)="nextPrev('prev')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+            Prev
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+        <ion-row justify-content-end>
+            
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
+        <ion-row justify-content-end>
+          1
+        </ion-row>
+      </ion-col>
+      <ion-col >
+        <ion-row justify-content-center>
+          {{resp?.page_information?.currentPage}}
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
+        <ion-row justify-content-start >
+          {{resp?.page_information?.totalPage}}
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+        <ion-row justify-content-start >
+            
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-end>
+          <ion-button 
+          (click)="nextPrev('next')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+            Next
+          </ion-button>
         </ion-row>
       </ion-col>
     </ion-row>

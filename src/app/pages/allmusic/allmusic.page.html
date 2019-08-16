@@ -8,9 +8,35 @@
 </ion-header>
 
 <ion-content>
-  <ion-row justify-content-center>
-    <ion-searchbar placeholder="Search Music" class="searchbar" debounce="500" [(ngModel)]="search" (ionChange)="searchData()"></ion-searchbar>
-  </ion-row>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-grid fixed>
+    <ion-row justify-content-center>
+      <ion-col size="4">
+        <!-- <ion-row justify-content-center> -->
+        <ion-item>
+          <ion-label>Show</ion-label>
+          <ion-select interface="popover" [(ngModel)]="page_size" name="ionSelect" (ionChange)="getDataMusic()">
+            <ion-select-option value="5">5</ion-select-option>
+            <ion-select-option value="10">10</ion-select-option>
+            <ion-select-option value="15">15</ion-select-option>
+          </ion-select>
+        </ion-item>  
+        <!-- </ion-row> -->
+      </ion-col>
+      <ion-col size="8">
+        <!-- <ion-row justify-content-center> -->
+        <ion-searchbar placeholder="Search Music" class="searchbar" debounce="500" [(ngModel)]="search" (ionChange)="getDataMusic()"></ion-searchbar>
+        <!-- </ion-row> -->
+      </ion-col>
+    </ion-row>
+  </ion-grid>
   <ion-grid style="margin-right: 1.5%" class="marginku">
     <ion-row justify-content-center>
       <ion-col *ngFor ="let data of safeUrl" size="md">
@@ -26,6 +52,31 @@
               <ion-button (click)="sendIdMusic(data.id)" type="submit" color="warning">View Lyrics</ion-button>
           </ion-card-content>
         </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-row justify-content-start>
+          <ion-button 
+          (click)="nextPrev('prev')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+            Prev
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          {{resp?.page_information?.currentPage}}
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-end>
+          <ion-button 
+          (click)="nextPrev('next')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+            Next
+          </ion-button>
+        </ion-row>
       </ion-col>
     </ion-row>
   </ion-grid>
