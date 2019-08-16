@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { ToastController, NavController } from '@ionic/angular';
+import { ToastController, NavController, LoadingController } from '@ionic/angular';
 import { NavigationExtras } from '@angular/router';
 
 @Component({
@@ -18,8 +18,8 @@ export class AddMusicPage implements OnInit {
     link: ''
   }
 
-  page_size = null;
-  page_number = null;
+  page_size = '5';
+  page_number = '1';
   order_by = 'id';
   sort_by = 'ASC';
   search = '';
@@ -31,11 +31,13 @@ export class AddMusicPage implements OnInit {
   status : any;
 
   id;
+  resp:any;
 
   constructor(
     private api: ApiService,
     public toastController: ToastController,
-    public navCtrl : NavController
+    public navCtrl : NavController,
+    private loadingCtrl: LoadingController
   ) { }
 
   async ionViewDidEnter(){
@@ -81,11 +83,25 @@ export class AddMusicPage implements OnInit {
   }
 
   getMusicList(){
-    console.log('music list');
-    return this.api.getListData('music', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ').then((result) => {
-      console.log(result);
-      return this.listMusic = JSON.parse(JSON.stringify(result)).data;
-    }).catch(err => {alert('Error Get Data')});
+    return this.showLoading().then(() => {
+      console.log('music list');
+      return this.api.getListData('music', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
+      .then((result) => {
+        console.log(result);
+        this.loadingCtrl.dismiss();
+        this.resp = JSON.parse(JSON.stringify(result));
+        console.log(' this response ',this.resp);
+        if (parseInt(this.page_number) > this.resp.page_information.totalPage) {
+          this.page_number = this.resp.page_information.totalPage.toString();
+          this.getMusicList();
+        } else {
+          return this.listMusic = JSON.parse(JSON.stringify(result)).data;
+        }
+      }).catch(err => {
+        this.loadingCtrl.dismiss();
+        this.notif("Error Getting Data");
+      });
+    });
   }
 
   async searchData(){
@@ -137,6 +153,36 @@ export class AddMusicPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  nextPrev(nav){
+    if (nav === 'next') {
+      let a = parseInt(this.page_number) + 1;
+      this.page_number = a.toString();
+      this.getMusicList();
+    } else {
+      let a = parseInt(this.page_number) - 1;
+      this.page_number = a.toString();
+      this.getMusicList();
+    }
+  }
+
+  async showLoading() {
+    const a = await this.loadingCtrl.create({
+      animated: true,
+      backdropDismiss: false,
+      message: "Getting data..",
+      spinner: "dots"
+    });
+
+    a.present();
+  }
+
+  doRefresh(event) {
+    this.getMusicList()
+    .then(() => {
+      event.target.complete();
+    });
   }
 
 }

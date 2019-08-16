@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController, NavController } from '@ionic/angular';
 import * as md5 from "md5";
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-add-user',
@@ -45,16 +46,19 @@ export class AddUserPage implements OnInit {
   base64File = '';
   ionSelect = null;
 
-  page_size = null
-  page_number = null
+  page_size = '5'
+  page_number = '1'
   order_by = 'id'
   sort_by = 'ASC'
   search = ''
   listMembers:any;
+  resp:any;
 
   constructor(
     private api: ApiService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController,
+    private navCtrl: NavController
   ) { }
 
   async ionViewDidEnter() {
@@ -89,6 +93,34 @@ export class AddUserPage implements OnInit {
     this.api.postData('users/create', this.dataUser)
     .then((res) => {
       console.log(res);
+      let ress = JSON.parse(JSON.stringify(res));
+      if (ress.sukses === true) {
+        this.position = undefined;
+        this.selectGender = undefined;
+        this.pass = '';
+        this.dataUser = {
+          username: '',
+          name: '',
+          password: '',
+          phone: '',
+          position_id: null,
+          gender_id: null,
+          email: '',
+          image: {
+            file_name: '',
+            file_size: '',
+            file_type: '',
+            base64: null,
+            isImage: null
+          }
+        }
+        this.getMemberList();
+      } else {
+        this.showToast('Failed insert users');
+      }
+    }).catch((err) => {
+      console.log(err);
+      this.showToast('Failed insert users');
     })
     console.log(this.dataUser);
   }
@@ -143,21 +175,69 @@ export class AddUserPage implements OnInit {
   }
 
   getMemberList() {
-    console.log('member')
-    this.api.getListData('users', this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
-    .then((res) => {
-      // console.log(res);
-      this.listMembers = JSON.parse(JSON.stringify(res)).data;
-      console.log(this.listMembers);
-    });
+    console.log('member');
+    return this.loadAnimation().then(() => {
+      return this.api.getListData('users', this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
+      .then((res) => {
+        // console.log(res);
+        this.loadingCtrl.dismiss();
+        this.resp = JSON.parse(JSON.stringify(res));
+        console.log(' this response ',this.resp);
+        if (parseInt(this.page_number) > this.resp.page_information.totalPage) {
+          this.page_number = this.resp.page_information.totalPage.toString();
+          this.getMemberList();
+        } else {
+          return this.listMembers = JSON.parse(JSON.stringify(res)).data;
+        }
+        console.log(this.listMembers);
+      }).catch((err) => {
+        this.loadingCtrl.dismiss();
+      })
+    })
   }
 
   deleteUser(id){
-
+    console.log(id)
+    let body = {id: id}
+    this.api.postData('users/delete', body).then((res) => {
+      const response = JSON.parse(JSON.stringify(res));
+      console.log(response)
+      if (response.sukses === true) {
+        this.showToast('Delete user successfully');
+        this.getMemberList();
+      } else {
+        this.showToast('Failed delete user');
+      }
+    }).catch((err) => {
+      this.showToast('Failed delete user');
+    })
   }
 
   sendIdUser(id){
-    
+    const extras: NavigationExtras = {
+      queryParams: {
+        id: JSON.stringify(id)
+      }
+    }
+    this.navCtrl.navigateForward(['member-update'], extras);
+  }
+
+  async showToast(msg) {
+    const a = await this.toastCtrl.create({
+      message: msg,
+      animated: true,
+      duration: 2000,
+      keyboardClose: true,
+      position: "bottom"
+    });
+
+    a.present();
+  }
+
+  doRefresh(event) {
+    this.getMemberList().then(() => {
+      event.target.complete();
+    })
   }
 
 }

@@ -8,6 +8,14 @@
 </ion-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <form style="margin-left: 15px; margin-right: 15px;">
     <ion-item>
       <ion-label position="floating">Title</ion-label>
@@ -46,10 +54,10 @@
       <ion-col size="4">
         <ion-item>
           <ion-label>Show</ion-label>
-          <ion-select interface="popover" [(ngModel)]="ionSelect" name="ionSelect" (ionChange)="getMusicList()">
-            <ion-select-option value="5">10</ion-select-option>
+          <ion-select interface="popover" [(ngModel)]="page_size" name="ionSelect" (ionChange)="getMusicList()">
+            <ion-select-option value="5">5</ion-select-option>
+            <ion-select-option value="10">10</ion-select-option>
             <ion-select-option value="15">15</ion-select-option>
-            <ion-select-option value="20">20</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -102,7 +110,7 @@
       </ion-col>
       <ion-col align-self-center>
         <ion-row justify-content-center>
-          Created By
+          {{data?.created_by}}
         </ion-row>
       </ion-col>
       <ion-col size="2" align-self-center>
@@ -121,6 +129,31 @@
               </ion-button>
             </ion-col>
           </ion-row>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-row justify-content-start>
+          <ion-button 
+          (click)="nextPrev('prev')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+            Prev
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          {{resp?.page_information?.currentPage}}
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-end>
+          <ion-button 
+          (click)="nextPrev('next')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+            Next
+          </ion-button>
         </ion-row>
       </ion-col>
     </ion-row>
