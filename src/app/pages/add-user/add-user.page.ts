@@ -240,4 +240,23 @@ export class AddUserPage implements OnInit {
     })
   }
 
+  nextPrev(nav){
+    if (nav === 'next') {
+      let a = parseInt(this.page_number) + 1;
+      this.page_number = a.toString();
+      this.getMemberList();
+    } else if (nav === 'prev') {
+      let a = parseInt(this.page_number) - 1;
+      this.page_number = a.toString();
+      this.getMemberList();
+    } else if (nav === 'first') {
+      this.page_number = '1';
+      this.getMemberList();
+    } else if (nav === 'last') {
+      this.page_number = this.resp.page_information.totalPage.toString();
+      console.log(this.page_number);
+      this.getMemberList();
+    }
+  }
+
 }

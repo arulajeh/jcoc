@@ -142,9 +142,29 @@
           </ion-button>
         </ion-row>
       </ion-col>
-      <ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+        <ion-row justify-content-end>
+           
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
+        <ion-row justify-content-end>
+          1
+        </ion-row>
+      </ion-col>
+      <ion-col >
         <ion-row justify-content-center>
           {{resp?.page_information?.currentPage}}
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
+        <ion-row justify-content-start >
+          {{resp?.page_information?.totalPage}}
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+        <ion-row justify-content-start >
+           
         </ion-row>
       </ion-col>
       <ion-col>

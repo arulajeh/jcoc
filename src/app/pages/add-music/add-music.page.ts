@@ -160,9 +160,16 @@ export class AddMusicPage implements OnInit {
       let a = parseInt(this.page_number) + 1;
       this.page_number = a.toString();
       this.getMusicList();
-    } else {
+    } else if (nav === 'prev') {
       let a = parseInt(this.page_number) - 1;
       this.page_number = a.toString();
+      this.getMusicList();
+    } else if (nav === 'first') {
+      this.page_number = '1';
+      this.getMusicList();
+    } else if (nav === 'last') {
+      this.page_number = this.resp.page_information.totalPage.toString();
+      console.log(this.page_number);
       this.getMusicList();
     }
   }
