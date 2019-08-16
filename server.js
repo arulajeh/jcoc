@@ -197,14 +197,15 @@ app.post('/api/users/create', (req, res) => {
   }
 })
 
-app.post('/api/user/detail', (req, res) => {
+app.post('/api/users/detail', (req, res) => {
   const head = req.headers;
   const body = req.body;
   let token = head.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    db.sequelize.query(`SELECT * FROM v_user where id = ${body.id}`, {type: db.Sequelize.QueryTypes.SELECT}).then((result) => {
-      const data = result[0].get({plain: true});
+    db.sequelize.query(`SELECT * FROM v_user where id = ${body.id}`, {type: db.Sequelize.QueryTypes.SELECT})
+    .then((result) => {
+      const data = result[0];
       delete data.password;
       if (result) {
         res.json({
