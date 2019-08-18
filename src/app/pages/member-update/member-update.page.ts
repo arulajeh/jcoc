@@ -33,7 +33,7 @@ export class MemberUpdatePage implements OnInit {
     email: '',
     image: {
       file_name: '',
-      file_size: '',
+      file_size: 0,
       file_type: '',
       base64: null,
       isImage: null
@@ -92,12 +92,19 @@ export class MemberUpdatePage implements OnInit {
         console.log(res);
         this.loadingCtrl.dismiss();
         const resp = JSON.parse(JSON.stringify(res)).data;
-        this.selectGender.id = resp.gender_id;
+        this.position = this.listPostions.find(x => x.id === resp.position_id);
+        this.selectGender = this.gender.find(x => x.id === resp.gender_id);
         this.dataUser = {
           id: this.id,
           email: resp.email,
           gender_id: resp.gender_id,
-          image: resp.file,
+          image: {
+            file_name: '',
+            base64: '',
+            file_size: 0,
+            file_type: '',
+            isImage: null
+          },
           name: resp.name,
           password: '',
           phone: resp.phone,

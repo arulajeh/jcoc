@@ -48,7 +48,7 @@ export class AddUserPage implements OnInit {
 
   page_size = '5'
   page_number = '1'
-  order_by = 'id'
+  order_by = 'name'
   sort_by = 'ASC'
   search = ''
   listMembers:any;
@@ -255,6 +255,18 @@ export class AddUserPage implements OnInit {
     } else if (nav === 'last') {
       this.page_number = this.resp.page_information.totalPage.toString();
       console.log(this.page_number);
+      this.getMemberList();
+    }
+  }
+
+  changeSort(id){
+    if (this.sort_by === 'ASC') {
+      this.sort_by = 'DESC';
+      this.order_by = id;
+      this.getMemberList();
+    } else  if (this.sort_by === 'DESC') {
+      this.sort_by = 'ASC';
+      this.order_by = id;
       this.getMemberList();
     }
   }
