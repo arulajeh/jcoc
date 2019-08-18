@@ -1151,7 +1151,7 @@ app.post('/api/article/create', (req, res) => {
     }).then((result) => {
       if (result) {
         db.m_articles.create({
-          file_id: result.id,
+          files_id: result.id,
           title: args.title,
           content: args.content,
           status: 1,
@@ -1227,7 +1227,7 @@ app.post('/api/article/delete', (req, res) => {
 
 // Get Content List
 
-app.get('/api/content', (req, res) => {
+app.get('/api/article', (req, res) => {
   const head = req.headers;
   let token = head.authorization;
   let hasilJWT = checkJWT(token);
@@ -1268,7 +1268,7 @@ app.get('/api/content', (req, res) => {
   console.log(head);
 })
 
-app.get('/api/content/all', (req, res) => {
+app.get('/api/article/all', (req, res) => {
   const head = req.headers;
   let token = head.authorization;
   let hasilJWT = checkJWT(token);
