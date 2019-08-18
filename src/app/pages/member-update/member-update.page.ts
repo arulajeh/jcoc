@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute } from '@angular/router';
 import * as md5 from "md5";
-import { ToastController } from '@ionic/angular';
+import { ToastController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-member-update',
@@ -39,8 +39,14 @@ export class MemberUpdatePage implements OnInit {
       isImage: null
     }
   }
-  position: any;
-  selectGender:any;
+  position = {
+    id: 0,
+    position_name: ""
+  };
+  selectGender = {
+      id: 0,
+      name: ""
+  };
   pass = '';
   files = [];
   stillUploading = false;
@@ -50,7 +56,8 @@ export class MemberUpdatePage implements OnInit {
   constructor(
     private api: ApiService,
     private route: ActivatedRoute,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController
   ) { }
 
   ngOnInit() {
@@ -78,21 +85,30 @@ export class MemberUpdatePage implements OnInit {
   }
 
   getMemberDetail() {
-    const body = {id: this.id};
-    return this.api.postData('users/detail', body).then((res) => {
-      const resp = JSON.parse(JSON.stringify(res)).data;
-      this.dataUser = {
-        id: this.id,
-        email: resp.email,
-        gender_id: resp.gender_id,
-        image: resp.file,
-        name: resp.name,
-        password: '',
-        phone: resp.phone,
-        position_id: resp.position_id,
-        username: resp.username
-      }
-    });
+    return this.showLoading('Getting user detail').then(() => {
+      const body = {id: this.id};
+      return this.api.postData('users/detail', body)
+      .then((res) => {
+        console.log(res);
+        this.loadingCtrl.dismiss();
+        const resp = JSON.parse(JSON.stringify(res)).data;
+        this.selectGender.id = resp.gender_id;
+        this.dataUser = {
+          id: this.id,
+          email: resp.email,
+          gender_id: resp.gender_id,
+          image: resp.file,
+          name: resp.name,
+          password: '',
+          phone: resp.phone,
+          position_id: resp.position_id,
+          username: resp.username
+        }
+      }).catch((err) => {
+        this.loadingCtrl.dismiss();
+        this.showToast('Error getting user detail');
+      })
+    })
   }
 
   submit() {
@@ -102,18 +118,15 @@ export class MemberUpdatePage implements OnInit {
     this.dataUser.id = this.id;
     this.api.postData('users/update', this.dataUser)
     .then((res) => {
-      console.log(res);
       let ress = JSON.parse(JSON.stringify(res));
       if (ress.sukses === true) {
-        
+        this.showToast('Update user successfully')
       } else {
-        this.showToast('Failed insert users');
+        this.showToast('Failed update users');
       }
     }).catch((err) => {
-      console.log(err);
-      this.showToast('Failed insert users');
-    })
-    console.log(this.dataUser);
+      this.showToast('Failed update users');
+    });
   }
 
   async changeFile(e) {
@@ -162,6 +175,18 @@ export class MemberUpdatePage implements OnInit {
     });
 
     a.present();
+  }
+
+  async showLoading(msg) {
+    const x = await this.loadingCtrl.create({
+      animated: true,
+      spinner: "dots",
+      keyboardClose: true,
+      message: msg,
+      translucent: true
+    });
+
+    x.present();
   }
 
 }

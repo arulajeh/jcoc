@@ -20,7 +20,7 @@ export class AddMusicPage implements OnInit {
 
   page_size = '5';
   page_number = '1';
-  order_by = 'id';
+  order_by = 'judul';
   sort_by = 'ASC';
   search = '';
 
@@ -57,11 +57,8 @@ export class AddMusicPage implements OnInit {
       this.notif("You haven't enter the Music Link/URL");
     }else{
       await this.api.postData('music/create', this.dataMusic).then((result) => {
-        console.log(result);
         return this.status = JSON.parse(JSON.stringify(result)).sukses;
       });
-      console.log(this.dataMusic);
-      console.log(this.status);
       if(this.status == true){
         //alert('SUCCESS');
         this.notif("Success! Music has been udded.");
@@ -83,14 +80,11 @@ export class AddMusicPage implements OnInit {
   }
 
   getMusicList(){
-    return this.showLoading().then(() => {
-      console.log('music list');
+    return this.showLoading('Getting data').then(() => {
       return this.api.getListData('music', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
       .then((result) => {
-        console.log(result);
         this.loadingCtrl.dismiss();
         this.resp = JSON.parse(JSON.stringify(result));
-        console.log(' this response ',this.resp);
         if (parseInt(this.page_number) > this.resp.page_information.totalPage) {
           this.page_number = this.resp.page_information.totalPage.toString();
           this.getMusicList();
@@ -104,20 +98,7 @@ export class AddMusicPage implements OnInit {
     });
   }
 
-  async searchData(){
-    console.log('value search',this.search);
-    await this.getMusicList().then((res) => {
-      this.listMusic = [];
-      console.log('list music baru', res);
-    })
-  }
-
-  changeSelect(){
-    console.log(this.ionSelect);
-  }
-
   sendIdMusic(id){
-    console.log(id);
     let navigationExtras: NavigationExtras = {
       queryParams: {
         id: JSON.stringify(id)
@@ -127,21 +108,23 @@ export class AddMusicPage implements OnInit {
   }
 
   deleteMusic(id){
-    return this.api.postData('music/delete', {"id": id}).then(async (result) => {
-      // console.log('result' + result);
-      const toast = await this.toastController.create({
-        message: 'Success! Music has been deleted.',
-        duration: 2000
+    return this.showLoading('Deleting music').then(() => {
+      return this.api.postData('music/delete', {"id": id}).then(async (result) => {
+        this.loadingCtrl.dismiss();
+        const toast = await this.toastController.create({
+          message: 'Success! Music has been deleted.',
+          duration: 2000
+        });
+        toast.present();
+        this.getMusicList();
+      }).catch(async err => {
+        const toast = await this.toastController.create({
+          message: 'Failed!',
+          duration: 2000
+        });
+        toast.present();
       });
-      toast.present();
-      this.getMusicList();
-    }).catch(async err => {
-      const toast = await this.toastController.create({
-        message: 'Failed!',
-        duration: 2000
-      });
-      toast.present();
-    });
+    })
   }
 
   async notif(ms){
@@ -169,16 +152,15 @@ export class AddMusicPage implements OnInit {
       this.getMusicList();
     } else if (nav === 'last') {
       this.page_number = this.resp.page_information.totalPage.toString();
-      console.log(this.page_number);
       this.getMusicList();
     }
   }
 
-  async showLoading() {
+  async showLoading(msg) {
     const a = await this.loadingCtrl.create({
       animated: true,
       backdropDismiss: false,
-      message: "Getting data..",
+      message: msg,
       spinner: "dots"
     });
 
@@ -190,6 +172,18 @@ export class AddMusicPage implements OnInit {
     .then(() => {
       event.target.complete();
     });
+  }
+
+  changeSort(name) {
+    if (this.sort_by === 'ASC') {
+      this.sort_by = 'DESC';
+      this.order_by = name;
+      this.getMusicList();
+    } else {
+      this.sort_by = 'ASC';
+      this.order_by = name;
+      this.getMusicList();
+    }
   }
 
 }

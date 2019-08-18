@@ -19,7 +19,6 @@
   <ion-grid fixed>
     <ion-row justify-content-center>
       <ion-col size="4">
-        <!-- <ion-row justify-content-center> -->
         <ion-item>
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" name="ionSelect" (ionChange)="getDataMusic()">
@@ -27,13 +26,10 @@
             <ion-select-option value="10">10</ion-select-option>
             <ion-select-option value="15">15</ion-select-option>
           </ion-select>
-        </ion-item>  
-        <!-- </ion-row> -->
+        </ion-item>
       </ion-col>
       <ion-col size="8">
-        <!-- <ion-row justify-content-center> -->
         <ion-searchbar placeholder="Search Music" class="searchbar" debounce="500" [(ngModel)]="search" (ionChange)="getDataMusic()"></ion-searchbar>
-        <!-- </ion-row> -->
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -64,9 +60,29 @@
           </ion-button>
         </ion-row>
       </ion-col>
-      <ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+        <ion-row justify-content-end>
+            
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
+        <ion-row justify-content-end>
+          1
+        </ion-row>
+      </ion-col>
+      <ion-col >
         <ion-row justify-content-center>
           {{resp?.page_information?.currentPage}}
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
+        <ion-row justify-content-start >
+          {{resp?.page_information?.totalPage}}
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+        <ion-row justify-content-start >
+            
         </ion-row>
       </ion-col>
       <ion-col>

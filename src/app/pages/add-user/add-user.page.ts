@@ -219,7 +219,7 @@ export class AddUserPage implements OnInit {
         id: JSON.stringify(id)
       }
     }
-    this.navCtrl.navigateForward(['member-update'], extras);
+    this.navCtrl.navigateForward(['/member-update'], extras);
   }
 
   async showToast(msg) {

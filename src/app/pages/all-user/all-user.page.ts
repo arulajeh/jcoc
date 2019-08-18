@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, LoadingController, ToastController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./all-user.page.scss'],
 })
 export class AllUserPage implements OnInit {
-  page_size = '100';
+  page_size = '5';
   page_number = '1';
   order_by = 'id';
   sort_by = 'ASC';
@@ -16,9 +16,13 @@ export class AllUserPage implements OnInit {
 
   listMembers: any;
 
+  resp: any;
+
   constructor(
     private navCtrl: NavController,
-    private api: ApiService
+    private api: ApiService,
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {
@@ -26,7 +30,6 @@ export class AllUserPage implements OnInit {
 
   ionViewDidEnter() {
     this.getMemberList();
-    console.log('all member list')
   }
 
   initData() {
@@ -34,13 +37,64 @@ export class AllUserPage implements OnInit {
   }
 
   getMemberList() {
-    console.log('member')
-    this.api.getListData('users', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
-    .then((res) => {
-      console.log(res);
-      this.listMembers = JSON.parse(JSON.stringify(res)).data;
-      console.log(this.listMembers);
+    this.showLoading('Getting user data').then(() => {
+      this.api.getListData('users', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
+      .then((res) => {
+        this.loadingCtrl.dismiss();
+        this.resp = JSON.parse(JSON.stringify(res));
+        if (parseInt(this.page_number) > this.resp.page_information.totalPage) {
+          this.page_number = this.resp.page_information.totalPage.toString();
+          this.getMemberList();
+        } else {
+          return this.listMembers = JSON.parse(JSON.stringify(res)).data;
+        }
+      }).catch((err) => {
+        this.loadingCtrl.dismiss();
+        this.showToast('Error Getting Data');
+      })
+    })
+  }
+
+  async showLoading(msg) {
+    const x = await this.loadingCtrl.create({
+      animated: true,
+      backdropDismiss: false,
+      keyboardClose: true,
+      showBackdrop: true,
+      message: msg,
+      spinner: "dots"
     });
+
+    x.present();
+  }
+
+  async showToast(msg) {
+    const a = await this.toastCtrl.create({
+      animated: true,
+      duration: 2000,
+      keyboardClose: true,
+      message: msg,
+      position: "bottom"
+    });
+    a.present();
+  }
+
+  nextPrev(nav){
+    if (nav === 'next') {
+      let a = parseInt(this.page_number) + 1;
+      this.page_number = a.toString();
+      this.getMemberList();
+    } else if (nav === 'prev') {
+      let a = parseInt(this.page_number) - 1;
+      this.page_number = a.toString();
+      this.getMemberList();
+    } else if (nav === 'first') {
+      this.page_number = '1';
+      this.getMemberList();
+    } else if (nav === 'last') {
+      this.page_number = this.resp.page_information.totalPage.toString();
+      this.getMemberList();
+    }
   }
 
 }
