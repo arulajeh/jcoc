@@ -44,11 +44,7 @@ export class AllSchedulePage implements OnInit {
         id: JSON.stringify(id)
       }
     };
-    this.navCtrl.navigateForward([''], navigationExtras);
-  }
-
-  async searchData() {
-
+    this.navCtrl.navigateForward(['/view-schedule'], navigationExtras);
   }
 
   ngOnInit() {
