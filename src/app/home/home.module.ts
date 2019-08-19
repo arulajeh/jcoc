@@ -25,7 +25,9 @@ const routes: Routes = [
       { path: 'add-schedule', loadChildren: '../pages/add-schedule/add-schedule.module#AddSchedulePageModule' },
       { path: 'content', loadChildren: '../pages/content/content.module#ContentPageModule' },
       { path: 'dashboard', loadChildren: '../pages/dashboard/dashboard.module#DashboardPageModule' },
-      { path: 'logout', loadChildren: '../pages/logout/logout.module#LogoutPageModule' }
+      { path: 'logout', loadChildren: '../pages/logout/logout.module#LogoutPageModule' },
+      { path: 'articles-all', loadChildren: '../pages/articles-all/articles-all.module#ArticlesAllPageModule' },
+      { path: 'articles-add', loadChildren: '../pages/articles-add/articles-add.module#ArticlesAddPageModule' },
     ]
   }
 ]
