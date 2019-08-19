@@ -180,11 +180,12 @@ export class AddSchedulePage implements OnInit {
     if (Array.isArray(data)) {
       let any = [];
       data.forEach((val, index) => {
-        if (val.judul) {
-          any.push(val.judul);  
-        } else {
-          any.push(val.id);
-        }
+        // if (val.judul) {
+        //   any.push(val.judul);  
+        // } else {
+        //   any.push(val.id);
+        // }
+        any.push(val.id);
       });
       return any;
     } else {
