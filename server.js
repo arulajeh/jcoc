@@ -714,14 +714,14 @@ app.post('/api/schedule/create', (req, res) => {
           let al = [];
           await args.lagu.forEach((value, index) => {
             return al.push({
-              music_name: value,
+              music_id: value,
               schedule_id: id_schedule
             });
           })
 
           await db.m_vokalis.bulkCreate(vl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
           await db.m_song_leader.bulkCreate(sl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
-          await db.master_lagu.bulkCreate(al, {fields: ['music_name', 'schedule_id'], individualHooks: true});
+          await db.rel_schedule_music.bulkCreate(al, {fields: ['music_id', 'schedule_id'], individualHooks: true});
           await db.m_files.create({
             file: args.image.base64,
             status: 1,
@@ -868,7 +868,7 @@ app.post('/api/schedule/update', (req,res) => {
         if (updated) {
           db.sequelize.query(`UPDATE m_vokalis SET status = 0 WHERE m_vokalis.schedule_id = ${args.id}`).then(() => {
             db.sequelize.query(`UPDATE m_song_leader SET status = 0 WHERE m_song_leader.schedule_id = ${args.id}`).then(() => {
-              db.sequelize.query(`UPDATE master_lagu SET status = 0 WHERE master_lagu.schedule_id = ${args.id}`).then(async () => {
+              db.sequelize.query(`UPDATE rel_schedule_music SET status = 0 WHERE rel_schedule_music.schedule_id = ${args.id}`).then(async () => {
                 const id_schedule = args.id
                 let vl = [];
                 await args.vokalis.forEach((value, index) => {
@@ -887,13 +887,13 @@ app.post('/api/schedule/update', (req,res) => {
                 let al = [];
                 await args.lagu.forEach((value, index) => {
                   return al.push({
-                    music_name: value,
+                    music_id: value,
                     schedule_id: id_schedule
                   });
                 })
                 await db.m_vokalis.bulkCreate(vl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
                 await db.m_song_leader.bulkCreate(sl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
-                await db.master_lagu.bulkCreate(al, {fields: ['music_name', 'schedule_id'], individualHooks: true});
+                await db.rel_schedule_music.bulkCreate(al, {fields: ['music_id', 'schedule_id'], individualHooks: true});
                 if (args.image && args.image.file_name) {
                   db.rel_schedule_files.findOne({where: {schedule_id: args.id, status: 1}})
                   .then((resFile) => {

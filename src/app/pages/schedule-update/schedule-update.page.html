@@ -1,0 +1,139 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>schedule-update</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <form id="updateScheduleForm">
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="stacked" color="primary">Event Name</ion-label>
+            <ion-input [(ngModel)]="dataSchedule.event_name" name="title" type="text" spellcheck="false" autocapitalize="off"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label>Date</ion-label>
+            <ion-datetime display-format="DD-MM-YYYY" [(ngModel)]="dataSchedule.event_date" name="event_date"></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="stacked" color="primary">Event Picture</ion-label>
+            <ion-input type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-label color="primary" position="stacked">Song Leader</ion-label>
+          <ionic-selectable
+          [(ngModel)]="songLeader"
+          [items]="listMembers.song_leader"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          [isMultiple]="true"
+          name="song_leader"
+          >
+          </ionic-selectable>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label color="primary" position="stacked">Singer</ion-label>
+          <ionic-selectable
+          [(ngModel)]="singer"
+          [items]="listMembers.vokalis"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          [isMultiple]="true"
+          name="singer"
+          >
+          </ionic-selectable>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-label color="primary" position="stacked">Gitaris</ion-label>
+          <ionic-selectable
+          [(ngModel)]="gitaris"
+          [items]="listMembers.gitaris"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          name="gitaris"
+          >
+          </ionic-selectable>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label color="primary" position="stacked">Basis</ion-label>
+          <ionic-selectable
+          [(ngModel)]="basis"
+          [items]="listMembers.basis"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          name="basis"
+          >
+          </ionic-selectable>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-label color="primary" position="stacked">Pianis</ion-label>
+          <ionic-selectable
+          [(ngModel)]="pianis"
+          [items]="listMembers.pianis"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          name="pianis"
+          >
+          </ionic-selectable>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label color="primary" position="stacked">Drummer</ion-label>
+          <ionic-selectable
+          [(ngModel)]="drummer"
+          [items]="listMembers.drummer"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          name="drummer"
+          >
+          </ionic-selectable>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label color="primary" position="stacked">Music</ion-label>
+          <ionic-selectable
+          [(ngModel)]="music"
+          [items]="listMusics"
+          itemValueField="id"
+          itemTextField="judul"
+          [canSearch]="true"
+          [isMultiple]="true"
+          name="music"
+          >
+          </ionic-selectable>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button 
+          (click)="submit()" 
+          type="submit" 
+          expand="block">
+          Add Schedule
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+</ion-content>
