@@ -29,6 +29,11 @@ export class HomePage {
       ]
     },
     {
+      title: 'Add Articles',
+      url: '/home/articles-add',
+      icon: 'cube'
+    },
+    {
       title: 'Members',
       children: [
         {
@@ -57,6 +62,11 @@ export class HomePage {
           icon: 'calendar'
         }
       ]
+    },
+    {
+      title: 'Articles',
+      url: '/home/articles-all',
+      icon: 'cube'
     },
     {
       title: 'Content',
