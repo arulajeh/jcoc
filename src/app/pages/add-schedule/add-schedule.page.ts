@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { ToastController, LoadingController } from '@ionic/angular';
+import { ToastController, LoadingController, NavController } from '@ionic/angular';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-add-schedule',
@@ -17,21 +18,6 @@ export class AddSchedulePage implements OnInit {
   gitaris:any;
   drummer:any;
   music = [];
-
-  listGender = [
-    {
-      id: 1,
-      name: "Satu"
-    },
-    {
-      id: 2,
-      name: "Dua"
-    },
-    {
-      id: 3,
-      name: "Tiga"
-    }
-  ]
 
   files = [];
 
@@ -78,7 +64,8 @@ export class AddSchedulePage implements OnInit {
   constructor(
     private api: ApiService,
     private toastCtrl: ToastController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -312,8 +299,13 @@ export class AddSchedulePage implements OnInit {
     }
   }
 
-  editSchedule(id){
-    
+  updateSchedule(id) {
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+        id: JSON.stringify(id)
+      }
+    }
+    this.navCtrl.navigateForward(['schedule-update'], navigationExtras);
   }
 
 }

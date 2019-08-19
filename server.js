@@ -714,14 +714,14 @@ app.post('/api/schedule/create', (req, res) => {
           let al = [];
           await args.lagu.forEach((value, index) => {
             return al.push({
-              music_name: value,
+              music_id: value,
               schedule_id: id_schedule
             });
           })
 
           await db.m_vokalis.bulkCreate(vl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
           await db.m_song_leader.bulkCreate(sl, {fields: ['user_id', 'schedule_id'], individualHooks: true});
-          await db.master_lagu.bulkCreate(al, {fields: ['music_name', 'schedule_id'], individualHooks: true});
+          await db.rel_schedule_music.bulkCreate(al, {fields: ['music_id', 'schedule_id'], individualHooks: true});
           await db.m_files.create({
             file: args.image.base64,
             status: 1,
