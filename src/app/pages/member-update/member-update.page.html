@@ -1,5 +1,8 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="warning">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
     <ion-title>Update Member</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -89,7 +92,7 @@
         <ion-button 
         (click)="submit()" 
         type="submit" 
-        [disabled]="!dataUser.username || !dataUser.name || !pass || !dataUser.name || !dataUser.email || !dataUser.phone || !dataUser.image.isImage || !position.id || !selectGender.id"
+        [disabled]="!dataUser.username || !dataUser.name || !dataUser.name || !dataUser.email || !dataUser.phone || !position.id || !selectGender.id"
         expand="block">
         Update Member
         </ion-button>

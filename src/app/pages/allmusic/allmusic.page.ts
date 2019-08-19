@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
-import { NavController, LoadingController } from '@ionic/angular';
+import { NavController, LoadingController, ToastController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationExtras } from '@angular/router';
 
@@ -28,7 +28,8 @@ export class AllmusicPage implements OnInit {
     public navCtrl: NavController,
     private domSanitizer: DomSanitizer,
     private api: ApiService,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {
@@ -40,6 +41,7 @@ export class AllmusicPage implements OnInit {
   }
 
   convertSafeUrl(data){
+    this.safeUrl = [];
     for (let index of data) {
       this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(index.link);
       this.safeUrl.push({
@@ -52,23 +54,23 @@ export class AllmusicPage implements OnInit {
   }
 
   getDataMusic() {
-    console.log('music');
+    this.safeUrl = [];
     return this.showLoading().then(() => {
       return this.api.getListData('music/all', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
       .then((result) => {
-        this.safeUrl = []
+        const data = JSON.parse(JSON.stringify(result)).data
         this.loadingCtrl.dismiss();
         this.resp = JSON.parse(JSON.stringify(result));
         if (parseInt(this.page_number) > this.resp.page_information.totalPage) {
           this.page_number = this.resp.page_information.totalPage.toString();
           this.getDataMusic();
         } else {
-          this.listMusics = JSON.parse(JSON.stringify(result)).data;
+          this.listMusics = data;
           return this.convertSafeUrl(this.listMusics);
         }
       }).catch(err => {
         this.loadingCtrl.dismiss();
-        console.log(err);
+        this.showToast('Error getting data');
       });
     })
   }
@@ -82,15 +84,21 @@ export class AllmusicPage implements OnInit {
     this.navCtrl.navigateForward(['/view-lyric'], navigationExtras);
   }
 
-  async nextPrev(nav){
+  nextPrev(nav){
     if (nav === 'next') {
       let a = parseInt(this.page_number) + 1;
       this.page_number = a.toString();
-      await this.getDataMusic();
-    } else {
+      this.getDataMusic();
+    } else if (nav === 'prev') {
       let a = parseInt(this.page_number) - 1;
       this.page_number = a.toString();
-      await this.getDataMusic();
+      this.getDataMusic();
+    } else if (nav === 'first') {
+      this.page_number = '1';
+      this.getDataMusic();
+    } else if (nav === 'last') {
+      this.page_number = this.resp.page_information.totalPage.toString();
+      this.getDataMusic();
     }
   }
 
@@ -110,6 +118,17 @@ export class AllmusicPage implements OnInit {
     .then(() => {
       event.target.complete();
     });
+  }
+
+  async showToast(msg) {
+    const a = await this.toastCtrl.create({
+      animated: true,
+      message: msg,
+      position: "bottom",
+      duration: 2000
+    });
+
+    a.present();
   }
 
 }

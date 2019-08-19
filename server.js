@@ -124,6 +124,48 @@ app.get('/api/users', (req, res) => {
   }
   console.log(head);
 })
+
+app.get('/api/users/list', (req, res) => {
+  const head = req.headers;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    let pageNumber = head.page_number ? head.page_number : 1;
+    let pageSize = head.page_size ? head.page_size : 5;
+    let sortBy = head.sort_by ? head.sort_by : 'ASC';
+    let orderBy = head.order_by ? head.order_by : 'id';
+    let search = head.search ? head.search : '';
+    let offset = (pageNumber - 1) * pageSize;
+    db.sequelize.query(`SELECT id, name, position_id, position_name FROM v_user WHERE v_user.created_by = ${hasilJWT.data.id} AND (email ILIKE '%${search}%' OR username ILIKE '%${search}%' OR "name" ILIKE '%${search}%') ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then( async (result) => {
+      let resultDB = result;
+      db.sequelize.query(`SELECT COUNT(*) from v_user WHERE v_user.created_by = ${hasilJWT.data.id} AND (email ILIKE '%${search}%' OR username ILIKE '%${search}%' OR "name" ILIKE '%${search}%')`,
+      { type: db.sequelize.QueryTypes.SELECT})
+      .then((row) => {
+        let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
+        res.json({
+          sukses: true,
+          data: resultDB,
+          page_information: {
+            currentPage: parseInt(pageNumber),
+            pageSize: parseInt(pageSize),
+            totalPage: totalPage > 0 ? totalPage : 1,
+            firstPage: 1,
+            totalData: parseInt(row[0].count)
+          }
+        })
+      });
+    });  
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+  console.log(head);
+})
+
 app.post('/api/users/create', (req, res) => {
   let args = req.body;
   let token = req.headers.authorization;
@@ -1090,6 +1132,187 @@ app.post('/api/content/delete', (req, res) => {
     })
   }
 })
+
+// Create new articles
+
+app.post('/api/article/create', (req, res) => {
+  const head = req.headers;
+  const args = req.body;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    db.m_files.create({
+      file: args.image.base64,
+      status: 1,
+      uploadBy: hasilJWT.data.id,
+      file_name: args.image.file_name,
+      file_size: args.image.file_size,
+      file_type: args.image.file_type
+    }).then((result) => {
+      if (result) {
+        db.m_articles.create({
+          files_id: result.id,
+          title: args.title,
+          content: args.content,
+          status: 1,
+          user_id: hasilJWT.data.id
+        }).then((cResult) => {
+          res.json({
+            sukses: true,
+            msg: 'Create content successfully'
+          });
+        }).catch((err) => {
+          console.log(err)
+          res.json({
+            sukses: false,
+            msg: JSON.stringify(err)
+          })
+        }).catch((err) => {
+          console.log(err)
+          res.json({
+            sukses: false,
+            msg: JSON.stringify(err)
+          })
+        })
+      } else {
+        res.json({
+          sukses: false,
+          msg: 'Failed create content'
+        });
+      }
+    });
+  } else {
+    res.json({
+      sukses: false,
+      msg: 'Unauthrized user'
+    })
+  }
+})
+
+// Delete articles
+
+app.post('/api/article/delete', (req, res) => {
+  const head = req.headers;
+  const args = req.body;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token)
+  if (hasilJWT) {
+    db.sequelize.query(`UPDATE m_articles SET status = 0 WHERE id = ${args.id}`, {type: db.Sequelize.QueryTypes.UPDATE})
+    .then((result) => {
+      if (result) {
+        res.json({
+          sukses: true,
+          msg: 'Delete content successfully'
+        });
+      } else {
+        res.json({
+          sukses: true,
+          msg: 'Delete content failed'
+        });
+      };
+    }).catch((err) => {
+      console.log(err)
+      res.json({
+        sukses: true,
+        msg: 'Delete content failed'
+      });
+    });
+  } else {
+    res.json({
+      sukses: false,
+      msg: 'Unauthrized user'
+    })
+  }
+})
+
+// Get Content List
+
+app.get('/api/article', (req, res) => {
+  const head = req.headers;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    let pageNumber = head.page_number ? head.page_number : 1;
+    let pageSize = head.page_size ? head.page_size : 5;
+    let sortBy = head.sort_by ? head.sort_by : 'ASC';
+    let orderBy = head.order_by ? head.order_by : 'id';
+    let search = head.search ? head.search : '';
+    let offset = (pageNumber - 1) * pageSize;
+    db.sequelize.query(`SELECT * FROM v_articles WHERE user_id = ${hasilJWT.data.id} AND (title ILIKE '%${search}%') ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then( async (result) => {
+      let resultDB = result;
+      db.sequelize.query(`SELECT COUNT(*) from v_articles WHERE user_id = ${hasilJWT.data.id} AND (title ILIKE '%${search}%')`,
+      { type: db.sequelize.QueryTypes.SELECT})
+      .then((row) => {
+        let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
+        res.json({
+          sukses: true,
+          data: resultDB,
+          page_information: {
+            currentPage: parseInt(pageNumber),
+            pageSize: parseInt(pageSize),
+            totalPage: totalPage > 0 ? totalPage : 1,
+            firstPage: 1,
+            totalData: parseInt(row[0].count)
+          }
+        })
+      });
+    });  
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+  console.log(head);
+})
+
+app.get('/api/article/all', (req, res) => {
+  const head = req.headers;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    let pageNumber = head.page_number ? head.page_number : 1;
+    let pageSize = head.page_size ? head.page_size : 5;
+    let sortBy = head.sort_by ? head.sort_by : 'ASC';
+    let orderBy = head.order_by ? head.order_by : 'id';
+    let search = head.search ? head.search : '';
+    let offset = (pageNumber - 1) * pageSize;
+    db.sequelize.query(`SELECT * FROM v_articles WHERE title ILIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then( async (result) => {
+      let resultDB = result;
+      db.sequelize.query(`SELECT COUNT(*) from v_articles WHERE title ILIKE '%${search}%'`,
+      { type: db.sequelize.QueryTypes.SELECT})
+      .then((row) => {
+        let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
+        res.json({
+          sukses: true,
+          data: resultDB,
+          page_information: {
+            currentPage: parseInt(pageNumber),
+            pageSize: parseInt(pageSize),
+            totalPage: totalPage > 0 ? totalPage : 1,
+            firstPage: 1,
+            totalData: parseInt(row[0].count)
+          }
+        })
+      });
+    });  
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+})
+
+// Articles detail
+
+
+// Update articles
+
 
 const request = require('request');
 

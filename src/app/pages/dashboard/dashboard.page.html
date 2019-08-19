@@ -7,6 +7,108 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+  <ion-grid fixed>
+    <ion-slides [options]="slideOpts"  class="content">
+      <ion-slide *ngFor="let img of contentList" >
+        <ion-row>
+          <ion-col size="12">
+            <img [src]="img.file" alt="">
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            {{img.title}}
+          </ion-col>
+        </ion-row>
+      </ion-slide>
+    </ion-slides>
 
+    <ion-row justify-content-center>
+      <ion-col size="12">
+        <ion-searchbar placeholder="Search Music" class="searchbar" debounce="500" [(ngModel)]="search" (ionChange)="getMusicList()"></ion-searchbar>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid style="margin-right: 1.5%" class="marginku">
+    <ion-row justify-content-center>
+      <ion-col *ngFor ="let data of safeUrl" size="md">
+        <ion-card class="card_music" >
+          <iframe class="yt" height="315"
+            [src]="data.url">
+          </iframe>
+          <ion-card-header>
+            <ion-card-title>{{data.title}}</ion-card-title>
+            <ion-card-subtitle>{{data.artist}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-button (click)="sendIdMusic(data.id)" type="submit" color="warning">View Lyrics</ion-button>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-row justify-content-start>
+          <ion-button 
+          (click)="nextPrev('prev')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+            Prev
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+        <ion-row justify-content-end>
+            
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
+        <ion-row justify-content-end>
+          1
+        </ion-row>
+      </ion-col>
+      <ion-col >
+        <ion-row justify-content-center>
+          {{resp?.page_information?.currentPage}}
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
+        <ion-row justify-content-start >
+          {{resp?.page_information?.totalPage}}
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+        <ion-row justify-content-start >
+            
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-end>
+          <ion-button 
+          (click)="nextPrev('next')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+            Next
+          </ion-button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- <ion-row  class="swiper">
+      <ion-col size="1">  
+        <span class="swiper-button-prev" (click)="swipePrev()"></span>
+      </ion-col>
+      <ion-col size='7'>
+        <ion-slides #mainslider pager="false" [options]="slideOpts">
+
+        </ion-slides>
+      </ion-col>
+      <ion-col size='3' class="swiper--next-car FR03">
+        <span [class]="cssPlate">
+          {{nextCar}}
+        </span>
+      </ion-col>
+      <ion-col size='1'>
+        <span class="swiper-button-next" (click)="swipeNext()"></span>
+      </ion-col>
+    </ion-row> -->
 </ion-content>

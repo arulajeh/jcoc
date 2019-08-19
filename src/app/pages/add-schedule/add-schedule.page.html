@@ -8,19 +8,285 @@
 </ion-header>
 
 <ion-content>
+  <!-- <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher> -->
+  <img src="assets/img/bg_4.jpg" class="headerImg" alt="JCOC Music Banner">
+  <ion-row>
+    <ion-col size="12">
+      <ion-row justify-content-center>
+        <ion-text color="secondary">
+          <h1>Add Members</h1>
+        </ion-text>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-grid fixed>
+    <form id="loginForm">
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="stacked" color="primary">Event Name</ion-label>
+            <ion-input [(ngModel)]="dataSchedule.event_name" name="title" type="text" spellcheck="false" autocapitalize="off"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label>Date</ion-label>
+            <ion-datetime display-format="DD-MM-YYYY" [(ngModel)]="dataSchedule.event_date" name="event_date"></ion-datetime>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label position="stacked" color="primary">Event Picture</ion-label>
+            <ion-input type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-label color="primary" position="stacked">Song Leader</ion-label>
+          <ionic-selectable
+          [(ngModel)]="songLeader"
+          [items]="listMembers.song_leader"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          [isMultiple]="true"
+          name="song_leader"
+          >
+          </ionic-selectable>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label color="primary" position="stacked">Singer</ion-label>
+          <ionic-selectable
+          [(ngModel)]="singer"
+          [items]="listMembers.vokalis"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          [isMultiple]="true"
+          name="gender"
+          >
+          </ionic-selectable>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-label color="primary" position="stacked">Gitaris</ion-label>
+          <ionic-selectable
+          [(ngModel)]="gitaris"
+          [items]="listMembers.gitaris"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          name="song_leader"
+          >
+          </ionic-selectable>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label color="primary" position="stacked">Basis</ion-label>
+          <ionic-selectable
+          [(ngModel)]="basis"
+          [items]="listMembers.basis"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          name="gender"
+          >
+          </ionic-selectable>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-label color="primary" position="stacked">Pianis</ion-label>
+          <ionic-selectable
+          [(ngModel)]="pianis"
+          [items]="listMembers.pianis"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          name="song_leader"
+          >
+          </ionic-selectable>
+        </ion-col>
+        <ion-col size="6">
+          <ion-label color="primary" position="stacked">Drummer</ion-label>
+          <ionic-selectable
+          [(ngModel)]="drummer"
+          [items]="listMembers.drummer"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          name="gender"
+          >
+          </ionic-selectable>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-label color="primary" position="stacked">Music</ion-label>
+          <ionic-selectable
+          [(ngModel)]="music"
+          [items]="listMusics"
+          itemValueField="id"
+          itemTextField="judul"
+          [canSearch]="true"
+          [isMultiple]="true"
+          name="gender"
+          >
+          </ionic-selectable>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button 
+          (click)="submit()" 
+          type="submit" 
+          expand="block">
+          Add Schedule
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
   <ion-grid fixed>
     <ion-row>
-      <ion-col size="6">
+      <ion-col size="4">
         <ion-item>
-          <ion-label position="floating">Event Name</ion-label>
-          <ion-input name="eventname" type="text" spellcheck="false" autocapitalize="off"></ion-input>
+          <ion-label>Show</ion-label>
+          <ion-select interface="popover" [(ngModel)]="page_size" (ionChange)="getScheduleList()">
+            <ion-select-option value="5">5</ion-select-option>
+            <ion-select-option value="10">10</ion-select-option>
+            <ion-select-option value="15">15</ion-select-option>
+          </ion-select>
         </ion-item>
       </ion-col>
-      <ion-col size="6">
-        <ion-item>
-          <ion-label>Event Date</ion-label>
-          <ion-datetime display-format="DD.MM.YYYY">Select Date</ion-datetime>
-        </ion-item>
+      <ion-col size="8">
+        <ion-searchbar showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getScheduleList()"></ion-searchbar>
+      </ion-col>
+    </ion-row>
+    <ion-row class="forecast_container" nowrap>
+      <ion-col size="1">
+        <ion-row justify-content-center>
+          No.
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center (click)="changeSort('event_name')">
+          Event Name
+          <ion-icon name="arrow-dropdown" *ngIf="order_by === 'event_name' && sort_by === 'DESC'"></ion-icon>
+          <ion-icon name="arrow-dropup" *ngIf="order_by === 'event_name' && sort_by === 'ASC'"></ion-icon>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center (click)="changeSort('event_date')">
+          Event Date
+          <ion-icon name="arrow-dropdown" *ngIf="order_by === 'event_date' && sort_by === 'DESC'"></ion-icon>
+          <ion-icon name="arrow-dropup" *ngIf="order_by === 'event_date' && sort_by === 'ASC'"></ion-icon>
+        </ion-row>
+      </ion-col>
+      <ion-col size="1">
+        <ion-row justify-content-center>
+          Picture
+        </ion-row>
+      </ion-col>
+      <ion-col size="2">
+        <ion-row justify-content-center>
+          Action
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let schedule of scheduleList; index as i" class="forecast_container" nowrap>
+      <ion-col size="1" align-self-center>
+        <ion-row justify-content-center>
+        {{i + 1}}
+        </ion-row>
+      </ion-col>
+      <ion-col align-self-center>
+        <ion-row justify-content-center>
+          {{schedule?.event_name}}
+        </ion-row>
+      </ion-col>
+      <ion-col align-self-center>
+        <ion-row justify-content-center>
+          {{schedule?.event_date | date: 'yyyy-MM-dd'}}
+        </ion-row>
+      </ion-col>
+      <ion-col size="1" align-self-center>
+        <ion-row justify-content-center>
+          <ion-img [src]="schedule?.file" style="width: 100%; height: 100%"></ion-img>
+        </ion-row>
+      </ion-col>
+      <ion-col size="2" align-self-center>
+        <ion-row justify-content-center>
+          <ion-row>
+            <ion-col size="12">
+              <ion-button color="warning" (click)="deleteSchedule(schedule?.id)" type="submit">
+                  <ion-icon name="trash"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-button color="warning" (click)="sendIdUser(user?.id)" type="submit">
+                  <ion-icon name="create"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-row justify-content-start>
+          <ion-button 
+          (click)="nextPrev('prev')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+            Prev
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+        <ion-row justify-content-end>
+            
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
+        <ion-row justify-content-end>
+          1
+        </ion-row>
+      </ion-col>
+      <ion-col >
+        <ion-row justify-content-center>
+          {{resp?.page_information?.currentPage}}
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
+        <ion-row justify-content-start >
+          {{resp?.page_information?.totalPage}}
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+        <ion-row justify-content-start >
+            
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-end>
+          <ion-button 
+          (click)="nextPrev('next')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+            Next
+          </ion-button>
+        </ion-row>
       </ion-col>
     </ion-row>
   </ion-grid>

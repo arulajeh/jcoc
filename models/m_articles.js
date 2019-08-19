@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Content = sequelize.define('content', {
+    const M_articles = sequelize.define('m_articles', {
       id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -17,18 +17,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false
       },
+      content: {
+        type: DataTypes.TEXT,
+        allowNull: false
+      },
       title: {
         type: DataTypes.STRING,
         allowNull: false
-      },
-      primary_id: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-      },
+      }
     },
     {
       freezeTableName: true,
     });
-    return Content;
+    return M_articles;
   }
   

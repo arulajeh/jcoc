@@ -10,24 +10,24 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       event_date: {
-        type: DataTypes.DATEONLY,
+        type: DataTypes.DATE,
         allowNull: false
       },
       gitaris: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       basis: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       pianis: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       drummer: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
       },
       user_id: {
         type: DataTypes.INTEGER,
