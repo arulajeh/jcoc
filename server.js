@@ -1316,7 +1316,7 @@ app.post('/api/article/detail', (req, res) => {
   let token = head.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    db.sequelize.query(`SELECT * FROM v_articles where id = ${body.id}`, {type: db.Sequelize.QueryTypes.SELECT}).then((result) => {
+    db.sequelize.query(`SELECT * FROM v_articles_detail where id = ${body.id}`, {type: db.Sequelize.QueryTypes.SELECT}).then((result) => {
       if (result) {
         res.json({
           sukses: true,
