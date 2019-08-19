@@ -887,7 +887,7 @@ app.post('/api/schedule/update', (req,res) => {
                 let al = [];
                 await args.lagu.forEach((value, index) => {
                   return al.push({
-                    music_name: value,
+                    music_id: value,
                     schedule_id: id_schedule
                   });
                 })

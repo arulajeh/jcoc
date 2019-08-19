@@ -83,14 +83,14 @@ export class ScheduleUpdatePage implements OnInit {
   }
 
   getMusicList() {
-    this.api.getListData('music').then((res) => {
+    return this.api.getListData('music').then((res) => {
       console.log(res);
       this.listMusics = JSON.parse(JSON.stringify(res)).data;
     })
   }
 
   getUsersList() {
-    this.api.getListData('users/list', '1000').then((res) => {
+    return this.api.getListData('users/list', '1000').then((res) => {
       console.log(res);
       const resp = JSON.parse(JSON.stringify(res)).data;
       this.listMembers = {
@@ -154,11 +154,12 @@ export class ScheduleUpdatePage implements OnInit {
     if (Array.isArray(data)) {
       let any = [];
       data.forEach((val, index) => {
-        if (val.judul) {
-          any.push(val.judul);  
-        } else {
-          any.push(val.id);
-        }
+        // if (val.judul) {
+        //   any.push(val.judul);  
+        // } else {
+        //   any.push(val.id);
+        // }
+        any.push(val.id);
       });
       return any;
     } else {
