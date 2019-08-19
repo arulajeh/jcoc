@@ -1310,9 +1310,100 @@ app.get('/api/article/all', (req, res) => {
 
 // Articles detail
 
+app.post('/api/article/detail', (req, res) => {
+  const head = req.headers;
+  const body = req.body;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    db.sequelize.query(`SELECT * FROM v_articles where id = ${body.id}`, {type: db.Sequelize.QueryTypes.SELECT}).then((result) => {
+      if (result) {
+        res.json({
+          sukses: true,
+          data: result[0]
+        });
+      } else {
+        res.json({
+          sukses: false,
+          msg: 'Article Not Found'
+        });
+      }
+    });
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+})
 
 // Update articles
 
+app.post('/api/article/update', (req, res) => {
+  const head = req.headers;
+  const args = req.body;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    if (hasilJWT.data.akses_id === 1) {
+      db.m_articles.update({
+        title: args.title,
+        content: args.content,
+        status: 1,
+        user_id: hasilJWT.data.id
+      }, {where: {id: args.id}, returning: true}).then((result) => {
+        if (args.image && args.image.file_name) {
+          db.m_files.update({
+            file: args.image.base64,
+            status: 1,
+            uploadBy: hasilJWT.data.id,
+            file_name: args.image.file_name,
+            file_size: args.image.file_size,
+            file_type: args.image.file_type,
+          }, {where: {id: args.files_id}})
+          .then((resul) => {
+            if (resul) {
+              res.json({
+                sukses: true,
+                msg: "Update article successfully"
+              })
+            } else {
+              res.json({
+                sukses: false,
+                msg: "Update article failed"
+              })
+            }
+          }).catch((err) => {
+            res.json({
+              sukses: false,
+              msg: JSON.stringify(err)
+            })
+          })
+        } else {
+          res.json({
+            sukses: true,
+            msg: "Update article successfully"
+          });
+        }
+      }).catch((err) => {
+        res.json({
+          sukses: false,
+          msg: JSON.stringify(err)
+        })
+      })
+    } else {
+      res.json({
+        sukses: false,
+        msg: "Unauthorized user"
+      });
+    }
+  } else {
+    res.json({
+      sukses: false,
+      msg: 'Unauthrized user'
+    })
+  }
+})
 
 const request = require('request');
 
