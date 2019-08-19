@@ -1,9 +1,116 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>articles-add</ion-title>
+  <ion-toolbar color="warning">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Add Article</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-
+<ion-content color="dark">
+  <ion-grid fixed color="dark">
+    <form id="loginForm" [hidden]="inputForm">
+      <ion-row>
+        <ion-col size="6">
+          <ion-item color="dark">
+            <ion-label position="stacked">Title</ion-label>
+            <ion-input [(ngModel)]="data.title" name="title" type="text" spellcheck="false" autocapitalize="off"
+              required>
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item color="dark">
+            <ion-label position="stacked">Photo</ion-label>
+            <ion-input type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item color="dark">
+          <ion-label position="floating">Content</ion-label>
+            <ion-textarea [(ngModel)]="data.content" name="content" placeholder="" rows="6" cols="20" spellcheck="false" autocapitalize="off"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-button 
+          (click)="submit()" 
+          type="submit"
+          [disabled]="!data.title || !data.image.base64 || !data.content"
+          expand="block">
+          Add Article
+          </ion-button>
+          <!-- [disabled]="!dataUser.username || !dataUser.name || !pass || !dataUser.name || !dataUser.email || !dataUser.phone || !dataUser.image.isImage || !position.id || !selectGender.id" -->
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-grid>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12">
+        <ion-searchbar showCancelButton="focus" placeholder="Search Article..." debounce="500" [(ngModel)]="search" (ionChange)="getData()"></ion-searchbar>
+      </ion-col>
+    </ion-row>
+    <ion-row class="forecast_container" nowrap>
+      <ion-col size="1">
+        <ion-row justify-content-center>
+          No.
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          Title
+        </ion-row>
+      </ion-col>
+      <ion-col size="4">
+        <ion-row justify-content-center>
+          Picture
+        </ion-row>
+      </ion-col>
+      <ion-col size="1">
+        <ion-row justify-content-center>
+          Action
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let article of listData; index as i" class="forecast_container" nowrap>
+      <ion-col size="1" align-self-center>
+        <ion-row justify-content-center>
+        {{i + 1}}
+        </ion-row>
+      </ion-col>
+      <ion-col align-self-center>
+        <ion-row justify-content-center>
+          {{article?.title}}
+        </ion-row>
+      </ion-col>
+      <ion-col align-self-center size="4">
+        <ion-row justify-content-center>
+          <ion-img [src]="article.file"></ion-img>
+          <!-- {{user?.email}} -->
+        </ion-row>
+      </ion-col>
+      <ion-col size="1" align-self-center>
+        <ion-row justify-content-center>
+          <ion-row>
+            <ion-col size="12">
+              <ion-button color="warning" (click)="deleteArticle(article?.id)" type="submit">
+                  <ion-icon name="trash"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-button color="warning" (click)="sendIdArticle(article?.id)" type="submit">
+                  <ion-icon name="create"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

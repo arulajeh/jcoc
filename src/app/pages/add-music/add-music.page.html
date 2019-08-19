@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="dark">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
       pullingIcon="arrow-dropdown"
@@ -17,25 +17,25 @@
     </ion-refresher-content>
   </ion-refresher>
   <form style="margin-left: 15px; margin-right: 15px;">
-    <ion-item>
+    <ion-item color="dark">
       <ion-label position="floating">Title</ion-label>
-      <ion-input [(ngModel)]="dataMusic.judul" name="title" type="text" spellcheck="false" autocapitalize="off"></ion-input>
+      <ion-input placeholder="Please enter Music's title here.." [(ngModel)]="dataMusic.judul" name="title" type="text" spellcheck="false" autocapitalize="off"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item color="dark">
       <ion-label position="floating">Artist</ion-label>
-      <ion-input [(ngModel)]="dataMusic.penyanyi" name="artist" type="text" spellcheck="false" autocaptalize="off"></ion-input>
+      <ion-input placeholder="Please enter Artist's name here.." [(ngModel)]="dataMusic.penyanyi" name="artist" type="text" spellcheck="false" autocaptalize="off"></ion-input>
     </ion-item>
-    <ion-item>
+    <ion-item color="dark">
       <ion-label position="floating">Lyrics</ion-label>
-      <ion-textarea rows="6" cols="20" [(ngModel)]="dataMusic.lirik" name="lyric" spellcheck="false" autocapitalize="off"></ion-textarea>
+      <ion-textarea placeholder="Please enter Music's lyrics here.." rows="6" cols="20" [(ngModel)]="dataMusic.lirik" name="lyric" spellcheck="false" autocapitalize="off"></ion-textarea>
     </ion-item>
-    <ion-item>
+    <ion-item color="dark">
       <ion-label position="floating">Chord</ion-label>
-      <ion-textarea rows="6" cols="20" [(ngModel)]="dataMusic.chord" name="chord" spellcheck="false" autocapitalize="off"></ion-textarea>
+      <ion-textarea placeholder="Please enter Music's chord here.." rows="6" cols="20" [(ngModel)]="dataMusic.chord" name="chord" spellcheck="false" autocapitalize="off"></ion-textarea>
     </ion-item>
-    <ion-item>
-      <ion-label position="floating">Link</ion-label>
-      <ion-input [(ngModel)]="dataMusic.link" name="link" spellcheck="false" autocapitalize="off"></ion-input>
+    <ion-item color="dark">
+      <ion-label position="floating">Link/URL</ion-label>
+      <ion-input placeholder="Please enter Music's link/url here.." [(ngModel)]="dataMusic.link" name="link" spellcheck="false" autocapitalize="off"></ion-input>
     </ion-item>
     <ion-card-subtitle>*format input ex : https://www.youtube.com/embed/U06jlgpMtQs (replace '/watch?v=' with '/embed/')</ion-card-subtitle>
     <ion-row>
@@ -52,7 +52,7 @@
 <ion-grid fixed>
     <ion-row>
       <ion-col size="4">
-        <ion-item>
+        <ion-item color="medium">
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" name="ionSelect" (ionChange)="getMusicList()">
             <ion-select-option value="5">5</ion-select-option>
@@ -62,7 +62,7 @@
         </ion-item>
       </ion-col>
       <ion-col size="8">
-        <ion-searchbar showCancelButton="focus" placeholder="Search Music" debounce="500" [(ngModel)]="search" (ionChange)="getMusicList()"></ion-searchbar>
+        <ion-searchbar color="medium" showCancelButton="focus" placeholder="Search Music" debounce="500" [(ngModel)]="search" (ionChange)="getMusicList()"></ion-searchbar>
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>

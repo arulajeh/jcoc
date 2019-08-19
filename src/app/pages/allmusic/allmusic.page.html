@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="dark">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
       pullingIcon="arrow-dropdown"
@@ -19,7 +19,7 @@
   <ion-grid fixed>
     <ion-row justify-content-center>
       <ion-col size="4">
-        <ion-item>
+        <ion-item color="medium">
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" name="ionSelect" (ionChange)="getDataMusic()">
             <ion-select-option value="5">5</ion-select-option>
@@ -41,7 +41,7 @@
             [src]="data.url">
           </iframe>
           <ion-card-header>
-            <ion-card-title>{{data.title}}</ion-card-title>
+            <ion-card-title color="light">{{data.title}}</ion-card-title>
             <ion-card-subtitle>{{data.artist}}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
