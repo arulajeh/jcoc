@@ -18,6 +18,8 @@ export class AllSchedulePage implements OnInit {
 
   listSchedule:any;
 
+  resp:any;
+
   constructor(
     private api : ApiService,
     public navCtrl: NavController,
@@ -34,6 +36,7 @@ export class AllSchedulePage implements OnInit {
       return this.api.getListData('schedule', this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
       .then((result) =>{
         this.loadingCtrl.dismiss();
+        this.resp = JSON.parse(JSON.stringify(result));
         this.listSchedule = JSON.parse(JSON.stringify(result)).data;
       });
     });
@@ -73,6 +76,24 @@ export class AllSchedulePage implements OnInit {
       keyboardClose: true
     });
     x.present();
+  }
+
+  nextPrev(nav){
+    if (nav === 'next') {
+      let a = parseInt(this.page_number) + 1;
+      this.page_number = a.toString();
+      this.getDataSchedule();
+    } else if (nav === 'prev') {
+      let a = parseInt(this.page_number) - 1;
+      this.page_number = a.toString();
+      this.getDataSchedule();
+    } else if (nav === 'first') {
+      this.page_number = '1';
+      this.getDataSchedule();
+    } else if (nav === 'last') {
+      this.page_number = this.resp.page_information.totalPage.toString();
+      this.getDataSchedule();
+    }
   }
 
 }
