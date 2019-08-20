@@ -40,70 +40,15 @@ export class AllmusicPage implements OnInit {
   ngOnInit() {
   }
 
-  testUrl(url) {
-    // var a = "url";
-    // var b = "";
-    // if (a.startsWith("https://") || a.startsWith("http://")) {
-    //   a.replace("https://" || "http://", "https://");
-    //   if (a.startsWith("www.youtube.com/watch?v=")) {
-        
-    //   } else {
-        
-    //   }
-    // } else {
-    //   if (a.startsWith("www.youtube.com/watch?v=")) {
-    //     b = a.replace("www.youtube.com/watch?v=", "https://www.youtube.com/embed/");
-    //     // console.log(b);
-    //   } else if (a.startsWith("youtube.com/watch?v=")) {
-    //     b = a.replace("youtube.com/watch?v=", "https://www.youtube.com/embed/");
-    //   } else if(a.startsWith("youtu.be/")) {
-    //     b = a.replace("youtu.be/", "https://www.youtube.com/embed/");
-    //   }
-    // }
-    // if (a.startsWith("https://") || a.startsWith("http://")) {
-    //   a.replace("https://" || "http://", "https://")
-    //   if (a.startsWith("www.youtube.com/watch?v=")) {
-    //     b = a.replace("www.youtube.com/watch?v=", "www.youtube.com/embed/");
-    //     console.log(b);
-    //   } else if (a.startsWith("http://www.youtube.com/watch?v=")) {
-    //     b = a.replace("http://www.youtube.com/watch?v=", "https://www.youtube.com/embed/");
-    //     console.log(b);
-    //   } else if (a.startsWith("https://youtu.be/")) {
-    //     b = a.replace("https://youtu.be/", "https://www.youtube.com/embed/");
-    //     console.log(b);
-    //   } else if (a.startsWith("http://youtu.be/")) {
-    //     b = a.replace("http://youtu.be/", "https://www.youtube.com/embed/");
-    //     console.log(b);
-    //   } else if (a.startsWith("http://youtube.com/watch?v=")) {
-    //     b = a.replace("http://youtube.com/watch?v=", "https://www.youtube.com/embed/");
-    //     console.log(b);
-    //   } else if (a.startsWith("https://youtube.com/watch?v=")) {
-    //     b = a.replace("https://youtube.com/watch?v=", "https://www.youtube.com/embed/");
-    //     console.log(b);
-    //   } else {
-    //     console.log('no i dont');
-    //   }  
-    // } else {
-    //   if (a.startsWith("www.youtube.com/watch?v=")) {
-    //     b = a.replace("www.youtube.com/watch?v=", "https://www.youtube.com/embed/");
-    //     console.log(b);
-    //   } else if (a.startsWith("youtube.com/watch?v=")) {
-    //     b = a.replace("youtube.com/watch?v=", "https://www.youtube.com/embed/");
-    //   } else if(a.startsWith("youtu.be/")) {
-    //     b = a.replace("youtu.be/", "https://www.youtube.com/embed/");
-    //   }
-    // }
-  }
-  
   async ionViewDidEnter() {
-    // this.testUrl();
     await this.getDataMusic();
   }
 
   convertSafeUrl(data){
     this.safeUrl = [];
     for (let index of data) {
-      this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(index.link);
+      const x = this.api.parseEmbedUrl(index.link);
+      this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(x);
       this.safeUrl.push({
         url:this.trustedVideoUrl,
         title: index.judul,

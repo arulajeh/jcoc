@@ -63,4 +63,17 @@ export class ApiService {
       );
     });
   }
+
+  parseEmbedUrl(data){
+    let a = data;
+    let b = '';
+    if (a.includes('youtube.com')) {
+      b = a.replace('youtube.com/watch?v=', 'youtube.com/embed/');
+    } else if(a.includes('youtu.be/')) {
+      b = a.replace('youtu.be/', 'youtube.com/embed/')
+    } else if(a.includes('youtube.com/embed/')) {
+      b = a;
+    }
+    return b;
+  }
 }

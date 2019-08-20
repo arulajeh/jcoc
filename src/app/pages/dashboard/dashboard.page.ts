@@ -112,7 +112,8 @@ export class DashboardPage implements OnInit {
   convertSafeUrl(data){
     this.safeUrl = [];
     for (let index of data) {
-      this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(index.link);
+      const x = this.api.parseEmbedUrl(index.link);
+      this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(x);
       this.safeUrl.push({
         url:this.trustedVideoUrl,
         title: index.judul,
