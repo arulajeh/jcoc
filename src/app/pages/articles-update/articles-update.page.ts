@@ -12,6 +12,7 @@ export class ArticlesUpdatePage implements OnInit {
 
   resp:any;
   data = {
+    id : null,
     title: '',
     image: {
       file_name: '',
@@ -62,7 +63,9 @@ export class ArticlesUpdatePage implements OnInit {
   }
 
   submit() {
+    console.log(this.data);
     this.showLoading('Submit data').then(() => {
+      this.data.id = this.id;
       this.api.postData('article/update', this.data).then((res) => {
         this.loadingCtrl.dismiss();
         const response = JSON.parse(JSON.stringify(res));

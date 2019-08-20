@@ -1346,6 +1346,7 @@ app.post('/api/article/update', (req, res) => {
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
     if (hasilJWT.data.akses_id === 1) {
+      console.log(args);
       db.m_articles.update({
         title: args.title,
         content: args.content,
