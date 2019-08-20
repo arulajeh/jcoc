@@ -14,11 +14,16 @@
   <ion-grid style="margin-right: 1.5%" class="marginku">
     <ion-row justify-content-center>
       <ion-col *ngFor ="let data of listArticle" size="md">
-        <ion-card class="card_schedule" >
+        <ion-card class="card_schedule" color="medium">
           <img [src]="data.file" alt="">
           <ion-card-header>
             <ion-card-title color="light">{{data.title}}</ion-card-title>
-            <ion-card-subtitle>{{data.name}}</ion-card-subtitle>
+            <ion-row>
+              <ion-col size="6"><ion-card-subtitle>{{data.name}}</ion-card-subtitle></ion-col>
+              <ion-col size="6"><ion-card-subtitle>{{data.createdAt | date: 'EEE, MMM d, y'}}</ion-card-subtitle></ion-col>
+            </ion-row>
+            
+            <ion-card-content>{{data.content}}</ion-card-content>
           </ion-card-header>
           <ion-card-content>
               <ion-button (click)="sendIdArticle(data.id)" type="submit" color="warning">Read More...</ion-button>
