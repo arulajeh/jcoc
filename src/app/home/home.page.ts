@@ -87,7 +87,7 @@ export class HomePage {
       title: 'Logout',
       url: '/home/logout',
       icon: 'log-out',
-      hidden: JSON.parse(localStorage.getItem('data')).akses === 1 ? false : true
+      hidden: false
     }
 
   ]
