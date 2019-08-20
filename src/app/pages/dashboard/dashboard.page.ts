@@ -43,7 +43,7 @@ export class DashboardPage implements OnInit {
 
   getDataContent() {
     return this.showLoading('Getting data').then(() => {
-      return this.api.getListData('content').then((res) => {
+      return this.api.getListData('content', '5', '1', 'id', 'ASC', ' ').then((res) => {
         this.loadingCtrl.dismiss();
         const response = JSON.parse(JSON.stringify(res));
         this.contentList = response.data;
