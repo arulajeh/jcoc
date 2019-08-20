@@ -9,16 +9,83 @@
 
 <ion-content>
   <ion-card>
-    <img src="" alt="">
+    <img [src]="resp?.file" alt="">
     <ion-card-title>NAMA EVENT</ion-card-title>
+    {{resp?.event_name}}
     <ion-card-subtitle>Tanggal Event</ion-card-subtitle>
+    {{resp?.event_date | date: 'EEE, d MMM y'}}
     <ion-grid fixed>
       <ion-row>
         <ion-col>
           <ion-card-title>Member List</ion-card-title>
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="primary">
+                Vokalis
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngFor="let data of resp?.vokalis">
+            <ion-col size="12">
+              {{data}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="primary">
+                Song Leader
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngFor="let data of resp?.song_leader">
+            <ion-col size="12">
+              {{data}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="primary">
+                Basis
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              {{resp?.basis}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="primary">
+                Drummer
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              {{resp?.drummer}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <ion-text color="primary">
+                Gitaris
+              </ion-text>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              {{resp?.gitaris}}
+            </ion-col>
+          </ion-row>
         </ion-col>
         <ion-col>
           <ion-card-title>Music List</ion-card-title>
+          <ion-row *ngFor="let music of resp?.music_name">
+            <ion-col size="12">
+              {{music}}
+            </ion-col>
+          </ion-row>
         </ion-col>
       </ion-row>
       <ion-row>

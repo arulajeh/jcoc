@@ -101,43 +101,47 @@ export class AddSchedulePage implements OnInit {
   }
 
   async submit() {
-    this.dataSchedule.song_leader = this.songLeader ? await this.parseSelectable(this.songLeader) : null;
-    this.dataSchedule.vokalis = this.singer ? await this.parseSelectable(this.singer) : null;
-    this.dataSchedule.pianis = this.pianis ? await this.parseSelectable(this.pianis) : null;
-    this.dataSchedule.basis = this.basis ? await this.parseSelectable(this.basis) : null;
-    this.dataSchedule.drummer = this.drummer ? await this.parseSelectable(this.drummer) : null;
-    this.dataSchedule.gitaris = this.gitaris ? await this.parseSelectable(this.gitaris) : null;
-    this.dataSchedule.lagu = this.music ? await this.parseSelectable(this.music) : null;
-
-    this.api.postData('schedule/create', this.dataSchedule).then((res) => {
-      console.log(res);
-      const response = JSON.parse(JSON.stringify(res));
-      if (response.sukses === true) {
-        this.showToast('Create schedule successfully');
-        this.dataSchedule = {
-          event_date: "",
-          event_name: "",
-          basis: 0,
-          gitaris: 0,
-          drummer: 0,
-          user_id: 0,
-          pianis: 0,
-          vokalis: [],
-          song_leader: [],
-          lagu: [],
-          image: {
-            file_name: "",
-            file_size: 0,
-            file_type: "",
-            base64: null,
-            isImage: null
-          }
-        };
-        this.getScheduleList()
-      } else {
-        this.showToast('Failed create schedule');
-      }
-    });
+    this.showLoading('Submit data').then( async () => {
+      this.dataSchedule.song_leader = this.songLeader ? await this.parseSelectable(this.songLeader) : null;
+      this.dataSchedule.vokalis = this.singer ? await this.parseSelectable(this.singer) : null;
+      this.dataSchedule.pianis = this.pianis ? await this.parseSelectable(this.pianis) : null;
+      this.dataSchedule.basis = this.basis ? await this.parseSelectable(this.basis) : null;
+      this.dataSchedule.drummer = this.drummer ? await this.parseSelectable(this.drummer) : null;
+      this.dataSchedule.gitaris = this.gitaris ? await this.parseSelectable(this.gitaris) : null;
+      this.dataSchedule.lagu = this.music ? await this.parseSelectable(this.music) : null;
+  
+      this.api.postData('schedule/create', this.dataSchedule).then((res) => {
+        this.loadingCtrl.dismiss();
+        console.log(res);
+        const response = JSON.parse(JSON.stringify(res));
+        if (response.sukses === true) {
+          this.showToast('Create schedule successfully');
+          this.dataSchedule = {
+            event_date: "",
+            event_name: "",
+            basis: 0,
+            gitaris: 0,
+            drummer: 0,
+            user_id: 0,
+            pianis: 0,
+            vokalis: [],
+            song_leader: [],
+            lagu: [],
+            image: {
+              file_name: "",
+              file_size: 0,
+              file_type: "",
+              base64: null,
+              isImage: null
+            }
+          };
+          this.getScheduleList()
+        } else {
+          this.showToast('Failed create schedule');
+        }
+      });
+    })
+    
     console.log(' Data Schedule Submit',this.dataSchedule);
     // console.log(a);
   }
@@ -180,11 +184,6 @@ export class AddSchedulePage implements OnInit {
     if (Array.isArray(data)) {
       let any = [];
       data.forEach((val, index) => {
-        // if (val.judul) {
-        //   any.push(val.judul);  
-        // } else {
-        //   any.push(val.id);
-        // }
         any.push(val.id);
       });
       return any;
