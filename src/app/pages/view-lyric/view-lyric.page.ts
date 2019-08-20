@@ -23,15 +23,8 @@ export class ViewLyricPage implements OnInit {
   async ionViewDidEnter(){
     await this.getIdMusic();
     await this.getDataMusic();
-    this.data_music.link = this.domSanitizer.bypassSecurityTrustResourceUrl(this.data_music.link);
-    // this.safeUrl.push({
-    //   url: this.trustedVideoUrl,
-    //   title: this.data_music.judul,
-    //   artis: this.data_music.penyanyi,
-    //   lyrics: this.data_music.lirik,
-    //   chord: this.data_music.chord
-    // });
-
+    const x = this.api.parseEmbedUrl(this.data_music.link);
+    this.data_music.link = this.domSanitizer.bypassSecurityTrustResourceUrl(x);
     console.log('data music ' + this.data_music);
   }
 

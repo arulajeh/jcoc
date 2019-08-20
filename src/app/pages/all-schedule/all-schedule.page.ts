@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { NavigationExtras } from '@angular/router';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-all-schedule',
@@ -18,27 +18,31 @@ export class AllSchedulePage implements OnInit {
 
   listSchedule:any;
 
+  resp:any;
+
   constructor(
     private api : ApiService,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController
   ) { }
 
   ionViewDidEnter(){
-    this.getDataSchedule();
-    console.log('all Schedule');
+      this.getDataSchedule()
   }
 
   getDataSchedule(){
-    console.log('schedule');
-    this.api.getListData('schedule', this.page_size, this.page_number, this.order_by, this.sort_by, this.search).then((result) =>{
-      console.log(result);
-      this.listSchedule = JSON.parse(JSON.stringify(result)).data;
-      console.log(this.listSchedule);
+    return this.showLoading('Getting data').then(() => {
+      return this.api.getListData('schedule', this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
+      .then((result) =>{
+        this.loadingCtrl.dismiss();
+        this.resp = JSON.parse(JSON.stringify(result));
+        this.listSchedule = JSON.parse(JSON.stringify(result)).data;
+      });
     });
   }
 
   sendIdSchedule(id){
-    console.log(id);
     let navigationExtras: NavigationExtras = {
       queryParams: {
         id: JSON.stringify(id)
@@ -48,6 +52,48 @@ export class AllSchedulePage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  async showToast(msg) {
+    const a = await this.toastCtrl.create({
+      animated: true,
+      duration: 2000,
+      keyboardClose: true,
+      message: msg,
+      position: "bottom"
+    });
+
+    a.present();
+  }
+
+  async showLoading(msg) {
+    const x = await this.loadingCtrl.create({
+      animated: true,
+      backdropDismiss: false,
+      message: msg,
+      showBackdrop: true,
+      spinner: "dots",
+      keyboardClose: true
+    });
+    x.present();
+  }
+
+  nextPrev(nav){
+    if (nav === 'next') {
+      let a = parseInt(this.page_number) + 1;
+      this.page_number = a.toString();
+      this.getDataSchedule();
+    } else if (nav === 'prev') {
+      let a = parseInt(this.page_number) - 1;
+      this.page_number = a.toString();
+      this.getDataSchedule();
+    } else if (nav === 'first') {
+      this.page_number = '1';
+      this.getDataSchedule();
+    } else if (nav === 'last') {
+      this.page_number = this.resp.page_information.totalPage.toString();
+      this.getDataSchedule();
+    }
   }
 
 }

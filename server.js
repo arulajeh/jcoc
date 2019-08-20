@@ -785,7 +785,7 @@ app.post('/api/schedule/detail', (req, res) => {
       if(result) {
         res.json({
           sukses: true,
-          data: result
+          data: result[0]
         });
       } else {
         res.json({
