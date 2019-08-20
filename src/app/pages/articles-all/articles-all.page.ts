@@ -30,7 +30,7 @@ export class ArticlesAllPage implements OnInit {
 
   getDataArticle(){
     console.log('Article');
-    this.api.getListData('article', this.page_size, this.page_number, this.order_by, this.sort_by, this.search).then((result) =>{
+    this.api.getListData('article/all', this.page_size, this.page_number, this.order_by, this.sort_by, this.search).then((result) =>{
       console.log(result);
       this.listArticle = JSON.parse(JSON.stringify(result)).data;
       console.log(this.listArticle);
