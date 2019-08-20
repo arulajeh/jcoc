@@ -275,9 +275,10 @@ app.post('/api/users/update', (req,res) => {
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
     if (hasilJWT.data.akses_id === 1) {
-      db.sequelize.query(`SELECT * FROM v_user where id = ${body.id}`, {type: db.Sequelize.QueryTypes.SELECT})
+      db.sequelize.query(`SELECT * FROM v_user where id = ${args.id}`, {type: db.Sequelize.QueryTypes.SELECT})
       .then((x) => {
         const pas = x[0].get({plain: true});
+        console.log(pas);
         const pass1 = Md5.hashStr(args.password);
         const pass2 = Md5.hashStr(pass1 + args.username);
         db.users.update({
