@@ -12,7 +12,7 @@ export class ArticlesUpdatePage implements OnInit {
 
   resp:any;
   data = {
-    id : null,
+    id : 0,
     title: '',
     image: {
       file_name: '',
@@ -21,7 +21,8 @@ export class ArticlesUpdatePage implements OnInit {
       base64: null,
       isImage: ''
     },
-    content: ''
+    content: '',
+    files_id: 0
   }
   id;
   files = [];
@@ -55,6 +56,7 @@ export class ArticlesUpdatePage implements OnInit {
         this.resp = JSON.parse(JSON.stringify(res)).data;
         this.data.content = this.resp.content;
         this.data.title = this.resp.title;
+        this.data.files_id = this.resp.files_id
       }).catch((err) => {
         this.loadingCtrl.dismiss();
         this.showToast('Error getting data');

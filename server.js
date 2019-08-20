@@ -1352,7 +1352,7 @@ app.post('/api/article/update', (req, res) => {
         content: args.content,
         status: 1,
         user_id: hasilJWT.data.id
-      }, {where: {id: args.id}, returning: true}).then((result) => {
+      }, {returning: true, where: {id: args.id}}).then((result) => {
         if (args.image && args.image.file_name) {
           db.m_files.update({
             file: args.image.base64,
