@@ -43,26 +43,37 @@
           expand="block">
           Add Article
           </ion-button>
-          <!-- [disabled]="!dataUser.username || !dataUser.name || !pass || !dataUser.name || !dataUser.email || !dataUser.phone || !dataUser.image.isImage || !position.id || !selectGender.id" -->
         </ion-col>
       </ion-row>
     </form>
   </ion-grid>
   <ion-grid fixed>
     <ion-row>
-      <ion-col size="12">
+      <ion-col size="4">
+        <ion-item>
+          <ion-label>Show</ion-label>
+          <ion-select interface="popover" [(ngModel)]="page_size" (ionChange)="getData()">
+            <ion-select-option value="5">5</ion-select-option>
+            <ion-select-option value="10">10</ion-select-option>
+            <ion-select-option value="15">15</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="8">
         <ion-searchbar showCancelButton="focus" placeholder="Search Article..." debounce="500" [(ngModel)]="search" (ionChange)="getData()"></ion-searchbar>
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
-      <ion-col size="1">
+      <!-- <ion-col size="1">
         <ion-row justify-content-center>
           No.
         </ion-row>
-      </ion-col>
+      </ion-col> -->
       <ion-col>
-        <ion-row justify-content-center>
+        <ion-row justify-content-center (click)="changeSort('title')">
           Title
+          <ion-icon name="arrow-dropdown" *ngIf="order_by === 'title' && sort_by === 'DESC'"></ion-icon>
+          <ion-icon name="arrow-dropup" *ngIf="order_by === 'title' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
       </ion-col>
       <ion-col size="4">
@@ -77,11 +88,11 @@
       </ion-col>
     </ion-row>
     <ion-row *ngFor="let article of listData; index as i" class="forecast_container" nowrap>
-      <ion-col size="1" align-self-center>
+      <!-- <ion-col size="1" align-self-center>
         <ion-row justify-content-center>
         {{i + 1}}
         </ion-row>
-      </ion-col>
+      </ion-col> -->
       <ion-col align-self-center>
         <ion-row justify-content-center>
           {{article?.title}}
@@ -90,7 +101,6 @@
       <ion-col align-self-center size="4">
         <ion-row justify-content-center>
           <ion-img [src]="article.file"></ion-img>
-          <!-- {{user?.email}} -->
         </ion-row>
       </ion-col>
       <ion-col size="1" align-self-center>
@@ -109,6 +119,75 @@
               </ion-button>
             </ion-col>
           </ion-row>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <div *ngIf="!resp">
+      <ion-row *ngFor="let x of skeleton" class="forecast_container" nowrap>
+        <!-- <ion-col size="1" align-self-center>
+          <ion-row justify-content-center>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </ion-row>
+        </ion-col> -->
+        <ion-col align-self-center>
+          <ion-row justify-content-center>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </ion-row>
+        </ion-col>
+        <ion-col align-self-center size="4">
+          <ion-row justify-content-center>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </ion-row>
+        </ion-col>
+        <ion-col size="1" align-self-center>
+          <ion-row justify-content-center>
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </div>
+    <ion-row>
+      <ion-col>
+        <ion-row justify-content-start>
+          <ion-button 
+          (click)="nextPrev('prev')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+            Prev
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+        <ion-row justify-content-end>
+            
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
+        <ion-row justify-content-end>
+          1
+        </ion-row>
+      </ion-col>
+      <ion-col >
+        <ion-row justify-content-center>
+          {{resp?.page_information?.currentPage}}
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
+        <ion-row justify-content-start >
+          {{resp?.page_information?.totalPage}}
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+        <ion-row justify-content-start >
+            
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-end>
+          <ion-button 
+          (click)="nextPrev('next')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+            Next
+          </ion-button>
         </ion-row>
       </ion-col>
     </ion-row>

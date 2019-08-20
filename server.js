@@ -1374,6 +1374,7 @@ app.post('/api/article/update', (req, res) => {
               })
             }
           }).catch((err) => {
+            console.log(err);
             res.json({
               sukses: false,
               msg: JSON.stringify(err)
@@ -1386,6 +1387,7 @@ app.post('/api/article/update', (req, res) => {
           });
         }
       }).catch((err) => {
+        console.log(err);
         res.json({
           sukses: false,
           msg: JSON.stringify(err)

@@ -18,6 +18,8 @@ export class AddMusicPage implements OnInit {
     link: ''
   }
 
+  respMusic:any;
+
   page_size = '5';
   page_number = '1';
   order_by = 'judul';
@@ -89,7 +91,8 @@ export class AddMusicPage implements OnInit {
           this.page_number = this.resp.page_information.totalPage.toString();
           this.getMusicList();
         } else {
-          return this.listMusic = JSON.parse(JSON.stringify(result)).data;
+          this.respMusic = JSON.parse(JSON.stringify(result))
+          return this.listMusic = this.respMusic.data;
         }
       }).catch(err => {
         this.loadingCtrl.dismiss();

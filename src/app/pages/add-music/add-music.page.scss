@@ -1,0 +1,21 @@
+// .skeleton{
+//     --background-rgb: rgb(0, 255, 0);
+// }
+
+// .custom-skeleton ion-skeleton-text {
+//     line-height: 13px;
+//     color: aliceblue;
+// }
+  
+// .custom-skeleton ion-skeleton-text:last-child {
+//     margin-bottom: 5px;
+//     color: rgb(0, 255, 0);
+// }
+
+.color{
+    color: rgb(255, 255, 255);
+}
+
+ion-skeleton-text {
+    --background-rgb: 255, 255, 255;
+}

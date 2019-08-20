@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="data_music">
   <ion-card>
     <ion-card-title>{{data_music?.judul}}</ion-card-title>
     <ion-grid>
@@ -26,6 +26,40 @@
         <ion-col>
           <ion-card-title>Chord</ion-card-title>
           <ion-card-content class="spacing">{{data_music?.chord}}</ion-card-content>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</ion-content>
+
+<ion-content *ngIf="!data_music">
+  <ion-card>
+    <ion-card-title>
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+    </ion-card-title>
+    <ion-grid>
+      <ion-row>
+        <ion-col><ion-card-subtitle>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </ion-card-subtitle></ion-col>
+        <ion-col><ion-card-subtitle>
+          Created by : 
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </ion-card-subtitle></ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          <ion-card-title>Lyric</ion-card-title>
+          <ion-card-content class="spacing">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </ion-card-content>
+        </ion-col>
+        <ion-col>
+          <ion-card-title>Chord</ion-card-title>
+          <ion-card-content class="spacing">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </ion-card-content>
         </ion-col>
       </ion-row>
     </ion-grid>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { ToastController, LoadingController } from '@ionic/angular';
+import { ToastController, LoadingController, NavController } from '@ionic/angular';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-articles-add',
@@ -8,6 +9,9 @@ import { ToastController, LoadingController } from '@ionic/angular';
   styleUrls: ['./articles-add.page.scss'],
 })
 export class ArticlesAddPage implements OnInit {
+
+  skeleton = [1,2,3];
+  resp:any;
 
   data = {
     title: '',
@@ -31,10 +35,16 @@ export class ArticlesAddPage implements OnInit {
   listData = [];
   inputForm = false;
 
+  page_size = '5';
+  page_number = '1';
+  order_by = 'id';
+  sort_by = 'ASC';
+
   constructor(
     private api : ApiService,
     private toastCtrl : ToastController,
-    private loadingCtrl : LoadingController
+    private loadingCtrl : LoadingController,
+    private navCtrl: NavController
   ) { }
 
   ionViewDidEnter(){
@@ -108,10 +118,11 @@ export class ArticlesAddPage implements OnInit {
 
   async getData() {
     this.loadingAnimated().then(() => {
-      this.api.getListData('article', null, null, null, null, this.search ? this.search : ' ')
+      this.api.getListData('article', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
       .then((result) => {
         console.log(result)
-        this.listData = JSON.parse(JSON.stringify(result)).data;
+        this.resp = JSON.parse(JSON.stringify(result))
+        this.listData = this.resp.data;
         this.insertImage();
       }).then(() => {
         this.loadingCtrl.dismiss();
@@ -169,10 +180,46 @@ export class ArticlesAddPage implements OnInit {
   }
 
   sendIdArticle(id){
-
+    const extras: NavigationExtras = {
+      queryParams: {
+        id: JSON.stringify(id)
+      }
+    }
+    this.navCtrl.navigateForward(['articles-update'], extras);
   }
 
   ngOnInit() {
+  }
+
+  nextPrev(nav){
+    if (nav === 'next') {
+      let a = parseInt(this.page_number) + 1;
+      this.page_number = a.toString();
+      this.getData();
+    } else if (nav === 'prev') {
+      let a = parseInt(this.page_number) - 1;
+      this.page_number = a.toString();
+      this.getData();
+    } else if (nav === 'first') {
+      this.page_number = '1';
+      this.getData();
+    } else if (nav === 'last') {
+      this.page_number = this.resp.page_information.totalPage.toString();
+      console.log(this.page_number);
+      this.getData();
+    }
+  }
+
+  changeSort(id){
+    if (this.sort_by === 'ASC') {
+      this.sort_by = 'DESC';
+      this.order_by = id;
+      this.getData();
+    } else  if (this.sort_by === 'DESC') {
+      this.sort_by = 'ASC';
+      this.order_by = id;
+      this.getData();
+    }
   }
 
 }
