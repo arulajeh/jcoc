@@ -9,6 +9,7 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./add-schedule.page.scss'],
 })
 export class AddSchedulePage implements OnInit {
+  imgNotFound = 'assets/img/image.png';
 
   listMusics = [];
   songLeader = [];
@@ -87,6 +88,8 @@ export class AddSchedulePage implements OnInit {
         // console.log(res);
         // this.scheduleList = JSON.parse(JSON.stringify(res)).data;
         // console.log(this.scheduleList);
+      }).then(() => {
+        this.getImages();
       }).catch((err) => {
         this.loadingCtrl.dismiss();
         this.showToast('Error Getting data');
@@ -307,6 +310,23 @@ export class AddSchedulePage implements OnInit {
       }
     }
     this.navCtrl.navigateForward(['schedule-update'], navigationExtras);
+  }
+
+  getImages() {
+    console.log(this.scheduleList);
+    Promise.all(
+      this.scheduleList.map( async (val) => {
+        const body = {id: val.file_id}
+        await this.api.postData('image', body).then(async (res) => {
+          const x = JSON.parse(JSON.stringify(res)).data;
+          await this.scheduleList.forEach((value) => {
+            if (x.id === value.file_id) {
+              value.file = x.file
+            }
+          });
+        });
+      })
+    );
   }
 
 }

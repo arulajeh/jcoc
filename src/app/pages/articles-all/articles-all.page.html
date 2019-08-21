@@ -15,7 +15,7 @@
     <ion-row justify-content-center>
       <ion-col *ngFor ="let data of listArticle" size="md">
         <ion-card class="card_schedule" color="medium">
-          <img [src]="data.file" alt="">
+          <img [src]="data.file ? data.file : imgNotFound" alt="">
           <ion-card-header>
             <ion-card-title color="light">{{data.title}}</ion-card-title>
             <ion-row>

@@ -24,7 +24,7 @@
         <ion-row>
           <ion-col size="12">
             <div class="box">
-              <img [src]="img.file" alt="">
+              <img [src]="img?.file ? img.file : imgNotFound" alt="">
               <p class="tengah">{{img.title}}</p>
             </div>
           </ion-col>

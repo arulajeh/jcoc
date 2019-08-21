@@ -15,7 +15,7 @@
     <ion-row justify-content-center>
       <ion-col *ngFor ="let data of listSchedule" size="md">
         <ion-card class="card_schedule" >
-          <img [src]="data.file" alt="">
+          <img [src]="data.file ? data.file : imgNotFound" alt="">
           <ion-card-header>
             <ion-card-title>{{data.event_name}}</ion-card-title>
             <ion-card-subtitle>{{data.event_date}}</ion-card-subtitle>

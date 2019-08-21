@@ -9,6 +9,7 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./articles-add.page.scss'],
 })
 export class ArticlesAddPage implements OnInit {
+  imgNotFound = 'assets/img/image.png';
 
   skeleton = [1,2,3];
   resp:any;

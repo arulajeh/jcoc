@@ -9,6 +9,7 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./articles-all.page.scss'],
 })
 export class ArticlesAllPage implements OnInit {
+  imgNotFound = 'assets/img/image.png';
 
   page_size = '100';
   page_number = '1';
@@ -30,11 +31,14 @@ export class ArticlesAllPage implements OnInit {
 
   getDataArticle(){
     console.log('Article');
-    this.api.getListData('article/all', this.page_size, this.page_number, this.order_by, this.sort_by, this.search).then((result) =>{
+    this.api.getListData('article/all', this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
+    .then((result) =>{
       console.log(result);
       this.listArticle = JSON.parse(JSON.stringify(result)).data;
       console.log(this.listArticle);
-    });
+    }).then(() => {
+      this.getImages();
+    })
   }
 
   sendIdArticle(id){
@@ -48,6 +52,22 @@ export class ArticlesAllPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  getImages() {
+    Promise.all(
+      this.listArticle.map( async (val) => {
+        const body = {id: val.file_id}
+        await this.api.postData('image', body).then(async (res) => {
+          const x = JSON.parse(JSON.stringify(res)).data;
+          await this.listArticle.forEach((value) => {
+            if (x.id === value.file_id) {
+              value.file = x.file
+            }
+          });
+        });
+      })
+    );
   }
 
 }

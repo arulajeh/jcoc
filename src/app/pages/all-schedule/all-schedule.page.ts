@@ -9,7 +9,7 @@ import { NavController, ToastController, LoadingController } from '@ionic/angula
   styleUrls: ['./all-schedule.page.scss'],
 })
 export class AllSchedulePage implements OnInit {
-
+  imgNotFound = 'assets/img/image.png';
   page_size = '100';
   page_number = '1';
   order_by = 'id';
@@ -38,7 +38,12 @@ export class AllSchedulePage implements OnInit {
         this.loadingCtrl.dismiss();
         this.resp = JSON.parse(JSON.stringify(result));
         this.listSchedule = JSON.parse(JSON.stringify(result)).data;
-      });
+      }).then(() => {
+        this.getImages();
+      }).catch((err) => {
+        this.loadingCtrl.dismiss();
+        this.showToast('Error getting data');
+      })
     });
   }
 
@@ -94,6 +99,22 @@ export class AllSchedulePage implements OnInit {
       this.page_number = this.resp.page_information.totalPage.toString();
       this.getDataSchedule();
     }
+  }
+
+  getImages() {
+    Promise.all(
+      this.listSchedule.map( async (val) => {
+        const body = {id: val.file_id}
+        await this.api.postData('image', body).then(async (res) => {
+          const x = JSON.parse(JSON.stringify(res)).data;
+          await this.listSchedule.forEach((value) => {
+            if (x.id === value.file_id) {
+              value.file = x.file
+            }
+          });
+        });
+      })
+    );
   }
 
 }

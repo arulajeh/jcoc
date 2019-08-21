@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
+  imgNotFound = 'assets/img/image.png';
 
   @ViewChild("mySlider", {read: IonSlides, static: false}) slides: IonSlides;
   // @ViewChild
@@ -155,6 +156,7 @@ export class DashboardPage implements OnInit {
 
   ionSlidesDidLoad(){
     this.slides.startAutoplay();
+    this.getImages();
   }
 
   getImages() {
