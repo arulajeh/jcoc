@@ -10,6 +10,7 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./add-user.page.scss'],
 })
 export class AddUserPage implements OnInit {
+  imgNotFound = 'assets/img/image.png';
   dataUser = {
     username: '',
     name: '',
@@ -178,7 +179,7 @@ export class AddUserPage implements OnInit {
     console.log('member');
     return this.loadAnimation().then(() => {
       const api = JSON.parse(localStorage.getItem('data')).akses === 1 ? 'users/all' : 'users';
-      return this.api.getListData(api, this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
+      return this.api.getListData(api, this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
       .then((res) => {
         // console.log(res);
         this.loadingCtrl.dismiss();

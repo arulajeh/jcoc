@@ -148,7 +148,7 @@
           <ion-icon name="arrow-dropup" *ngIf="order_by === 'name' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
       </ion-col>
-      <ion-col>
+      <ion-col class="hide-mobile">
         <ion-row justify-content-center (click)="changeSort('email')">
           Email
           <ion-icon name="arrow-dropdown" *ngIf="order_by === 'email' && sort_by === 'DESC'"></ion-icon>
@@ -162,7 +162,7 @@
           <ion-icon name="arrow-dropup" *ngIf="order_by === 'phone' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
       </ion-col>
-      <ion-col class="hide-mobile">
+      <ion-col>
         <ion-row justify-content-center (click)="changeSort('position_name')">
           Position
           <ion-icon name="arrow-dropdown" *ngIf="order_by === 'position_name' && sort_by === 'DESC'"></ion-icon>
@@ -191,7 +191,7 @@
           {{user?.name}}
         </ion-row>
       </ion-col>
-      <ion-col align-self-center>
+      <ion-col align-self-center class="hide-mobile">
         <ion-row justify-content-center>
           {{user?.email}}
         </ion-row>
@@ -201,14 +201,14 @@
           {{user?.phone}}
         </ion-row>
       </ion-col>
-      <ion-col align-self-center class="hide-mobile">
+      <ion-col align-self-center>
         <ion-row justify-content-center>
           {{user?.position_name}}
         </ion-row>
       </ion-col>
       <ion-col size="2" align-self-center>
         <ion-row justify-content-center>
-          <ion-img [src]="user?.file" style="width: 100%; height: 100%"></ion-img>
+          <ion-img [src]="user?.file ? user.file : imgNotFound" style="width: 100%; height: 100%"></ion-img>
         </ion-row>
       </ion-col>
       <ion-col size="2" align-self-center>

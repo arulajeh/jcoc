@@ -35,6 +35,7 @@ export class AddMusicPage implements OnInit {
   id;
   resp:any;
 
+  validUrl = false;
   constructor(
     private api: ApiService,
     public toastController: ToastController,
@@ -63,6 +64,7 @@ export class AddMusicPage implements OnInit {
       });
       if(this.status == true){
         //alert('SUCCESS');
+        this.getMusicList();
         this.notif("Success! Music has been udded.");
         this.dataMusic.judul = "";
         this.dataMusic.penyanyi = "";
@@ -188,6 +190,10 @@ export class AddMusicPage implements OnInit {
       this.order_by = name;
       this.getMusicList();
     }
+  }
+
+  async isValid(url) {
+    return this.validUrl = await this.api.isValidURL(url);
   }
 
 }
