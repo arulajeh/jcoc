@@ -716,7 +716,7 @@ app.get('/api/schedule', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT * FROM v_schedule WHERE user_id = ${hasilJWT.data.id} AND event_name ILIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT event_name, event_date, user_id, song_leader_id, vokalis_id, song_leader, vokalis, basis, basis_id, gitaris, gitaris_id, drummer, drummer_id, pianis, pianis_id, music_name, file_id FROM v_schedule WHERE user_id = ${hasilJWT.data.id} AND event_name ILIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
@@ -756,7 +756,7 @@ app.get('/api/schedule/all', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT * FROM v_schedule WHERE event_name ILIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT event_name, event_date, user_id, song_leader_id, vokalis_id, song_leader, vokalis, basis, basis_id, gitaris, gitaris_id, drummer, drummer_id, pianis, pianis_id, music_name, file_id FROM v_schedule WHERE event_name ILIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
@@ -1114,7 +1114,7 @@ app.get('/api/content', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT * FROM v_content WHERE title ILIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT id, title, file_id FROM v_content WHERE title ILIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
@@ -1348,7 +1348,7 @@ app.get('/api/article', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT * FROM v_articles WHERE user_id = ${hasilJWT.data.id} AND (title ILIKE '%${search}%') ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT id, content, title, name, file_id FROM v_articles WHERE user_id = ${hasilJWT.data.id} AND (title ILIKE '%${search}%') ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
@@ -1389,7 +1389,7 @@ app.get('/api/article/all', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT * FROM v_articles WHERE title ILIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT id, content, title, name, file_id FROM v_articles WHERE title ILIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;

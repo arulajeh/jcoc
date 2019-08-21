@@ -191,11 +191,11 @@ export class AddUserPage implements OnInit {
         } else {
           return this.listMembers = JSON.parse(JSON.stringify(res)).data;
         }
-        console.log(this.listMembers);
       }).then(() => {
         this.getImages();
       }).catch((err) => {
         this.loadingCtrl.dismiss();
+        this.showToast('Error getting data');
       })
     })
   }
@@ -278,18 +278,14 @@ export class AddUserPage implements OnInit {
   getImages() {
     Promise.all(
       this.listMembers.map( async (val) => {
-        // console.log(val.id);
         const body = {id: val.file_id}
         await this.api.postData('image', body).then(async (res) => {
-          // console.log(res);
-          const x = JSON.parse(JSON.stringify(res));
-          console.log(x);
-          // await this.listMembers.forEach((value) => {
-          //   console.log(value)
-          //   if (x.id === value.file_id) {
-          //     value.file = x.file
-          //   }
-          // });
+          const x = JSON.parse(JSON.stringify(res)).data;
+          await this.listMembers.forEach((value) => {
+            if (x.id === value.file_id) {
+              value.file = x.file
+            }
+          });
         });
       })
     );
