@@ -128,9 +128,7 @@ export class AddUserPage implements OnInit {
 
   initData() {
     this.getDataPosition();
-    this.getMemberList().then(() => {
-      this.getImages();
-    })
+    this.getMemberList()
   }
 
   getDataPosition() {
@@ -194,6 +192,8 @@ export class AddUserPage implements OnInit {
           return this.listMembers = JSON.parse(JSON.stringify(res)).data;
         }
         console.log(this.listMembers);
+      }).then(() => {
+        this.getImages();
       }).catch((err) => {
         this.loadingCtrl.dismiss();
       })
@@ -280,21 +280,17 @@ export class AddUserPage implements OnInit {
       this.listMembers.map( async (val) => {
         console.log(val.id);
         const body = {id: val.id}
-        await this.api.postData('users/image', body).then((res) => {
+        await this.api.postData('image', body).then((res) => {
           console.log(res);
-          const x = JSON.parse(JSON.stringify(res));
+          const x = JSON.parse(JSON.stringify(res)).data;
           this.listMembers.forEach((value) => {
-            if (x.id === value.id) {
+            if (x.id === value.file_id) {
               value.file = x.file
             }
           });
         });
       })
     );
-  }
-
-  images() {
-    // this.api.postData('')
   }
 
 }
