@@ -8,6 +8,7 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./all-user.page.scss'],
 })
 export class AllUserPage implements OnInit {
+  imgNotFound = 'assets/img/image.png';
   page_size = '5';
   page_number = '1';
   order_by = 'id';
@@ -48,6 +49,8 @@ export class AllUserPage implements OnInit {
         } else {
           return this.listMembers = JSON.parse(JSON.stringify(res)).data;
         }
+      }).then(() => {
+        this.getImages();
       }).catch((err) => {
         this.loadingCtrl.dismiss();
         this.showToast('Error Getting Data');
@@ -95,6 +98,22 @@ export class AllUserPage implements OnInit {
       this.page_number = this.resp.page_information.totalPage.toString();
       this.getMemberList();
     }
+  }
+
+  getImages() {
+    Promise.all(
+      this.listMembers.map( async (val) => {
+        const body = {id: val.file_id}
+        await this.api.postData('image', body).then(async (res) => {
+          const x = JSON.parse(JSON.stringify(res)).data;
+          await this.listMembers.forEach((value) => {
+            if (x.id === value.file_id) {
+              value.file = x.file
+            }
+          });
+        });
+      })
+    );
   }
 
 }

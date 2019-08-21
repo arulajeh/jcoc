@@ -40,7 +40,7 @@
       <ion-col *ngFor ="let data of listMembers" size="xs">
         <ion-card class="card_music" color="medium">
           <ion-row justify-content-center class="topMargin">
-            <img [src]="data.file" alt="" class="yt user-img mb-4">
+            <img [src]="data.file ? data.file : imgNotFound" alt="" class="yt user-img mb-4">
           </ion-row>
           <ion-row justify-content-center class="topMargin">
             {{data?.email}}

@@ -126,6 +126,7 @@ export class ArticlesAddPage implements OnInit {
         this.insertImage();
       }).then(() => {
         this.loadingCtrl.dismiss();
+        this.getImages();
       }).catch((err) => {
         this.loadingCtrl.dismiss();
       })
@@ -220,6 +221,22 @@ export class ArticlesAddPage implements OnInit {
       this.order_by = id;
       this.getData();
     }
+  }
+
+  getImages() {
+    Promise.all(
+      this.listData.map( async (val) => {
+        const body = {id: val.file_id}
+        await this.api.postData('image', body).then(async (res) => {
+          const x = JSON.parse(JSON.stringify(res)).data;
+          await this.listData.forEach((value) => {
+            if (x.id === value.file_id) {
+              value.file = x.file
+            }
+          });
+        });
+      })
+    );
   }
 
 }

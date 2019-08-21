@@ -9,7 +9,17 @@
 
 <ion-content padding color="dark">
   <ion-grid fixed>
-    <ion-slides [options]="slideOpts"  class="content">
+    <ion-slides 
+    [options]="slideOpts" 
+    class="content" 
+    loop="true" 
+    speed="500" 
+    pager="true" 
+    autoplay="5000"
+    #mySlider 
+    (ionSlidesDidLoad)="ionSlidesDidLoad()"
+    *ngIf="respContent"
+    >
       <ion-slide *ngFor="let img of contentList" >
         <ion-row>
           <ion-col size="12">

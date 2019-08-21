@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { ToastController, LoadingController, NavController } from '@ionic/angular';
+import { ToastController, LoadingController, NavController, IonSlides } from '@ionic/angular';
 import { NavigationExtras } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -10,6 +10,9 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./dashboard.page.scss'],
 })
 export class DashboardPage implements OnInit {
+
+  @ViewChild("mySlider", {read: IonSlides, static: false}) slides: IonSlides;
+  // @ViewChild
 
   public slideOpts = {
     slidesPerView: 1,
@@ -24,6 +27,7 @@ export class DashboardPage implements OnInit {
   contentList = [];
   musicList = []
   resp:any;
+  respContent:any;
 
   page_number = '1';
   search = '';
@@ -45,9 +49,8 @@ export class DashboardPage implements OnInit {
     return this.showLoading('Getting data').then(() => {
       return this.api.getListData('content', '5', '1', 'id', 'ASC', ' ').then((res) => {
         this.loadingCtrl.dismiss();
-        const response = JSON.parse(JSON.stringify(res));
-        this.contentList = response.data;
-        console.log(this.contentList);
+        this.respContent = JSON.parse(JSON.stringify(res));
+        this.contentList = this.respContent.data;
       }).catch(() => {
         this.loadingCtrl.dismiss();
         this.showToast('Error getting data');
@@ -148,6 +151,26 @@ export class DashboardPage implements OnInit {
       this.page_number = this.resp.page_information.totalPage.toString();
       this.getMusicList();
     }
+  }
+
+  ionSlidesDidLoad(){
+    this.slides.startAutoplay();
+  }
+
+  getImages() {
+    Promise.all(
+      this.contentList.map( async (val) => {
+        const body = {id: val.file_id}
+        await this.api.postData('image', body).then(async (res) => {
+          const x = JSON.parse(JSON.stringify(res)).data;
+          await this.contentList.forEach((value) => {
+            if (x.id === value.file_id) {
+              value.file = x.file
+            }
+          });
+        });
+      })
+    );
   }
 
 }
