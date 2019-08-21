@@ -15,11 +15,17 @@
     <ion-grid>
       <ion-row>
         <ion-col><ion-card-subtitle>Created by : {{dataArticle?.name}}</ion-card-subtitle></ion-col>
-        <ion-col><ion-card-subtitle>{{dataArticle?.createdAt | date: 'EEE, MMM d, y'}}</ion-card-subtitle></ion-col>
+        <ion-col><ion-card-subtitle>
+          <ion-row justify-content-end>
+            {{dataArticle?.createdAt | date: 'EEE, MMM d, y'}}
+          </ion-row>
+        </ion-card-subtitle></ion-col>
       </ion-row>
       <ion-row>
         <ion-col>  
-          <ion-card-content class="spacing">{{dataArticle?.content}}</ion-card-content>
+          <ion-card-content class="spacing">
+            {{dataArticle?.content}}
+          </ion-card-content>
         </ion-col>
       </ion-row>
     </ion-grid>

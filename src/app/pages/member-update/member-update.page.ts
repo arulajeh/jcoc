@@ -119,10 +119,11 @@ export class MemberUpdatePage implements OnInit {
   }
 
   submit() {
-    this.dataUser.password = md5(this.pass);
+    this.dataUser.password = this.pass !== '' ? md5(this.pass) : '';
     this.dataUser.position_id = this.position.id;
     this.dataUser.gender_id = this.selectGender.id;
     this.dataUser.id = this.id;
+    console.log(this.dataUser);
     this.api.postData('users/update', this.dataUser)
     .then((res) => {
       let ress = JSON.parse(JSON.stringify(res));
