@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="warning">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="dark">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
       pullingIcon="arrow-dropdown"
@@ -20,7 +20,7 @@
   <ion-row>
     <ion-col size="12">
       <ion-row justify-content-center>
-        <ion-text color="secondary">
+        <ion-text>
           <h1>Add Members</h1>
         </ion-text>
       </ion-row>
@@ -30,16 +30,16 @@
     <form id="loginForm">
       <ion-row>
         <ion-col size="6">
-          <ion-item>
-            <ion-label position="stacked" color="primary">Name</ion-label>
+          <ion-item color="dark">
+            <ion-label position="stacked">Name</ion-label>
             <ion-input [(ngModel)]="dataUser.name" name="name" type="text" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
-          <ion-item>
-            <ion-label position="stacked" color="primary">Username</ion-label>
+          <ion-item color="dark">
+            <ion-label position="stacked">Username</ion-label>
             <ion-input [(ngModel)]="dataUser.username" name="username" type="text" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
@@ -48,16 +48,16 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-item>
-            <ion-label position="stacked" color="primary">Password</ion-label>
+          <ion-item color="dark">
+            <ion-label position="stacked">Password</ion-label>
             <ion-input [(ngModel)]="pass" name="password" type="password" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
-          <ion-item>
-            <ion-label position="stacked" color="primary">Phone</ion-label>
+          <ion-item color="dark">
+            <ion-label position="stacked">Phone</ion-label>
             <ion-input [(ngModel)]="dataUser.phone" name="phone" type="text" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
@@ -66,8 +66,8 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-label color="primary" position="stacked">Position</ion-label>
-          <ionic-selectable
+          <ion-label position="stacked">Position</ion-label>
+          <ionic-selectable color="dark"
           [(ngModel)]="position"
           [items]="listPostions"
           itemValueField="id"
@@ -78,7 +78,7 @@
           </ionic-selectable>
         </ion-col>
         <ion-col size="6">
-          <ion-label color="primary" position="stacked">Gender</ion-label>
+          <ion-label position="stacked">Gender</ion-label>
           <ionic-selectable
           [(ngModel)]="selectGender"
           [items]="gender"
@@ -92,23 +92,23 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-item>
-            <ion-label position="stacked" color="primary">Email</ion-label>
+          <ion-item color="dark">
+            <ion-label position="stacked">Email</ion-label>
             <ion-input [(ngModel)]="dataUser.email" name="email" type="text" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
-          <ion-item>
-            <ion-label position="stacked" color="primary">Photo</ion-label>
+          <ion-item color="dark">
+            <ion-label position="stacked">Photo</ion-label>
             <ion-input type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-button 
+          <ion-button color="warning" 
           (click)="submit()" 
           type="submit" 
           [disabled]="!dataUser.username || !dataUser.name || !pass || !dataUser.name || !dataUser.email || !dataUser.phone || !dataUser.image.isImage || !position.id || !selectGender.id"
@@ -122,7 +122,7 @@
   <ion-grid fixed>
     <ion-row>
       <ion-col size="4">
-        <ion-item>
+        <ion-item color="medium">
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" (ionChange)="getMemberList()">
             <ion-select-option value="5">5</ion-select-option>
@@ -132,7 +132,7 @@
         </ion-item>
       </ion-col>
       <ion-col size="8">
-        <ion-searchbar showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getMemberList()"></ion-searchbar>
+        <ion-searchbar color="medium" showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getMemberList()"></ion-searchbar>
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
@@ -247,17 +247,23 @@
       </ion-col>
       <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
         <ion-row justify-content-end>
-          1
+          <ion-button color="warning">
+            1
+          </ion-button>
         </ion-row>
       </ion-col>
       <ion-col >
         <ion-row justify-content-center>
-          {{resp?.page_information?.currentPage}}
+          <ion-button color="warning" disabled>
+            {{resp?.page_information?.currentPage}}
+          </ion-button>
         </ion-row>
       </ion-col>
       <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
         <ion-row justify-content-start >
-          {{resp?.page_information?.totalPage}}
+          <ion-button color="warning">
+            {{resp?.page_information?.totalPage}}
+          </ion-button>
         </ion-row>
       </ion-col>
       <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.totalPage">

@@ -7,22 +7,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-card *ngIf="resp">
+<ion-content color="dark">
+  <ion-card *ngIf="resp" color="dark">
     <img [src]="resp?.file" alt="">
-    <ion-card-title>NAMA EVENT</ion-card-title>
-    {{resp?.event_name}}
-    <ion-card-subtitle>Tanggal Event</ion-card-subtitle>
-    {{resp?.event_date | date: 'EEE, d MMM y'}}
+    <ion-card-title color="warning">{{resp?.event_name}}</ion-card-title>
+    <ion-card-subtitle>{{resp?.event_date | date: 'EEE, d MMM y'}}</ion-card-subtitle>
     <ion-grid fixed>
       <ion-row>
         <ion-col>
-          <ion-card-title>Member List</ion-card-title>
+          <ion-card-title color="warning">Member List</ion-card-title>
           <ion-row>
             <ion-col size="12">
-              <ion-text color="primary">
-                Vokalis
-              </ion-text>
+              <ion-card-subtitle class="sub">Vokalis</ion-card-subtitle>
             </ion-col>
           </ion-row>
           <ion-row *ngFor="let data of resp?.vokalis">
@@ -32,9 +28,7 @@
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              <ion-text color="primary">
-                Song Leader
-              </ion-text>
+              <ion-card-subtitle class="sub">Song Leader</ion-card-subtitle>
             </ion-col>
           </ion-row>
           <ion-row *ngFor="let data of resp?.song_leader">
@@ -44,74 +38,60 @@
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              <ion-text color="primary">
-                Basis
-              </ion-text>
+              <ion-card-subtitle class="sub">Basis</ion-card-subtitle>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              {{resp?.basis}}
+                {{resp?.basis}}
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              <ion-text color="primary">
-                Drummer
-              </ion-text>
+              <ion-card-subtitle class="sub">Drummer</ion-card-subtitle>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              {{resp?.drummer}}
+                {{resp?.drummer}}
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              <ion-text color="primary">
-                Gitaris
-              </ion-text>
+              <ion-card-subtitle class="sub">Gitaris</ion-card-subtitle>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              {{resp?.gitaris}}
+                {{resp?.gitaris}}
             </ion-col>
           </ion-row>
         </ion-col>
         <ion-col>
-          <ion-card-title>Music List</ion-card-title>
+          <ion-card-title color="warning">Music List</ion-card-title>
           <ion-row *ngFor="let music of resp?.music_name">
             <ion-col size="12">
-              {{music}}
+              <ion-card-subtitle>{{music}}</ion-card-subtitle>
             </ion-col>
           </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-card-title>Awesome Title</ion-card-title>
-          <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
-        </ion-col>
-        <ion-col>
-          <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
         </ion-col>
       </ion-row>
     </ion-grid>  
   </ion-card>
-  <ion-card *ngIf="!resp">
+
+  <ion-card *ngIf="!resp" color="dark">
     <img [src]="resp?.file" alt="">
-    <ion-card-title>NAMA EVENT</ion-card-title>
+    <ion-card-title color="warning">NAMA EVENT</ion-card-title>
       <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
     <ion-card-subtitle>Tanggal Event</ion-card-subtitle>
       <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
     <ion-grid fixed>
       <ion-row>
         <ion-col>
-          <ion-card-title>Member List</ion-card-title>
+          <ion-card-title color="warning">Member List</ion-card-title>
           <ion-row>
             <ion-col size="12">
-              <ion-text color="primary">
+              <ion-text>
                 Vokalis
               </ion-text>
             </ion-col>
@@ -123,7 +103,7 @@
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              <ion-text color="primary">
+              <ion-text>
                 Song Leader
               </ion-text>
             </ion-col>
@@ -135,7 +115,7 @@
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              <ion-text color="primary">
+              <ion-text>
                 Basis
               </ion-text>
             </ion-col>
@@ -147,7 +127,7 @@
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              <ion-text color="primary">
+              <ion-text>
                 Drummer
               </ion-text>
             </ion-col>
@@ -159,7 +139,7 @@
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              <ion-text color="primary">
+              <ion-text>
                 Gitaris
               </ion-text>
             </ion-col>
@@ -171,23 +151,12 @@
           </ion-row>
         </ion-col>
         <ion-col>
-          <ion-card-title>Music List</ion-card-title>
+          <ion-card-title color="warning">Music List</ion-card-title>
           <ion-row>
             <ion-col size="12">
               <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
             </ion-col>
           </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-card-title>Awesome Title</ion-card-title>
-          <ion-card-subtitle>
-            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-          </ion-card-subtitle>
-        </ion-col>
-        <ion-col>
-          <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
         </ion-col>
       </ion-row>
     </ion-grid>  
