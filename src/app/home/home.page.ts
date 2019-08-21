@@ -32,6 +32,12 @@ export class HomePage {
       ]
     },
     {
+      title: 'All Members',
+      url: '/home/all-user',
+      icon: 'contacts',
+      hidden: JSON.parse(localStorage.getItem('data')).akses === 2 ? false : true
+    },
+    {
       title: 'Members',
       children: [
         {
@@ -46,7 +52,8 @@ export class HomePage {
           icon: 'person-add',
           hidden: false
         }
-      ]
+      ],
+      hidden: JSON.parse(localStorage.getItem('data')).akses === 1 ? false : true
     },
     {
       title: 'Schedule',

@@ -33,7 +33,7 @@ export class AllSchedulePage implements OnInit {
 
   getDataSchedule(){
     return this.showLoading('Getting data').then(() => {
-      return this.api.getListData('schedule', this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
+      return this.api.getListData('schedule/all', this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
       .then((result) =>{
         this.loadingCtrl.dismiss();
         this.resp = JSON.parse(JSON.stringify(result));

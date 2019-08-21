@@ -1102,7 +1102,7 @@ app.post('/api/content/create', (req, res) => {
         }).then((result) => {
           if (result) {
             db.content.create({
-              file_id: result.id,
+              files_id: result.id,
               title: args.title,
               status: 1,
               user_id: hasilJWT.data.id
