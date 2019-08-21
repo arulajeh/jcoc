@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { ToastController, MenuController } from '@ionic/angular';
 import { ApiService } from "../../services/api.service";
 import { Router } from '@angular/router';
 
@@ -16,10 +16,15 @@ export class LoginPage implements OnInit {
   constructor(
     private api: ApiService,
     private toastCtrl: ToastController,
-    private route: Router
+    private route: Router,
+    private menuCtrl: MenuController
   ) { }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter() {
+    this.menuCtrl.enable(false);
   }
 
   submit() {

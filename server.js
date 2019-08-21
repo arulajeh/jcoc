@@ -125,6 +125,34 @@ app.get('/api/users', (req, res) => {
   console.log(head);
 })
 
+app.post('api/users/image', (req, res) => {
+  let args = req.body;
+  let token = req.headers.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    db.sequelize.query(`SELECT file, id FROM v_user WHERE id = ${args.id}`, { type: db.sequelize.QueryTypes.SELECT})
+    .then((result) => {
+      if (result) {
+        const img = result[0];
+        res.json({
+          sukses: true,
+          data: img
+        });
+      } else {
+        res.json({
+          sukses:  false,
+          msg: 'Image not found'
+        });
+      }
+    })
+  } else {
+    res.json({
+      sukses: false,
+      msg: 'Unauthorized User'
+    });
+  }
+})
+
 app.get('/api/users/all', (req, res) => {
   const head = req.headers;
   let token = head.authorization;
