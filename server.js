@@ -589,7 +589,7 @@ app.post('/api/music/create', (req, res) => {
   let token = req.headers.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    if (hasilJWT.data.akses_id === 1) {
+    // if (hasilJWT.data.akses_id === 1) {
       db.music.create({
         judul: args.judul,
         penyanyi: args.penyanyi,
@@ -623,12 +623,12 @@ app.post('/api/music/create', (req, res) => {
         data: "Unauthorized user"
       });
     }
-  } else {
+  // } else {
     res.json({
       sukses: false,
       message: 'Invalid Token'
     });
-  }
+  // }
 })
 
 app.post('/api/music/update', (req, res) => {
@@ -636,7 +636,7 @@ app.post('/api/music/update', (req, res) => {
   let token = req.headers.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    if (hasilJWT.data.akses_id === 1) {
+    // if (hasilJWT.data.akses_id === 1) {
     db.music.update({
       judul: args.judul,
       penyanyi: args.penyanyi,
@@ -668,12 +668,12 @@ app.post('/api/music/update', (req, res) => {
         data: "Unauthorized user"
       });
     }
-  } else {
+  // } else {
     res.json({
       sukses: false,
       message: 'Invalid Token'
     });
-  }
+  // }
 })
 
 // Get Schedule List
@@ -724,7 +724,7 @@ app.post('/api/schedule/create', (req, res) => {
   let token = req.headers.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    if (hasilJWT.data.akses_id === 1) {
+    // if (hasilJWT.data.akses_id === 1) {
       db.schedule.create({
         event_date: args.event_date,
         event_name: args.event_name,
@@ -807,12 +807,12 @@ app.post('/api/schedule/create', (req, res) => {
         data: "Unauthorized user"
       });
     }
-  } else {
+  // } else {
     res.json({
       sukses: false,
       message: 'Invalid Token'
     });
-  }
+  // }
 })
 
 // Schedule Detail
@@ -856,7 +856,7 @@ app.post('/api/schedule/delete', (req,res) => {
   let token = req.headers.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    if (hasilJWT.data.akses_id === 1) {
+    // if (hasilJWT.data.akses_id === 1) {
       db.sequelize.query(`UPDATE schedule SET status = 0 WHERE id = ${args.id}`, {type: db.sequelize.QueryTypes.UPDATE})
       .then((result) => {
         if (result) {
@@ -882,12 +882,12 @@ app.post('/api/schedule/delete', (req,res) => {
         msg: 'Unauthorized User'
       })
     }
-  } else {
+  // } else {
     res.json({
       sukses: false,
       message: 'Invalid Token'
     });
-  }
+  // }
 })
 
 // Update Schedule
@@ -897,7 +897,7 @@ app.post('/api/schedule/update', (req,res) => {
   let token = req.headers.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    if (hasilJWT.data.akses_id === 1) {
+    // if (hasilJWT.data.akses_id === 1) {
       db.schedule.update({
         event_date: args.event_date,
         event_name: args.event_name,
@@ -1003,12 +1003,12 @@ app.post('/api/schedule/update', (req,res) => {
         msg: 'Unauthorized User'
       })
     }
-  } else {
+  // } else {
     res.json({
       sukses: false,
       message: 'Invalid Token'
     });
-  }
+  // }
 })
 
 // Get Master Positions
@@ -1102,7 +1102,7 @@ app.post('/api/content/create', (req, res) => {
         }).then((result) => {
           if (result) {
             db.content.create({
-              files_id: result.id,
+              file_id: result.id,
               title: args.title,
               status: 1,
               user_id: hasilJWT.data.id
