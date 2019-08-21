@@ -278,16 +278,18 @@ export class AddUserPage implements OnInit {
   getImages() {
     Promise.all(
       this.listMembers.map( async (val) => {
-        console.log(val.id);
-        const body = {id: val.id}
-        await this.api.postData('image', body).then((res) => {
-          console.log(res);
-          const x = JSON.parse(JSON.stringify(res)).data;
-          this.listMembers.forEach((value) => {
-            if (x.id === value.file_id) {
-              value.file = x.file
-            }
-          });
+        // console.log(val.id);
+        const body = {id: val.file_id}
+        await this.api.postData('image', body).then(async (res) => {
+          // console.log(res);
+          const x = JSON.parse(JSON.stringify(res));
+          console.log(x);
+          // await this.listMembers.forEach((value) => {
+          //   console.log(value)
+          //   if (x.id === value.file_id) {
+          //     value.file = x.file
+          //   }
+          // });
         });
       })
     );
