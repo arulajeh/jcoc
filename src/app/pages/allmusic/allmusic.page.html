@@ -29,14 +29,14 @@
         </ion-item>
       </ion-col>
       <ion-col size="8">
-        <ion-searchbar placeholder="Search Music" class="searchbar" debounce="500" [(ngModel)]="search" (ionChange)="getDataMusic()"></ion-searchbar>
+        <ion-searchbar color="medium" placeholder="Search Music" class="searchbar" debounce="500" [(ngModel)]="search" (ionChange)="getDataMusic()"></ion-searchbar>
       </ion-col>
     </ion-row>
   </ion-grid>
-  <ion-grid style="margin-right: 1.5%" class="marginku">
+  <ion-grid style="margin-right: 1.5%" class="marginku" color="medium">
     <ion-row justify-content-center>
       <ion-col *ngFor ="let data of safeUrl" size="md">
-        <ion-card class="card_music" >
+        <ion-card class="card_music" color="medium">
           <iframe class="yt" height="315"
             [src]="data.url">
           </iframe>
@@ -67,17 +67,23 @@
       </ion-col>
       <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
         <ion-row justify-content-end>
-          1
+          <ion-button color="warning">
+            1
+          </ion-button>
         </ion-row>
       </ion-col>
       <ion-col >
         <ion-row justify-content-center>
-          {{resp?.page_information?.currentPage}}
+          <ion-button color="warning" disabled>
+            {{resp?.page_information?.currentPage}}
+          </ion-button>
         </ion-row>
       </ion-col>
       <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
         <ion-row justify-content-start >
-          {{resp?.page_information?.totalPage}}
+          <ion-button color="warning">
+            {{resp?.page_information?.totalPage}}
+          </ion-button>
         </ion-row>
       </ion-col>
       <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
