@@ -38,7 +38,7 @@ export class AllUserPage implements OnInit {
 
   getMemberList() {
     this.showLoading('Getting user data').then(() => {
-      this.api.getListData('users', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
+      this.api.getListData('users/all', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
       .then((res) => {
         this.loadingCtrl.dismiss();
         this.resp = JSON.parse(JSON.stringify(res));

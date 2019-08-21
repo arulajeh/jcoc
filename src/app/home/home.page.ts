@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
+  hasLogin = localStorage.getItem('token') ? true : false;
 
   pages = [
     {
@@ -32,6 +33,12 @@ export class HomePage {
       ]
     },
     {
+      title: 'All Members',
+      url: '/home/all-user',
+      icon: 'contacts',
+      hidden: JSON.parse(localStorage.getItem('data')).akses === 2 ? false : true
+    },
+    {
       title: 'Members',
       children: [
         {
@@ -46,7 +53,8 @@ export class HomePage {
           icon: 'person-add',
           hidden: false
         }
-      ]
+      ],
+      hidden: JSON.parse(localStorage.getItem('data')).akses === 1 ? false : true
     },
     {
       title: 'Schedule',
@@ -66,16 +74,28 @@ export class HomePage {
       ]
     },
     {
-      title: 'Add Articles',
-      url: '/home/articles-add',
-      icon: 'today',
+      title: 'Articles',
+      children: [
+        {
+          title: 'Articles',
+          url: '/home/articles-all',
+          icon: 'paper',
+          hidden: false
+        },
+        {
+          title: 'Add Articles',
+          url: '/home/articles-add',
+          icon: 'today',
+          hidden: false
+        }
+      ],
       hidden: JSON.parse(localStorage.getItem('data')).akses === 1 ? false : true
     },
     {
       title: 'Articles',
       url: '/home/articles-all',
       icon: 'paper',
-      hidden: false
+      hidden: JSON.parse(localStorage.getItem('data')).akses === 2 ? false : true
     },
     {
       title: 'Content',

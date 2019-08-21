@@ -10,6 +10,7 @@ import { NavigationExtras } from '@angular/router';
   styleUrls: ['./add-user.page.scss'],
 })
 export class AddUserPage implements OnInit {
+  imgNotFound = 'assets/img/image.png';
   dataUser = {
     username: '',
     name: '',
@@ -51,7 +52,7 @@ export class AddUserPage implements OnInit {
   order_by = 'name'
   sort_by = 'ASC'
   search = ''
-  listMembers:any;
+  listMembers = [];
   resp:any;
 
   constructor(
@@ -127,7 +128,9 @@ export class AddUserPage implements OnInit {
 
   initData() {
     this.getDataPosition();
-    this.getMemberList();
+    this.getMemberList().then(() => {
+      this.getImages();
+    })
   }
 
   getDataPosition() {
@@ -177,7 +180,8 @@ export class AddUserPage implements OnInit {
   getMemberList() {
     console.log('member');
     return this.loadAnimation().then(() => {
-      return this.api.getListData('users', this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
+      const api = JSON.parse(localStorage.getItem('data')).akses === 1 ? 'users/all' : 'users';
+      return this.api.getListData(api, this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
       .then((res) => {
         // console.log(res);
         this.loadingCtrl.dismiss();
@@ -269,6 +273,28 @@ export class AddUserPage implements OnInit {
       this.order_by = id;
       this.getMemberList();
     }
+  }
+
+  getImages() {
+    Promise.all(
+      this.listMembers.map( async (val) => {
+        console.log(val.id);
+        const body = {id: val.id}
+        await this.api.postData('users/image', body).then((res) => {
+          console.log(res);
+          const x = JSON.parse(JSON.stringify(res));
+          this.listMembers.forEach((value) => {
+            if (x.id === value.id) {
+              value.file = x.file
+            }
+          });
+        });
+      })
+    );
+  }
+
+  images() {
+    // this.api.postData('')
   }
 
 }

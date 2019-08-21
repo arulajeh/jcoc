@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true
       },
-      files_id: {
+      file_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

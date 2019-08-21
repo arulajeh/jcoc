@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     akses_id: {
       type: DataTypes.INTEGER,

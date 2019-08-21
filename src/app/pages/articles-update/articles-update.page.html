@@ -26,7 +26,7 @@
       <ion-col size="12">
         <ion-item color="dark">
         <ion-label position="floating">Content</ion-label>
-          <ion-textarea [(ngModel)]="data.content" name="content" placeholder="Your article content" rows="6" cols="20" spellcheck="false" autocapitalize="off"></ion-textarea>
+          <ion-textarea class="spacing" [(ngModel)]="data.content" name="content" placeholder="Your article content" rows="6" cols="20" spellcheck="false" autocapitalize="off"></ion-textarea>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -35,7 +35,7 @@
         <ion-button 
         (click)="submit()" 
         type="submit"
-        [disabled]="!data.title || !data.image.base64 || !data.content"
+        [disabled]="!data.title || !data.content"
         expand="block">
         Add Article
         </ion-button>

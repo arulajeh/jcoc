@@ -73,7 +73,8 @@ export class AddSchedulePage implements OnInit {
 
   getScheduleList() {
     this.showLoading('Getting data').then(() => {
-      this.api.getListData('schedule', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
+      const api = JSON.parse(localStorage.getItem('data')).akses === 1 ? 'schedule/all' : 'schedule';
+      this.api.getListData(api, this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
       .then((res) => {
         this.loadingCtrl.dismiss();
         this.resp = JSON.parse(JSON.stringify(res));

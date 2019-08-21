@@ -125,6 +125,75 @@ app.get('/api/users', (req, res) => {
   console.log(head);
 })
 
+app.post('/api/users/image', (req, res) => {
+  let args = req.body;
+  let token = req.headers.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    db.sequelize.query(`SELECT file, id FROM v_user WHERE id = ${args.id}`, { type: db.sequelize.QueryTypes.SELECT})
+    .then((result) => {
+      if (result) {
+        const img = result[0];
+        res.json({
+          sukses: true,
+          data: img
+        });
+      } else {
+        res.json({
+          sukses:  false,
+          msg: 'Image not found'
+        });
+      }
+    })
+  } else {
+    res.json({
+      sukses: false,
+      msg: 'Unauthorized User'
+    });
+  }
+})
+
+app.get('/api/users/all', (req, res) => {
+  const head = req.headers;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    let pageNumber = head.page_number ? head.page_number : 1;
+    let pageSize = head.page_size ? head.page_size : 5;
+    let sortBy = head.sort_by ? head.sort_by : 'ASC';
+    let orderBy = head.order_by ? head.order_by : 'id';
+    let search = head.search ? head.search : '';
+    let offset = (pageNumber - 1) * pageSize;
+    db.sequelize.query(`SELECT akses_id, email, gender_id, id, name, position_id, position_name, username, phone FROM v_user WHERE email ILIKE '%${search}%' OR username ILIKE '%${search}%' OR "name" ILIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then( async (result) => {
+      let resultDB = result;
+      db.sequelize.query(`SELECT COUNT(*) from v_user WHERE email ILIKE '%${search}%' OR username ILIKE '%${search}%' OR "name" ILIKE '%${search}%'`,
+      { type: db.sequelize.QueryTypes.SELECT})
+      .then((row) => {
+        let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
+        res.json({
+          sukses: true,
+          data: resultDB,
+          page_information: {
+            currentPage: parseInt(pageNumber),
+            pageSize: parseInt(pageSize),
+            totalPage: totalPage > 0 ? totalPage : 1,
+            firstPage: 1,
+            totalData: parseInt(row[0].count)
+          }
+        })
+      });
+    });  
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+  console.log(head);
+})
+
 app.get('/api/users/list', (req, res) => {
   const head = req.headers;
   let token = head.authorization;
@@ -548,7 +617,7 @@ app.post('/api/music/create', (req, res) => {
   let token = req.headers.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    if (hasilJWT.data.akses_id === 1) {
+    // if (hasilJWT.data.akses_id === 1) {
       db.music.create({
         judul: args.judul,
         penyanyi: args.penyanyi,
@@ -582,12 +651,12 @@ app.post('/api/music/create', (req, res) => {
         data: "Unauthorized user"
       });
     }
-  } else {
-    res.json({
-      sukses: false,
-      message: 'Invalid Token'
-    });
-  }
+  // } else {
+    // res.json({
+    //   sukses: false,
+    //   message: 'Invalid Token'
+    // });
+  // }
 })
 
 app.post('/api/music/update', (req, res) => {
@@ -595,7 +664,7 @@ app.post('/api/music/update', (req, res) => {
   let token = req.headers.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    if (hasilJWT.data.akses_id === 1) {
+    // if (hasilJWT.data.akses_id === 1) {
     db.music.update({
       judul: args.judul,
       penyanyi: args.penyanyi,
@@ -627,12 +696,12 @@ app.post('/api/music/update', (req, res) => {
         data: "Unauthorized user"
       });
     }
-  } else {
-    res.json({
-      sukses: false,
-      message: 'Invalid Token'
-    });
-  }
+  // } else {
+    // res.json({
+    //   sukses: false,
+    //   message: 'Invalid Token'
+    // });
+  // }
 })
 
 // Get Schedule List
@@ -676,6 +745,46 @@ app.get('/api/schedule', (req, res) => {
   }
 })
 
+app.get('/api/schedule/all', (req, res) => {
+  const head = req.headers;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    let pageNumber = head.page_number ? head.page_number : 1;
+    let pageSize = head.page_size ? head.page_size : 5;
+    let sortBy = head.sort_by ? head.sort_by : 'ASC';
+    let orderBy = head.order_by ? head.order_by : 'id';
+    let search = head.search ? head.search : '';
+    let offset = (pageNumber - 1) * pageSize;
+    db.sequelize.query(`SELECT * FROM v_schedule WHERE event_name ILIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    { type: db.sequelize.QueryTypes.SELECT})
+    .then( async (result) => {
+      let resultDB = result;
+      db.sequelize.query(`SELECT COUNT("id") FROM v_schedule WHERE event_name ILIKE '%${search}%'`,
+      { type: db.sequelize.QueryTypes.SELECT})
+      .then((row) => {
+        let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
+        res.json({
+          sukses: true,
+          data: resultDB,
+          page_information: {
+            currentPage: parseInt(pageNumber),
+            pageSize: parseInt(pageSize),
+            totalPage: totalPage > 0 ? totalPage : 1,
+            firstPage: 1,
+            totalData: parseInt(row[0].count)
+          }
+        })
+      });
+    });  
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+})
+
 // Create Schedule
 app.post('/api/schedule/create', (req, res) => {
   
@@ -683,7 +792,7 @@ app.post('/api/schedule/create', (req, res) => {
   let token = req.headers.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    if (hasilJWT.data.akses_id === 1) {
+    // if (hasilJWT.data.akses_id === 1) {
       db.schedule.create({
         event_date: args.event_date,
         event_name: args.event_name,
@@ -766,12 +875,12 @@ app.post('/api/schedule/create', (req, res) => {
         data: "Unauthorized user"
       });
     }
-  } else {
-    res.json({
-      sukses: false,
-      message: 'Invalid Token'
-    });
-  }
+  // } else {
+    // res.json({
+    //   sukses: false,
+    //   message: 'Invalid Token'
+    // });
+  // }
 })
 
 // Schedule Detail
@@ -815,7 +924,7 @@ app.post('/api/schedule/delete', (req,res) => {
   let token = req.headers.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    if (hasilJWT.data.akses_id === 1) {
+    // if (hasilJWT.data.akses_id === 1) {
       db.sequelize.query(`UPDATE schedule SET status = 0 WHERE id = ${args.id}`, {type: db.sequelize.QueryTypes.UPDATE})
       .then((result) => {
         if (result) {
@@ -841,12 +950,12 @@ app.post('/api/schedule/delete', (req,res) => {
         msg: 'Unauthorized User'
       })
     }
-  } else {
-    res.json({
-      sukses: false,
-      message: 'Invalid Token'
-    });
-  }
+  // } else {
+    // res.json({
+    //   sukses: false,
+    //   message: 'Invalid Token'
+    // });
+  // }
 })
 
 // Update Schedule
@@ -856,7 +965,7 @@ app.post('/api/schedule/update', (req,res) => {
   let token = req.headers.authorization;
   let hasilJWT = checkJWT(token);
   if (hasilJWT) {
-    if (hasilJWT.data.akses_id === 1) {
+    // if (hasilJWT.data.akses_id === 1) {
       db.schedule.update({
         event_date: args.event_date,
         event_name: args.event_name,
@@ -962,12 +1071,12 @@ app.post('/api/schedule/update', (req,res) => {
         msg: 'Unauthorized User'
       })
     }
-  } else {
-    res.json({
-      sukses: false,
-      message: 'Invalid Token'
-    });
-  }
+  // } else {
+    // res.json({
+    //   sukses: false,
+    //   message: 'Invalid Token'
+    // });
+  // }
 })
 
 // Get Master Positions
@@ -1005,7 +1114,7 @@ app.get('/api/content', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT * FROM v_content WHERE user_id = ${hasilJWT.data.id} AND (title ILIKE '%${search}%') ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT * FROM v_content WHERE title ILIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;

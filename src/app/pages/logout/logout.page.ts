@@ -11,10 +11,15 @@ export class LogoutPage implements OnInit {
   constructor(
     private navCtrl: NavController
   ) { 
-    this.logout();
+    // this.logout();
   }
 
   ngOnInit() {
+  }
+
+  ionViewWillEnter(){
+    console.log('logout');
+    this.logout();
   }
 
   logout() {

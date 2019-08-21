@@ -35,7 +35,7 @@
     </ion-item>
     <ion-item color="dark">
       <ion-label position="floating">Link/URL</ion-label>
-      <ion-input placeholder="Please enter Music's link/url here.." [(ngModel)]="dataMusic.link" name="link" spellcheck="false" autocapitalize="off"></ion-input>
+      <ion-input (ionChange)="isValid(dataMusic.link)" placeholder="Please enter Music's link/url here.." [(ngModel)]="dataMusic.link" name="link" spellcheck="false" autocapitalize="off"></ion-input>
     </ion-item>
     <ion-card-subtitle>*format input ex : https://www.youtube.com/watch?v=videoID</ion-card-subtitle>
     <ion-row>
@@ -43,7 +43,7 @@
         <ion-button ion-button block color="warning"
         (click)="submit()"
         type="submit"
-        [disabled]="">
+        [disabled]="!validUrl || !dataMusic.judul || !dataMusic.penyanyi || !dataMusic.lirik || !dataMusic.chord">
           Add Music
         </ion-button>
       </ion-col>
