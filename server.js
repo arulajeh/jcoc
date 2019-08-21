@@ -125,7 +125,7 @@ app.get('/api/users', (req, res) => {
   console.log(head);
 })
 
-app.post('api/users/image', (req, res) => {
+app.post('/api/users/image', (req, res) => {
   let args = req.body;
   let token = req.headers.authorization;
   let hasilJWT = checkJWT(token);
