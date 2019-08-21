@@ -74,16 +74,28 @@ export class HomePage {
       ]
     },
     {
-      title: 'Add Articles',
-      url: '/home/articles-add',
-      icon: 'today',
+      title: 'Articles',
+      children: [
+        {
+          title: 'Articles',
+          url: '/home/articles-all',
+          icon: 'paper',
+          hidden: false
+        },
+        {
+          title: 'Add Articles',
+          url: '/home/articles-add',
+          icon: 'today',
+          hidden: false
+        }
+      ],
       hidden: JSON.parse(localStorage.getItem('data')).akses === 1 ? false : true
     },
     {
       title: 'Articles',
       url: '/home/articles-all',
       icon: 'paper',
-      hidden: false
+      hidden: JSON.parse(localStorage.getItem('data')).akses === 2 ? false : true
     },
     {
       title: 'Content',
