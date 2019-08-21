@@ -177,7 +177,8 @@ export class AddUserPage implements OnInit {
   getMemberList() {
     console.log('member');
     return this.loadAnimation().then(() => {
-      return this.api.getListData('users', this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
+      const api = JSON.parse(localStorage.getItem('data')).akses === 1 ? 'users/all' : 'users';
+      return this.api.getListData(api, this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
       .then((res) => {
         // console.log(res);
         this.loadingCtrl.dismiss();

@@ -34,4 +34,13 @@
     white-space: pre-wrap;
 }
 
+// .hide-mobile {
+//     // background: silver;
+// }
+@media (max-width: 600px) {
+    .hide-mobile {
+        display: none;
+    }
+}
+
 @import "./theme/test.scss";

@@ -83,7 +83,8 @@ export class AddMusicPage implements OnInit {
 
   getMusicList(){
     return this.showLoading('Getting data').then(() => {
-      return this.api.getListData('music', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
+      const api = JSON.parse(localStorage.getItem('data')).akses === 1 ? 'music/all' : 'music';
+      return this.api.getListData(api, this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
       .then((result) => {
         this.loadingCtrl.dismiss();
         this.resp = JSON.parse(JSON.stringify(result));
