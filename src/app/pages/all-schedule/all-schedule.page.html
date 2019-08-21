@@ -7,18 +7,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="dark">
   <ion-row justify-content-center>
-    <ion-searchbar placeholder="Search Schedule" class="searchbar" debounce="500" [(ngModel)]="search"></ion-searchbar>
+    <ion-searchbar color="medium" placeholder="Search Schedule" class="searchbar" debounce="500" [(ngModel)]="search"></ion-searchbar>
   </ion-row>
   <ion-grid style="margin-right: 1.5%" class="marginku">
     <ion-row justify-content-center>
       <ion-col *ngFor ="let data of listSchedule" size="md">
-        <ion-card class="card_schedule" >
+        <ion-card class="card_schedule" color="medium">
           <img [src]="data.file ? data.file : imgNotFound" alt="">
           <ion-card-header>
-            <ion-card-title>{{data.event_name}}</ion-card-title>
-            <ion-card-subtitle>{{data.event_date}}</ion-card-subtitle>
+            <ion-card-title color="light">{{data.event_name}}</ion-card-title>
+            <ion-card-subtitle>{{data.event_date | date: 'EEE, MMM d, y'}}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
               <ion-button (click)="sendIdSchedule(data.id)" type="submit" color="warning">View Shedule</ion-button>
@@ -43,17 +43,23 @@
       </ion-col>
       <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
         <ion-row justify-content-end>
-          1
+          <ion-button color="warning">
+            1
+          </ion-button>
         </ion-row>
       </ion-col>
       <ion-col >
         <ion-row justify-content-center>
-          {{resp?.page_information?.currentPage}}
+          <ion-button color="warning" disabled>
+            {{resp?.page_information?.currentPage}}
+          </ion-button>
         </ion-row>
       </ion-col>
       <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
         <ion-row justify-content-start >
-          {{resp?.page_information?.totalPage}}
+          <ion-button color="warning">
+            {{resp?.page_information?.totalPage}}
+          </ion-button>
         </ion-row>
       </ion-col>
       <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
