@@ -624,10 +624,10 @@ app.post('/api/music/create', (req, res) => {
       });
     }
   // } else {
-    res.json({
-      sukses: false,
-      message: 'Invalid Token'
-    });
+    // res.json({
+    //   sukses: false,
+    //   message: 'Invalid Token'
+    // });
   // }
 })
 
@@ -669,10 +669,10 @@ app.post('/api/music/update', (req, res) => {
       });
     }
   // } else {
-    res.json({
-      sukses: false,
-      message: 'Invalid Token'
-    });
+    // res.json({
+    //   sukses: false,
+    //   message: 'Invalid Token'
+    // });
   // }
 })
 
@@ -808,10 +808,10 @@ app.post('/api/schedule/create', (req, res) => {
       });
     }
   // } else {
-    res.json({
-      sukses: false,
-      message: 'Invalid Token'
-    });
+    // res.json({
+    //   sukses: false,
+    //   message: 'Invalid Token'
+    // });
   // }
 })
 
@@ -883,10 +883,10 @@ app.post('/api/schedule/delete', (req,res) => {
       })
     }
   // } else {
-    res.json({
-      sukses: false,
-      message: 'Invalid Token'
-    });
+    // res.json({
+    //   sukses: false,
+    //   message: 'Invalid Token'
+    // });
   // }
 })
 
@@ -1004,10 +1004,10 @@ app.post('/api/schedule/update', (req,res) => {
       })
     }
   // } else {
-    res.json({
-      sukses: false,
-      message: 'Invalid Token'
-    });
+    // res.json({
+    //   sukses: false,
+    //   message: 'Invalid Token'
+    // });
   // }
 })
 
@@ -1046,7 +1046,7 @@ app.get('/api/content', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT * FROM v_content WHERE user_id = ${hasilJWT.data.id} AND (title ILIKE '%${search}%') ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT * FROM v_content WHERE title ILIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
