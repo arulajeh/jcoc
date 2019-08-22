@@ -14,7 +14,7 @@
         <ion-col size="6">
           <ion-item color="dark">
             <ion-label position="stacked">Title</ion-label>
-            <ion-input [(ngModel)]="data.title" name="title" type="text" spellcheck="false" autocapitalize="off"
+            <ion-input placeholder="Enter your article's name here" [(ngModel)]="data.title" name="title" type="text" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
           </ion-item>
@@ -30,7 +30,7 @@
         <ion-col size="12">
           <ion-item color="dark">
           <ion-label position="floating">Content</ion-label>
-            <ion-textarea [(ngModel)]="data.content" name="content" placeholder="" rows="6" cols="20" spellcheck="false" autocapitalize="off"></ion-textarea>
+            <ion-textarea placeholder="Please enter your article's content here" [(ngModel)]="data.content" name="content" rows="6" cols="20" spellcheck="false" autocapitalize="off"></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -40,7 +40,8 @@
           (click)="submit()" 
           type="submit"
           [disabled]="!data.title || !data.image.base64 || !data.content"
-          expand="block">
+          expand="block"
+          color="warning">
           Add Article
           </ion-button>
         </ion-col>
@@ -50,7 +51,7 @@
   <ion-grid fixed>
     <ion-row>
       <ion-col size="4">
-        <ion-item>
+        <ion-item color="medium">
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" (ionChange)="getData()">
             <ion-select-option value="5">5</ion-select-option>
@@ -60,7 +61,7 @@
         </ion-item>
       </ion-col>
       <ion-col size="8">
-        <ion-searchbar showCancelButton="focus" placeholder="Search Article..." debounce="500" [(ngModel)]="search" (ionChange)="getData()"></ion-searchbar>
+        <ion-searchbar color="medium" showCancelButton="focus" placeholder="Search Article..." debounce="500" [(ngModel)]="search" (ionChange)="getData()"></ion-searchbar>
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
@@ -69,19 +70,19 @@
           No.
         </ion-row>
       </ion-col> -->
-      <ion-col>
+      <ion-col size="5">
         <ion-row justify-content-center (click)="changeSort('title')">
           Title
           <ion-icon name="arrow-dropdown" *ngIf="order_by === 'title' && sort_by === 'DESC'"></ion-icon>
           <ion-icon name="arrow-dropup" *ngIf="order_by === 'title' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
       </ion-col>
-      <ion-col size="4">
+      <ion-col size="5">
         <ion-row justify-content-center>
           Picture
         </ion-row>
       </ion-col>
-      <ion-col size="1">
+      <ion-col size="2">
         <ion-row justify-content-center>
           Action
         </ion-row>
@@ -93,27 +94,27 @@
         {{i + 1}}
         </ion-row>
       </ion-col> -->
-      <ion-col align-self-center>
+      <ion-col size="5" align-self-center>
         <ion-row justify-content-center>
           {{article?.title}}
         </ion-row>
       </ion-col>
-      <ion-col align-self-center size="4">
+      <ion-col align-self-center size="5">
         <ion-row justify-content-center>
           <ion-img [src]="article.file ? article.file : imgNotFound"></ion-img>
         </ion-row>
       </ion-col>
-      <ion-col size="1" align-self-center>
+      <ion-col size="2" align-self-center>
         <ion-row justify-content-center>
           <ion-row>
-            <ion-col size="12">
+            <ion-col size="6">
               <ion-button color="warning" (click)="deleteArticle(article?.id)" type="submit">
                   <ion-icon name="trash"></ion-icon>
               </ion-button>
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col size="12">
+            <ion-col size="6">
               <ion-button color="warning" (click)="sendIdArticle(article?.id)" type="submit">
                   <ion-icon name="create"></ion-icon>
               </ion-button>
