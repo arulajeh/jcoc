@@ -30,7 +30,6 @@ export class LoginPage implements OnInit {
   submit() {
     this.api.login(this.username, this.password).then((result) => {
       this.resData = JSON.parse(JSON.stringify(result));
-      console.log(this.resData);
       if (this.resData.sukses === true) {
         localStorage.setItem('token', this.resData.token);
         localStorage.setItem('data', JSON.stringify(this.resData.data));

@@ -75,7 +75,6 @@ export class ArticlesAddPage implements OnInit {
             base64 : reader.result,
             isImage : file.type.includes('image')
           };
-          console.log(this.data);
           resolve(this.data.image);
         }
       };
@@ -91,7 +90,6 @@ export class ArticlesAddPage implements OnInit {
 
   submit() {
     this.api.postData('article/create', this.data).then((result) => {
-      console.log(result);
       const res = JSON.parse(JSON.stringify(result));
       if (res.sukses === true) {
         this.showToast('Success upload content');
@@ -121,10 +119,8 @@ export class ArticlesAddPage implements OnInit {
     this.loadingAnimated().then(() => {
       this.api.getListData('article', this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
       .then((result) => {
-        console.log(result)
         this.resp = JSON.parse(JSON.stringify(result))
         this.listData = this.resp.data;
-        this.insertImage();
       }).then(() => {
         this.loadingCtrl.dismiss();
         this.getImages();
@@ -175,12 +171,6 @@ export class ArticlesAddPage implements OnInit {
     });
   }
 
-  insertImage() {
-    this.listData.map((value, index) => {
-      console.log(value.file_id);
-    })
-  }
-
   sendIdArticle(id){
     const extras: NavigationExtras = {
       queryParams: {
@@ -207,7 +197,6 @@ export class ArticlesAddPage implements OnInit {
       this.getData();
     } else if (nav === 'last') {
       this.page_number = this.resp.page_information.totalPage.toString();
-      console.log(this.page_number);
       this.getData();
     }
   }

@@ -80,10 +80,6 @@ export class AddUserPage implements OnInit {
     x.present();
   }
 
-  changeSelect() {
-    console.log(this.ionSelect);
-  }
-
   ngOnInit() {
   }
 
@@ -93,7 +89,6 @@ export class AddUserPage implements OnInit {
     this.dataUser.gender_id = this.selectGender.id;
     this.api.postData('users/create', this.dataUser)
     .then((res) => {
-      console.log(res);
       let ress = JSON.parse(JSON.stringify(res));
       if (ress.sukses === true) {
         this.position = undefined;
@@ -121,10 +116,8 @@ export class AddUserPage implements OnInit {
         this.showToast('Failed insert users');
       }
     }).catch((err) => {
-      console.log(err);
       this.showToast('Failed insert users');
     })
-    console.log(this.dataUser);
   }
 
   initData() {
@@ -134,8 +127,7 @@ export class AddUserPage implements OnInit {
 
   getDataPosition() {
     this.api.getMasterData('position').then( async (res) => {
-      this.listPostions = await JSON.parse(JSON.stringify(res)).data;
-      return console.log(this.listPostions);
+      return this.listPostions = await JSON.parse(JSON.stringify(res)).data;
     })
   }
 
@@ -144,7 +136,6 @@ export class AddUserPage implements OnInit {
     for (const a of files) {
       const b = await this.fileToBase64(a);
     }
-    console.log(this.dataUser, this.pass, this.position, this.selectGender);
   }
 
   async fileToBase64(file) {
@@ -177,15 +168,12 @@ export class AddUserPage implements OnInit {
   }
 
   getMemberList() {
-    console.log('member');
     return this.loadAnimation().then(() => {
       const api = JSON.parse(localStorage.getItem('data')).akses === 1 ? 'users/all' : 'users';
       return this.api.getListData(api, this.page_size, this.page_number, this.order_by, this.sort_by, this.search ? this.search : ' ')
       .then((res) => {
-        // console.log(res);
         this.loadingCtrl.dismiss();
         this.resp = JSON.parse(JSON.stringify(res));
-        console.log(' this response ',this.resp);
         if (parseInt(this.page_number) > this.resp.page_information.totalPage) {
           this.page_number = this.resp.page_information.totalPage.toString();
           this.getMemberList();
@@ -202,11 +190,9 @@ export class AddUserPage implements OnInit {
   }
 
   deleteUser(id){
-    console.log(id)
     let body = {id: id}
     this.api.postData('users/delete', body).then((res) => {
       const response = JSON.parse(JSON.stringify(res));
-      console.log(response)
       if (response.sukses === true) {
         this.showToast('Delete user successfully');
         this.getMemberList();
@@ -259,7 +245,6 @@ export class AddUserPage implements OnInit {
       this.getMemberList();
     } else if (nav === 'last') {
       this.page_number = this.resp.page_information.totalPage.toString();
-      console.log(this.page_number);
       this.getMemberList();
     }
   }

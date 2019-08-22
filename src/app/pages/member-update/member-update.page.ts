@@ -73,14 +73,12 @@ export class MemberUpdatePage implements OnInit {
   getParams() {
     return this.route.queryParams.subscribe(params => {
       this.id = JSON.parse(params['id'])
-      console.log(this.id);
     });
   }
 
   getDataPosition() {
     return this.api.getMasterData('position').then( async (res) => {
-      this.listPostions = await JSON.parse(JSON.stringify(res)).data;
-      return console.log(this.listPostions);
+      return this.listPostions = await JSON.parse(JSON.stringify(res)).data;
     })
   }
 
@@ -89,7 +87,6 @@ export class MemberUpdatePage implements OnInit {
       const body = {id: this.id};
       return this.api.postData('users/detail', body)
       .then((res) => {
-        console.log(res);
         this.loadingCtrl.dismiss();
         const resp = JSON.parse(JSON.stringify(res)).data;
         this.position = this.listPostions.find(x => x.id === resp.position_id);
@@ -123,7 +120,6 @@ export class MemberUpdatePage implements OnInit {
     this.dataUser.position_id = this.position.id;
     this.dataUser.gender_id = this.selectGender.id;
     this.dataUser.id = this.id;
-    console.log(this.dataUser);
     this.api.postData('users/update', this.dataUser)
     .then((res) => {
       let ress = JSON.parse(JSON.stringify(res));
@@ -142,7 +138,6 @@ export class MemberUpdatePage implements OnInit {
     for (const a of files) {
       const b = await this.fileToBase64(a);
     }
-    console.log(this.dataUser, this.pass, this.position, this.selectGender);
   }
 
   async fileToBase64(file) {

@@ -48,7 +48,6 @@ export class ContentPage implements OnInit {
     for (const a of files) {
       const b = await this.fileToBase64(a);
     }
-    // console.log(this.dataUser, this.pass, this.position, this.selectGender);
   }
 
   async fileToBase64(file) {
@@ -67,7 +66,6 @@ export class ContentPage implements OnInit {
             base64: reader.result,
             isImage: file.type.includes('image')
           };
-          console.log(this.content);
           resolve(this.content.image);
         }
       };
@@ -83,7 +81,6 @@ export class ContentPage implements OnInit {
 
   submit() {
     this.api.postData('content/create', this.content).then((result) => {
-      console.log(result);
       const res = JSON.parse(JSON.stringify(result));
       if (res.sukses === true) {
         this.showToast('Success upload content');
@@ -113,7 +110,6 @@ export class ContentPage implements OnInit {
       this.api.getListData('content', '5', '1', 'title', 'ASC', this.search ? this.search : ' ')
       .then(async (result) => {
         this.loadingCtrl.dismiss();
-        console.log(result)
         return this.listContent = await JSON.parse(JSON.stringify(result)).data;
       }).then(() => {
         this.getImages();
@@ -164,12 +160,6 @@ export class ContentPage implements OnInit {
     }).catch((err) => {
       this.showToast('Fail delete content');
     });
-  }
-
-  insertImage() {
-    this.listContent.map((value, index) => {
-      console.log(value.file_id);
-    })
   }
 
   getImages() {

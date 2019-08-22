@@ -18,7 +18,6 @@ export class LogoutPage implements OnInit {
   }
 
   ionViewWillEnter(){
-    console.log('logout');
     this.logout();
   }
 

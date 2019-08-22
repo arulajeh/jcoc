@@ -85,9 +85,6 @@ export class AddSchedulePage implements OnInit {
         } else {
           return this.scheduleList = JSON.parse(JSON.stringify(res)).data;
         }
-        // console.log(res);
-        // this.scheduleList = JSON.parse(JSON.stringify(res)).data;
-        // console.log(this.scheduleList);
       }).then(() => {
         this.getImages();
       }).catch((err) => {
@@ -100,8 +97,6 @@ export class AddSchedulePage implements OnInit {
   check(){
     let x = this.parseSelectable(this.songLeader);
     let y = this.parseSelectable(this.singer);
-    // x = this.parseSelectable(this.songLeader);
-    console.log(x , y);
   }
 
   async submit() {
@@ -116,7 +111,6 @@ export class AddSchedulePage implements OnInit {
   
       this.api.postData('schedule/create', this.dataSchedule).then((res) => {
         this.loadingCtrl.dismiss();
-        console.log(res);
         const response = JSON.parse(JSON.stringify(res));
         if (response.sukses === true) {
           this.showToast('Create schedule successfully');
@@ -145,9 +139,6 @@ export class AddSchedulePage implements OnInit {
         }
       });
     })
-    
-    console.log(' Data Schedule Submit',this.dataSchedule);
-    // console.log(a);
   }
 
   initData() {
@@ -162,14 +153,12 @@ export class AddSchedulePage implements OnInit {
 
   getMusicList() {
     this.api.getListData('music', '1000', '1', 'judul', 'ASC').then((res) => {
-      console.log(res);
       this.listMusics = JSON.parse(JSON.stringify(res)).data;
     })
   }
 
   getUsersList() {
     this.api.getListData('users/list', '1000', '1', 'name', 'ASC', ' ').then((res) => {
-      console.log(res);
       const resp = JSON.parse(JSON.stringify(res)).data;
       this.listMembers = {
         basis: resp.filter(x => x.position_name === 'Basis'),
@@ -179,12 +168,10 @@ export class AddSchedulePage implements OnInit {
         song_leader: resp.filter(x => x.position_name === 'Song Leader'),
         vokalis: resp.filter(x => x.position_name === 'Singer')
       }
-      console.log(this.listMembers);
     });
   }
 
   parseSelectable(data) {
-    console.log(data);
     if (Array.isArray(data)) {
       let any = [];
       data.forEach((val, index) => {
@@ -201,7 +188,6 @@ export class AddSchedulePage implements OnInit {
     for (const a of files) {
       const b = await this.fileToBase64(a);
     }
-    // console.log(this.dataUser, this.pass, this.position, this.selectGender);
   }
 
   async fileToBase64(file) {
@@ -286,7 +272,6 @@ export class AddSchedulePage implements OnInit {
       this.getScheduleList();
     } else if (nav === 'last') {
       this.page_number = this.resp.page_information.totalPage.toString();
-      console.log(this.page_number);
       this.getScheduleList();
     }
   }
@@ -313,7 +298,6 @@ export class AddSchedulePage implements OnInit {
   }
 
   getImages() {
-    console.log(this.scheduleList);
     Promise.all(
       this.scheduleList.map( async (val) => {
         const body = {id: val.file_id}

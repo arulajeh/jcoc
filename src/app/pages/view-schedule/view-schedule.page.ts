@@ -31,9 +31,7 @@ export class ViewSchedulePage implements OnInit {
   getScheduleData() {
     const data = {id: this.id};
     return this.api.postData('schedule/detail', data).then((result) => {
-      console.log(result);
       this.resp = JSON.parse(JSON.stringify(result)).data;
-      console.log(this.resp);
     });
   }
 

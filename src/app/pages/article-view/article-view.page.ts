@@ -31,9 +31,7 @@ export class ArticleViewPage implements OnInit {
   getArticleData() {
     const data = {id: this.id};
     return this.api.postData('article/detail', data).then((result) => {
-      console.log(result);
       this.dataArticle = JSON.parse(JSON.stringify(result)).data;
-      console.log(this.dataArticle);
     });
   }
   

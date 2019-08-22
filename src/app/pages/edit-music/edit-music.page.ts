@@ -75,10 +75,8 @@ export class EditMusicPage implements OnInit {
       return this.status = JSON.parse(JSON.stringify(result)).sukses;
     });
       if(this.status == true){
-        //alert('SUCCESS');
         this.notif("Success! Music has been updated.");
       }else{
-        // alert('FAILED!');
         this.notif("Failed!");
       }
     }

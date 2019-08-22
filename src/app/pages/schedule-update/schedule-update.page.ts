@@ -78,20 +78,17 @@ export class ScheduleUpdatePage implements OnInit {
   getParams() {
     this.route.queryParams.subscribe(params => {
       this.id = JSON.parse(params['id']);
-      console.log(parseInt(this.id));
     });
   }
 
   getMusicList() {
     return this.api.getListData('music', '1000', '1', 'judul', 'ASC').then((res) => {
-      console.log(res);
       this.listMusics = JSON.parse(JSON.stringify(res)).data;
     })
   }
 
   getUsersList() {
     return this.api.getListData('users/list', '1000', '1', 'name', 'ASC').then((res) => {
-      console.log(res);
       const resp = JSON.parse(JSON.stringify(res)).data;
       this.listMembers = {
         basis: resp.filter(x => x.position_name === 'Basis'),
@@ -101,14 +98,12 @@ export class ScheduleUpdatePage implements OnInit {
         song_leader: resp.filter(x => x.position_name === 'Song Leader'),
         vokalis: resp.filter(x => x.position_name === 'Singer')
       }
-      console.log(this.listMembers);
     });
   }
 
   getScheduleDetail() {
     const data = {id: this.id}
     return this.api.postData('schedule/detail',data).then(async (res) => {
-      console.log(res);
       this.resp = JSON.parse(JSON.stringify(res));
       this.dataSchedule.event_date = this.resp.data.event_date;
       this.dataSchedule.event_name = this.resp.data.event_name;
@@ -119,12 +114,8 @@ export class ScheduleUpdatePage implements OnInit {
       this.songLeader = await this.reparseSelectable(this.listMembers.song_leader, this.resp.data.song_leader_id);
       this.singer = await this.reparseSelectable(this.listMembers.vokalis, this.resp.data.vokalis_id);
       this.music = await this.reparseSelectable(this.listMusics, this.resp.data.music_id);
-      console.log('list_music',this.listMusics)
-      console.log('music_id', this.resp.data.music_id);
-      console.log(this.music);
     }).catch((err) => {
       this.loadingCtrl.dismiss();
-      console.log(err);
     })
   }
 
@@ -154,15 +145,9 @@ export class ScheduleUpdatePage implements OnInit {
   }
 
   parseSelectable(data) {
-    console.log(data);
     if (Array.isArray(data)) {
       let any = [];
       data.forEach((val, index) => {
-        // if (val.judul) {
-        //   any.push(val.judul);  
-        // } else {
-        //   any.push(val.id);
-        // }
         any.push(val.id);
       });
       return any;
@@ -173,11 +158,8 @@ export class ScheduleUpdatePage implements OnInit {
 
   reparseSelectable(data1, data2) {
     let x = [];
-    console.log(data1);
-    console.log(data2);
     data1.map((val) => {
       data2.forEach(element => {
-        console.log('Element data2 ',element);
         if (val.id === element) {
         x.push(val);
         }
@@ -191,7 +173,6 @@ export class ScheduleUpdatePage implements OnInit {
     for (const a of files) {
       const b = await this.fileToBase64(a);
     }
-    // console.log(this.dataUser, this.pass, this.position, this.selectGender);
   }
 
   async fileToBase64(file) {
@@ -232,11 +213,7 @@ export class ScheduleUpdatePage implements OnInit {
     this.dataSchedule.drummer = this.drummer ? await this.parseSelectable(this.drummer) : null;
     this.dataSchedule.gitaris = this.gitaris ? await this.parseSelectable(this.gitaris) : null;
     this.dataSchedule.lagu = this.music ? await this.parseSelectable(this.music) : null;
-
-    console.log('Data update schedule ',this.dataSchedule);
-
     this.api.postData('schedule/update', this.dataSchedule).then((res) => {
-      console.log(res);
       const response = JSON.parse(JSON.stringify(res));
       if (response.sukses === true) {
         this.showToast('Update schedule successfully');
@@ -244,8 +221,6 @@ export class ScheduleUpdatePage implements OnInit {
         this.showToast('Failed create schedule');
       }
     });
-    // console.log(' Data Schedule Submit',this.dataSchedule);
-    // console.log(a);
   }
 
 }

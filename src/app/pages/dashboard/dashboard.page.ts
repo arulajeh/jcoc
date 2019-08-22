@@ -74,7 +74,6 @@ export class DashboardPage implements OnInit {
           // return this.listMusic = JSON.parse(JSON.stringify(result)).data;
           return this.convertSafeUrl(this.musicList);
         }
-        // console.log(this.musicList);
       }).catch((err) => {
         this.loadingCtrl.dismiss();
         this.showToast('Error getting music list');
@@ -86,7 +85,6 @@ export class DashboardPage implements OnInit {
     await this.getDataContent();
     await this.getMusicList();
     this.getImages();
-    console.log(this.musicList);
   }
 
   async showToast(msg) {

@@ -25,14 +25,11 @@ export class ViewLyricPage implements OnInit {
     await this.getDataMusic();
     const x = this.api.parseEmbedUrl(this.data_music.link);
     this.data_music.link = this.domSanitizer.bypassSecurityTrustResourceUrl(x);
-    console.log('data music ' + this.data_music);
   }
 
   getDataMusic(){
     return this.api.postData('music/detail', {"id": this.id}).then((result) =>{
-      console.log('result ' + result);
        return this.data_music = JSON.parse(JSON.stringify(result)).data;
-      //console.log('data music ' + this.data_music)
     }).catch(err => {alert('Error Get Data!')});
   }
 
@@ -40,7 +37,6 @@ export class ViewLyricPage implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.id = JSON.parse(params['id']);
     })
-    console.log(this.id);
   }
 
   ngOnInit() {

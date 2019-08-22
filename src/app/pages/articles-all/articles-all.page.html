@@ -11,7 +11,8 @@
   <ion-row justify-content-center>
     <ion-searchbar color="medium" placeholder="Search Article..." class="searchbar" debounce="500" [(ngModel)]="search"></ion-searchbar>
   </ion-row>
-  <ion-grid style="margin-right: 1.5%" class="marginku">
+  <ion-grid class="marginku">
+      <!-- style="margin-right: 1.5%" -->
     <ion-row justify-content-center>
       <ion-col *ngFor ="let data of listArticle" size="md">
         <ion-card class="card_article" color="medium">
@@ -26,12 +27,87 @@
                 </ion-row>
               </ion-card-subtitle></ion-col>
             </ion-row>
-            <ion-card-content>{{data.content}}...</ion-card-content>
+            <ion-card-content>
+              <p class="elipsis">
+                {{data.content}}
+              </p>
+            </ion-card-content>
           </ion-card-header>
           <ion-card-content>
             <ion-button (click)="sendIdArticle(data.id)" type="submit" color="warning">Read More...</ion-button>
           </ion-card-content>
         </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="hide-mobile">
+        <ion-row justify-content-start>
+          <ion-button 
+          (click)="nextPrev('prev')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+            Prev
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+        <ion-row justify-content-end>
+            
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
+        <ion-row justify-content-end>
+          <ion-button color="warning">
+            1
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col >
+        <ion-row justify-content-center>
+          <ion-button color="warning" disabled>
+            {{resp?.page_information?.currentPage}}
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
+        <ion-row justify-content-start >
+          <ion-button color="warning">
+            {{resp?.page_information?.totalPage}}
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+        <ion-row justify-content-start >
+            
+        </ion-row>
+      </ion-col>
+      <ion-col class="hide-mobile">
+        <ion-row justify-content-end>
+          <ion-button 
+          (click)="nextPrev('next')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+            Next
+          </ion-button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row class="hide-desktop">
+      <ion-col>
+        <ion-row justify-content-start>
+          <ion-button 
+          (click)="nextPrev('prev')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+            Prev
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-end>
+          <ion-button 
+          (click)="nextPrev('next')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+            Next
+          </ion-button>
+        </ion-row>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -66,7 +66,6 @@ export class ArticlesUpdatePage implements OnInit {
   }
 
   submit() {
-    console.log(this.data);
     this.showLoading('Submit data').then(() => {
       this.data.id = this.id;
       this.api.postData('article/update', this.data).then((res) => {
@@ -77,7 +76,6 @@ export class ArticlesUpdatePage implements OnInit {
         } else {
           this.showToast('Update article failed');
         }
-        console.log(res);
       }).catch((err) => {
         this.loadingCtrl.dismiss();
         this.showToast('Error submit data');
@@ -108,7 +106,6 @@ export class ArticlesUpdatePage implements OnInit {
             base64 : reader.result,
             isImage : file.type.includes('image')
           };
-          console.log(this.data);
           resolve(this.data.image);
         }
       };
@@ -148,7 +145,6 @@ export class ArticlesUpdatePage implements OnInit {
   }
 
   navBack(){
-    console.log('nav Back')
     this.navCtrl.back();
   }
 

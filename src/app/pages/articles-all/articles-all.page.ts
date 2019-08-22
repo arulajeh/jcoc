@@ -10,6 +10,7 @@ import { NavigationExtras } from '@angular/router';
 })
 export class ArticlesAllPage implements OnInit {
   imgNotFound = 'assets/img/image.png';
+  resp:any;
 
   page_size = '100';
   page_number = '1';
@@ -27,18 +28,15 @@ export class ArticlesAllPage implements OnInit {
 
   ionViewDidEnter(){
     this.getDataArticle();
-    console.log('all Article');
   }
 
   getDataArticle(){
-    console.log('Article');
     this.showLoading('Getting articles').then(() => {
       this.api.getListData('article/all', this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
       .then((result) =>{
         this.loadingCtrl.dismiss();
-        console.log(result);
-        this.listArticle = JSON.parse(JSON.stringify(result)).data;
-        console.log(this.listArticle);
+        this.resp = JSON.parse(JSON.stringify(result));
+        this.listArticle = this.resp.data;
       }).then(() => {
         this.getImages();
       }).catch((err) => {
@@ -48,7 +46,6 @@ export class ArticlesAllPage implements OnInit {
   }
 
   sendIdArticle(id){
-    console.log(id);
     let navigationExtras: NavigationExtras = {
       queryParams: {
         id: JSON.stringify(id)
@@ -86,6 +83,24 @@ export class ArticlesAllPage implements OnInit {
       keyboardClose: true
     });
     x.present();
+  }
+
+  nextPrev(nav){
+    if (nav === 'next') {
+      let a = parseInt(this.page_number) + 1;
+      this.page_number = a.toString();
+      this.getDataArticle();
+    } else if (nav === 'prev') {
+      let a = parseInt(this.page_number) - 1;
+      this.page_number = a.toString();
+      this.getDataArticle();
+    } else if (nav === 'first') {
+      this.page_number = '1';
+      this.getDataArticle();
+    } else if (nav === 'last') {
+      this.page_number = this.resp.page_information.totalPage.toString();
+      this.getDataArticle();
+    }
   }
 
 }

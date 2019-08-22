@@ -81,7 +81,6 @@ export class AddMusicPage implements OnInit {
 
   initData(){
     this.getMusicList().then(() => {
-      console.log(this.listMusic);
     })
   }
 
