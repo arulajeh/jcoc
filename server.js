@@ -555,11 +555,11 @@ app.get('/api/music/all', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT * FROM v_music WHERE judul ILIKE '%${search}%' OR penyanyi ILIKE '%${search}%' OR link ILIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT * FROM v_music_detail WHERE judul ILIKE '%${search}%' OR penyanyi ILIKE '%${search}%' OR link ILIKE '%${search}%' ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
-      db.sequelize.query(`SELECT COUNT("id") FROM v_music WHERE judul ILIKE '%${search}%' OR penyanyi ILIKE '%${search}%' OR link ILIKE '%${search}%'`,
+      db.sequelize.query(`SELECT COUNT("id") FROM v_music_detail WHERE judul ILIKE '%${search}%' OR penyanyi ILIKE '%${search}%' OR link ILIKE '%${search}%'`,
       { type: db.sequelize.QueryTypes.SELECT})
       .then((row) => {
         let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
