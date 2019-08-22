@@ -28,9 +28,9 @@
         </ion-item>
   
         <!-- Children List for clicked Item -->
-        <ion-list *ngIf="p.open" [hidden]="p.hidden" color="medium">
+        <ion-list *ngIf="p.open" [hidden]="p.hidden">
           <ion-menu-toggle color="dark">
-            <ion-item color="light" *ngFor="let sub of p.children" class="sub-item" [routerLink]="sub.url" routerDirection="root"
+            <ion-item *ngFor="let sub of p.children" class="sub-item" [routerLink]="sub.url" routerDirection="root"
               routerLinkActive="active">
               <ion-icon [name]="sub.icon" slot="start"></ion-icon>
               <ion-label>

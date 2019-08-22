@@ -115,6 +115,7 @@ export class AddUserPage implements OnInit {
             isImage: null
           }
         }
+        this.showToast('Success! User has been added.')
         this.getMemberList();
       } else {
         this.showToast('Failed insert users');

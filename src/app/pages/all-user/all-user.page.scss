@@ -12,8 +12,14 @@
 }
 
 .yt{
-    --width :250px;
-    max-height: 315px;
+    // --width :250px;
+    // max-height: 315px;
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    // border: solid 4px #fff;
+    // display: inline;
+    // box-shadow: 0 0 28px rgba(255,255,255, .65);
 }
 
 .searchbar{

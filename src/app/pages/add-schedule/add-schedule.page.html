@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="dark">
   <!-- <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
       pullingIcon="arrow-dropdown"
@@ -20,39 +20,39 @@
   <ion-row>
     <ion-col size="12">
       <ion-row justify-content-center>
-        <ion-text color="secondary">
-          <h1>Add Members</h1>
+        <ion-text color="warning">
+          <h1>Add Schedule</h1>
         </ion-text>
       </ion-row>
     </ion-col>
   </ion-row>
-  <ion-grid fixed>
+  <ion-grid fixed color="dark">
     <form id="loginForm">
       <ion-row>
         <ion-col size="12">
-          <ion-item>
-            <ion-label position="stacked" color="primary">Event Name</ion-label>
+          <ion-item color="dark">
+            <ion-label position="stacked">Event Name</ion-label>
             <ion-input [(ngModel)]="dataSchedule.event_name" name="title" type="text" spellcheck="false" autocapitalize="off"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-item>
+          <ion-item color="dark">
             <ion-label>Date</ion-label>
             <ion-datetime display-format="DD-MM-YYYY" [(ngModel)]="dataSchedule.event_date" name="event_date"></ion-datetime>
           </ion-item>
         </ion-col>
         <ion-col size="6">
-          <ion-item>
-            <ion-label position="stacked" color="primary">Event Picture</ion-label>
+          <ion-item color="dark">
+            <ion-label position="stacked">Event Picture</ion-label>
             <ion-input type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-label color="primary" position="stacked">Song Leader</ion-label>
+          <ion-label position="stacked">Song Leader</ion-label>
           <ionic-selectable
           [(ngModel)]="songLeader"
           [items]="listMembers.song_leader"
@@ -65,7 +65,7 @@
           </ionic-selectable>
         </ion-col>
         <ion-col size="6">
-          <ion-label color="primary" position="stacked">Singer</ion-label>
+          <ion-label position="stacked">Singer</ion-label>
           <ionic-selectable
           [(ngModel)]="singer"
           [items]="listMembers.vokalis"
@@ -80,7 +80,7 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-label color="primary" position="stacked">Gitaris</ion-label>
+          <ion-label position="stacked">Gitaris</ion-label>
           <ionic-selectable
           [(ngModel)]="gitaris"
           [items]="listMembers.gitaris"
@@ -92,7 +92,7 @@
           </ionic-selectable>
         </ion-col>
         <ion-col size="6">
-          <ion-label color="primary" position="stacked">Basis</ion-label>
+          <ion-label position="stacked">Basis</ion-label>
           <ionic-selectable
           [(ngModel)]="basis"
           [items]="listMembers.basis"
@@ -106,7 +106,7 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-label color="primary" position="stacked">Pianis</ion-label>
+          <ion-label position="stacked">Pianis</ion-label>
           <ionic-selectable
           [(ngModel)]="pianis"
           [items]="listMembers.pianis"
@@ -118,7 +118,7 @@
           </ionic-selectable>
         </ion-col>
         <ion-col size="6">
-          <ion-label color="primary" position="stacked">Drummer</ion-label>
+          <ion-label position="stacked">Drummer</ion-label>
           <ionic-selectable
           [(ngModel)]="drummer"
           [items]="listMembers.drummer"
@@ -132,7 +132,7 @@
       </ion-row>
       <ion-row>
         <ion-col size="12">
-          <ion-label color="primary" position="stacked">Music</ion-label>
+          <ion-label position="stacked">Music</ion-label>
           <ionic-selectable
           [(ngModel)]="music"
           [items]="listMusics"
@@ -150,17 +150,18 @@
           <ion-button 
           (click)="submit()" 
           type="submit" 
-          expand="block">
+          expand="block"
+          color="warning">
           Add Schedule
           </ion-button>
         </ion-col>
       </ion-row>
     </form>
   </ion-grid>
-  <ion-grid fixed>
+  <ion-grid fixed color="dark">
     <ion-row>
       <ion-col size="4">
-        <ion-item>
+        <ion-item color="medium">
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" (ionChange)="getScheduleList()">
             <ion-select-option value="5">5</ion-select-option>
@@ -170,7 +171,7 @@
         </ion-item>
       </ion-col>
       <ion-col size="8">
-        <ion-searchbar showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getScheduleList()"></ion-searchbar>
+        <ion-searchbar color="medium" showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getScheduleList()"></ion-searchbar>
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
@@ -261,17 +262,23 @@
       </ion-col>
       <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
         <ion-row justify-content-end>
-          1
+          <ion-button color="warning">
+            1
+          </ion-button>
         </ion-row>
       </ion-col>
       <ion-col >
         <ion-row justify-content-center>
-          {{resp?.page_information?.currentPage}}
+          <ion-button color="warning" disabled>
+            {{resp?.page_information?.currentPage}}
+          </ion-button>
         </ion-row>
       </ion-col>
       <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
         <ion-row justify-content-start >
-          {{resp?.page_information?.totalPage}}
+          <ion-button color="warning">
+            {{resp?.page_information?.totalPage}}
+          </ion-button>
         </ion-row>
       </ion-col>
       <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
