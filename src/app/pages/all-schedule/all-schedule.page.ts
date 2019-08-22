@@ -48,6 +48,7 @@ export class AllSchedulePage implements OnInit {
   }
 
   sendIdSchedule(id){
+    console.log('id schedule', id);
     let navigationExtras: NavigationExtras = {
       queryParams: {
         id: JSON.stringify(id)
