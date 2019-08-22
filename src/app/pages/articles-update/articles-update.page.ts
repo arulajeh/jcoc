@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { ToastController, LoadingController } from '@ionic/angular';
+import { ToastController, LoadingController, NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -31,7 +31,8 @@ export class ArticlesUpdatePage implements OnInit {
     private api: ApiService,
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -144,6 +145,11 @@ export class ArticlesUpdatePage implements OnInit {
     });
 
     a.present();
+  }
+
+  navBack(){
+    console.log('nav Back')
+    this.navCtrl.back();
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
-import { ToastController, NavController } from '@ionic/angular';
+import { ToastController, NavController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-edit-music',
@@ -27,14 +27,13 @@ export class EditMusicPage implements OnInit {
     private api : ApiService,
     private toastController : ToastController,
     private navCtrl: NavController,
-    private router: Router
+    private router: Router,
+    private loadingCtrl: LoadingController
   ) { }
 
   async ionViewDidEnter(){
     await this.getIdMusic();
     await this.getDataMusic();
-    console.log(this.id);
-    // console.log('data music ' + this.data_music);
   }
 
   backPage(){
@@ -42,24 +41,22 @@ export class EditMusicPage implements OnInit {
     this.router.navigateByUrl('/home/add-music');
   }
 
-  // initData(){
-  //   this.getIdMusic();
-  //   this.getDataMusic();
-  // }
-
   getIdMusic(){
     this.route.queryParams.subscribe(params => {
       this.id = JSON.parse(params['id']);
     })
-    console.log(this.id);
   }
 
   getDataMusic(){
-    console.log(this.id);
-    return this.api.postData('music/detail', {"id": this.id}).then((result) =>{
-      console.log('result ' + result);
-      return this.dataMusic = JSON.parse(JSON.stringify(result)).data;
-    }).catch(err => {alert('Error Get Data!')});
+    this.showLoading('Getting data').then(() => {
+      return this.api.postData('music/detail', {"id": this.id}).then((result) =>{
+        this.loadingCtrl.dismiss();
+        return this.dataMusic = JSON.parse(JSON.stringify(result)).data;
+      }).catch(err => {
+        this.loadingCtrl.dismiss();
+        this.notif('Error getting data');
+      });
+    })
   }
 
   async submit(){
@@ -75,11 +72,8 @@ export class EditMusicPage implements OnInit {
       this.notif("You haven't enter the Music Link/URL");
     }else{
       await this.api.postData('music/update', this.dataMusic).then((result) =>{
-      console.log(JSON.stringify(result));
       return this.status = JSON.parse(JSON.stringify(result)).sukses;
     });
-      console.log(this.dataMusic);
-      console.log(this.status);
       if(this.status == true){
         //alert('SUCCESS');
         this.notif("Success! Music has been updated.");
@@ -99,6 +93,19 @@ export class EditMusicPage implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  async showLoading(msg) {
+    const a = await this.loadingCtrl.create({
+      animated: true,
+      backdropDismiss: false,
+      keyboardClose: true,
+      showBackdrop: true,
+      spinner: "dots",
+      message: msg
+    });
+
+    a.present();
   }
 
 }

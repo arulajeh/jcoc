@@ -13,7 +13,7 @@
     <ion-grid>
       <ion-row>
         <ion-col><ion-card-subtitle color="light">{{data_music?.penyanyi}}</ion-card-subtitle></ion-col>
-        <ion-col><ion-card-subtitle color="light">Created by : {{data_music?.created_by}}</ion-card-subtitle></ion-col>
+        <ion-col><ion-card-subtitle color="light">Created by : {{data_music?.user_name}}</ion-card-subtitle></ion-col>
       </ion-row>
       <ion-row>
         <ion-col>
@@ -32,9 +32,9 @@
   </ion-card>
 </ion-content>
 
-<ion-content *ngIf="!data_music">
+<ion-content *ngIf="!data_music" color="dark">
   <ion-card>
-    <ion-card-title>
+    <ion-card-title color="light">
       <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
     </ion-card-title>
     <ion-grid>
@@ -42,7 +42,7 @@
         <ion-col><ion-card-subtitle>
           <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
         </ion-card-subtitle></ion-col>
-        <ion-col><ion-card-subtitle>
+        <ion-col><ion-card-subtitle color="light">
           Created by : 
           <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
         </ion-card-subtitle></ion-col>
@@ -50,13 +50,13 @@
       <ion-row>
         <ion-col>
           <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
-          <ion-card-title>Lyric</ion-card-title>
+          <ion-card-title color="light">Lyric</ion-card-title>
           <ion-card-content class="spacing">
             <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
           </ion-card-content>
         </ion-col>
         <ion-col>
-          <ion-card-title>Chord</ion-card-title>
+          <ion-card-title color="light">Chord</ion-card-title>
           <ion-card-content class="spacing">
             <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
           </ion-card-content>

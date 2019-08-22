@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { NavController } from '@ionic/angular';
+import { NavController, LoadingController } from '@ionic/angular';
 import { NavigationExtras } from '@angular/router';
 
 @Component({
@@ -21,7 +21,8 @@ export class ArticlesAllPage implements OnInit {
 
   constructor(
     private api: ApiService,
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    private loadingCtrl: LoadingController
   ) { }
 
   ionViewDidEnter(){
@@ -31,13 +32,18 @@ export class ArticlesAllPage implements OnInit {
 
   getDataArticle(){
     console.log('Article');
-    this.api.getListData('article/all', this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
-    .then((result) =>{
-      console.log(result);
-      this.listArticle = JSON.parse(JSON.stringify(result)).data;
-      console.log(this.listArticle);
-    }).then(() => {
-      this.getImages();
+    this.showLoading('Getting articles').then(() => {
+      this.api.getListData('article/all', this.page_size, this.page_number, this.order_by, this.sort_by, this.search)
+      .then((result) =>{
+        this.loadingCtrl.dismiss();
+        console.log(result);
+        this.listArticle = JSON.parse(JSON.stringify(result)).data;
+        console.log(this.listArticle);
+      }).then(() => {
+        this.getImages();
+      }).catch((err) => {
+        this.loadingCtrl.dismiss();
+      })
     })
   }
 
@@ -68,6 +74,18 @@ export class ArticlesAllPage implements OnInit {
         });
       })
     );
+  }
+
+  async showLoading(msg) {
+    const x = await this.loadingCtrl.create({
+      animated: true,
+      backdropDismiss: false,
+      message: msg,
+      showBackdrop: true,
+      spinner: "dots",
+      keyboardClose: true
+    });
+    x.present();
   }
 
 }

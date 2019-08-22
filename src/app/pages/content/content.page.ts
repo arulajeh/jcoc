@@ -111,11 +111,11 @@ export class ContentPage implements OnInit {
   async getData() {
     this.loadingAnimated().then(() => {
       this.api.getListData('content', '5', '1', 'title', 'ASC', this.search ? this.search : ' ')
-      .then((result) => {
-        console.log(result)
-        this.listContent = JSON.parse(JSON.stringify(result)).data;
-      }).then(() => {
+      .then(async (result) => {
         this.loadingCtrl.dismiss();
+        console.log(result)
+        return this.listContent = await JSON.parse(JSON.stringify(result)).data;
+      }).then(() => {
         this.getImages();
       }).catch((err) => {
         this.loadingCtrl.dismiss();
@@ -148,6 +148,7 @@ export class ContentPage implements OnInit {
   }
 
   deleteContent(id) {
+    this.showToast('Deletting data');
     const data = {
       id: id
     }
