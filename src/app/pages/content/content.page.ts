@@ -8,6 +8,7 @@ import { ToastController, LoadingController } from '@ionic/angular';
   styleUrls: ['./content.page.scss'],
 })
 export class ContentPage implements OnInit {
+  imgNotFound = 'assets/img/image.png';
   content = {
     title: '',
     image: {
@@ -113,9 +114,9 @@ export class ContentPage implements OnInit {
       .then((result) => {
         console.log(result)
         this.listContent = JSON.parse(JSON.stringify(result)).data;
-        this.insertImage();
       }).then(() => {
         this.loadingCtrl.dismiss();
+        this.getImages();
       }).catch((err) => {
         this.loadingCtrl.dismiss();
       })
@@ -168,5 +169,21 @@ export class ContentPage implements OnInit {
     this.listContent.map((value, index) => {
       console.log(value.file_id);
     })
+  }
+
+  getImages() {
+    Promise.all(
+      this.listContent.map( async (val) => {
+        const body = {id: val.file_id}
+        await this.api.postData('image', body).then(async (res) => {
+          const x = JSON.parse(JSON.stringify(res)).data;
+          await this.listContent.forEach((value) => {
+            if (x.id === value.file_id) {
+              value.file = x.file
+            }
+          });
+        });
+      })
+    );
   }
 }

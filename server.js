@@ -205,11 +205,11 @@ app.get('/api/users/list', (req, res) => {
     let orderBy = head.order_by ? head.order_by : 'id';
     let search = head.search ? head.search : '';
     let offset = (pageNumber - 1) * pageSize;
-    db.sequelize.query(`SELECT id, name, position_id, position_name FROM v_user WHERE v_user.created_by = ${hasilJWT.data.id} AND (email ILIKE '%${search}%' OR username ILIKE '%${search}%' OR "name" ILIKE '%${search}%') ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
+    db.sequelize.query(`SELECT id, name, position_id, position_name FROM v_user WHERE created_by = ${hasilJWT.data.id} AND (email ILIKE '%${search}%' OR username ILIKE '%${search}%' OR "name" ILIKE '%${search}%') ORDER BY ${orderBy} ${sortBy} LIMIT ${pageSize} OFFSET ${offset}`,
     { type: db.sequelize.QueryTypes.SELECT})
     .then( async (result) => {
       let resultDB = result;
-      db.sequelize.query(`SELECT COUNT(*) from v_user WHERE v_user.created_by = ${hasilJWT.data.id} AND (email ILIKE '%${search}%' OR username ILIKE '%${search}%' OR "name" ILIKE '%${search}%')`,
+      db.sequelize.query(`SELECT COUNT(*) from v_user WHERE created_by = ${hasilJWT.data.id} AND (email ILIKE '%${search}%' OR username ILIKE '%${search}%' OR "name" ILIKE '%${search}%')`,
       { type: db.sequelize.QueryTypes.SELECT})
       .then((row) => {
         let totalPage = Math.ceil(parseInt(row[0].count) / parseInt(pageSize));
