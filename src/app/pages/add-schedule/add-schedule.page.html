@@ -248,15 +248,7 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col>
-        <ion-row justify-content-start>
-          <ion-button 
-          (click)="nextPrev('prev')"
-          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
-            Prev
-          </ion-button>
-        </ion-row>
-      </ion-col>
+      
       <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
         <ion-row justify-content-end>
             
@@ -288,15 +280,27 @@
             
         </ion-row>
       </ion-col>
+      
+    </ion-row>
+    <ion-row>
       <ion-col>
-        <ion-row justify-content-end>
+        <ion-row justify-content-start>
           <ion-button 
-          (click)="nextPrev('next')"
-          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
-            Next
+          (click)="nextPrev('prev')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+            Prev
           </ion-button>
         </ion-row>
       </ion-col>
+      <ion-col>
+          <ion-row justify-content-end>
+            <ion-button 
+            (click)="nextPrev('next')"
+            [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
+              Next
+            </ion-button>
+          </ion-row>
+        </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
