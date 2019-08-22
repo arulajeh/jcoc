@@ -83,14 +83,14 @@ export class ScheduleUpdatePage implements OnInit {
   }
 
   getMusicList() {
-    return this.api.getListData('music').then((res) => {
+    return this.api.getListData('music', '1000', '1', 'judul', 'ASC').then((res) => {
       console.log(res);
       this.listMusics = JSON.parse(JSON.stringify(res)).data;
     })
   }
 
   getUsersList() {
-    return this.api.getListData('users/list', '1000').then((res) => {
+    return this.api.getListData('users/list', '1000', '1', 'name', 'ASC').then((res) => {
       console.log(res);
       const resp = JSON.parse(JSON.stringify(res)).data;
       this.listMembers = {

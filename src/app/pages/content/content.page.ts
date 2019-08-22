@@ -110,7 +110,7 @@ export class ContentPage implements OnInit {
 
   async getData() {
     this.loadingAnimated().then(() => {
-      this.api.getListData('content', null, null, null, null, this.search ? this.search : ' ')
+      this.api.getListData('content', '5', '1', 'title', 'ASC', this.search ? this.search : ' ')
       .then((result) => {
         console.log(result)
         this.listContent = JSON.parse(JSON.stringify(result)).data;
