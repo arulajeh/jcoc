@@ -108,20 +108,24 @@ export class ScheduleUpdatePage implements OnInit {
   getScheduleDetail() {
     const data = {id: this.id}
     return this.api.postData('schedule/detail',data).then(async (res) => {
+      console.log(res);
       this.resp = JSON.parse(JSON.stringify(res));
-      this.dataSchedule.event_date = this.resp.data[0].event_date;
-      this.dataSchedule.event_name = this.resp.data[0].event_name;
-      this.gitaris = await this.listMembers.gitaris.find(x => x.id === this.resp.data[0].gitaris_id);
-      this.pianis = await this.listMembers.pianis.find(x => x.id === this.resp.data[0].pianis_id);
-      this.basis = await this.listMembers.basis.find(x => x.id === this.resp.data[0].basis_id);
-      this.drummer = await this.listMembers.drummer.find(x => x.id === this.resp.data[0].drummer_id);
-      this.songLeader = await this.reparseSelectable(this.listMembers.song_leader, this.resp.data[0].song_leader_id);
-      this.singer = await this.reparseSelectable(this.listMembers.vokalis, this.resp.data[0].vokalis_id);
-      this.music = await this.reparseSelectable(this.listMusics, this.resp.data[0].music_id);
+      this.dataSchedule.event_date = this.resp.data.event_date;
+      this.dataSchedule.event_name = this.resp.data.event_name;
+      this.gitaris = await this.listMembers.gitaris.find(x => x.id === this.resp.data.gitaris_id);
+      this.pianis = await this.listMembers.pianis.find(x => x.id === this.resp.data.pianis_id);
+      this.basis = await this.listMembers.basis.find(x => x.id === this.resp.data.basis_id);
+      this.drummer = await this.listMembers.drummer.find(x => x.id === this.resp.data.drummer_id);
+      this.songLeader = await this.reparseSelectable(this.listMembers.song_leader, this.resp.data.song_leader_id);
+      this.singer = await this.reparseSelectable(this.listMembers.vokalis, this.resp.data.vokalis_id);
+      this.music = await this.reparseSelectable(this.listMusics, this.resp.data.music_id);
       console.log('list_music',this.listMusics)
-      console.log('music_id', this.resp.data[0].music_id);
+      console.log('music_id', this.resp.data.music_id);
       console.log(this.music);
-    });
+    }).catch((err) => {
+      this.loadingCtrl.dismiss();
+      console.log(err);
+    })
   }
 
   async showToast(msg) {
