@@ -7,31 +7,31 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="dark">
   <img src="assets/img/bg_4.jpg" class="headerImg" alt="JCOC Music Banner">
   <ion-row>
     <ion-col size="12">
       <ion-row justify-content-center>
-        <ion-text color="secondary">
+        <ion-text color="warning">
           <h1>Add Content</h1>
         </ion-text>
       </ion-row>
     </ion-col>
   </ion-row>
-  <ion-grid fixed>
+  <ion-grid fixed color="dark">
     <form id="loginForm" [hidden]="inputForm">
       <ion-row>
         <ion-col size="6">
-          <ion-item>
-            <ion-label position="stacked" color="primary">Title</ion-label>
+          <ion-item color="dark">
+            <ion-label position="stacked">Title</ion-label>
             <ion-input [(ngModel)]="content.title" name="title" type="text" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
-          <ion-item>
-            <ion-label position="stacked" color="primary">Photo</ion-label>
+          <ion-item color="dark">
+            <ion-label position="stacked">Photo</ion-label>
             <ion-input type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
           </ion-item>
         </ion-col>
@@ -42,7 +42,8 @@
           (click)="submit()" 
           type="submit"
           [disabled]="!content.title || !content.image.base64"
-          expand="block">
+          expand="block"
+          color="warning">
           Add Content
           </ion-button>
           <!-- [disabled]="!dataUser.username || !dataUser.name || !pass || !dataUser.name || !dataUser.email || !dataUser.phone || !dataUser.image.isImage || !position.id || !selectGender.id" -->
@@ -50,10 +51,10 @@
       </ion-row>
     </form>
   </ion-grid>
-  <ion-grid fixed>
+  <ion-grid fixed color="dark">
     <ion-row>
       <ion-col size="12">
-        <ion-searchbar showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getData()"></ion-searchbar>
+        <ion-searchbar color="medium" showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getData()"></ion-searchbar>
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
@@ -72,7 +73,7 @@
           Picture
         </ion-row>
       </ion-col>
-      <ion-col size="1">
+      <ion-col>
         <ion-row justify-content-center>
           Action
         </ion-row>
@@ -95,13 +96,12 @@
           <!-- {{user?.email}} -->
         </ion-row>
       </ion-col>
-      <ion-col size="1" align-self-center>
+      <ion-col align-self-center>
         <ion-row justify-content-center>
-          <ion-row>
-            <ion-col size="12" (click)="deleteContent(content.id)">
-              <ion-icon name="trash" size="large"></ion-icon>
-            </ion-col>
-          </ion-row>
+          <ion-button color="warning" (click)="deleteContent(content.id)" type="submit">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+          <!-- <ion-icon name="trash" size="large"></ion-icon> -->
         </ion-row>
       </ion-col>
     </ion-row>

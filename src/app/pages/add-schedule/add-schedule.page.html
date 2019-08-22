@@ -32,7 +32,7 @@
         <ion-col size="12">
           <ion-item color="dark">
             <ion-label position="stacked">Event Name</ion-label>
-            <ion-input [(ngModel)]="dataSchedule.event_name" name="title" type="text" spellcheck="false" autocapitalize="off"></ion-input>
+            <ion-input placeholder="Please enter your schedule's name here" [(ngModel)]="dataSchedule.event_name" name="title" type="text" spellcheck="false" autocapitalize="off"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -194,7 +194,7 @@
           <ion-icon name="arrow-dropup" *ngIf="order_by === 'event_date' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
       </ion-col>
-      <ion-col size="1">
+      <ion-col size="2">
         <ion-row justify-content-center>
           Picture
         </ion-row>
@@ -221,7 +221,7 @@
           {{schedule?.event_date | date: 'yyyy-MM-dd'}}
         </ion-row>
       </ion-col>
-      <ion-col size="1" align-self-center>
+      <ion-col size="2" align-self-center>
         <ion-row justify-content-center>
           <ion-img [src]="schedule?.file ? schedule.file : imgNotFound" style="width: 100%; height: 100%"></ion-img>
         </ion-row>
