@@ -85,6 +85,7 @@ export class DashboardPage implements OnInit {
   async ionViewDidEnter() {
     await this.getDataContent();
     await this.getMusicList();
+    this.getImages();
     console.log(this.musicList);
   }
 
@@ -156,7 +157,6 @@ export class DashboardPage implements OnInit {
 
   ionSlidesDidLoad(){
     this.slides.startAutoplay();
-    this.getImages();
   }
 
   getImages() {
