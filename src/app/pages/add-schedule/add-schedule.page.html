@@ -151,7 +151,9 @@
           (click)="submit()" 
           type="submit" 
           expand="block"
-          color="warning">
+          color="warning"
+          [disabled]="!dataSchedule.event_name || !dataSchedule.event_date || !dataSchedule.image.file_name || songLeader.length < 1 || singer.length < 1 || music.length < 1"
+          >
           Add Schedule
           </ion-button>
         </ion-col>

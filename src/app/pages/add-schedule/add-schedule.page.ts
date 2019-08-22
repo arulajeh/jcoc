@@ -161,14 +161,14 @@ export class AddSchedulePage implements OnInit {
   }
 
   getMusicList() {
-    this.api.getListData('music').then((res) => {
+    this.api.getListData('music', '1000', '1', 'judul', 'ASC').then((res) => {
       console.log(res);
       this.listMusics = JSON.parse(JSON.stringify(res)).data;
     })
   }
 
   getUsersList() {
-    this.api.getListData('users/list', '1000').then((res) => {
+    this.api.getListData('users/list', '1000', '1', 'name', 'ASC', ' ').then((res) => {
       console.log(res);
       const resp = JSON.parse(JSON.stringify(res)).data;
       this.listMembers = {
