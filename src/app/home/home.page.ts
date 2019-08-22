@@ -63,15 +63,22 @@ export class HomePage {
           title: 'All Schedule',
           url: '/home/all-schedule',
           icon: 'analytics',
-          hidden: false
+          hidden: JSON.parse(localStorage.getItem('data')).akses === 1 ? false : true
         },
         {
           title: 'Add Schedule',
           url: '/home/add-schedule',
           icon: 'calendar',
-          hidden: false
+          hidden: JSON.parse(localStorage.getItem('data')).akses === 1 ? false : true
         }
-      ]
+      ],
+      hidden: JSON.parse(localStorage.getItem('data')).akses === 1 ? false : true
+    },
+    {
+      title: 'All Schedule',
+      url: '/home/all-schedule',
+      icon: 'analytics',
+      hidden: JSON.parse(localStorage.getItem('data')).akses === 2 ? false : true
     },
     {
       title: 'Articles',
@@ -101,7 +108,7 @@ export class HomePage {
       title: 'Content',
       url: '/home/content',
       icon: 'cube',
-      hidden: false
+      hidden: JSON.parse(localStorage.getItem('data')).akses === 1 ? false : true
     },
     {
       title: 'Logout',

@@ -86,10 +86,10 @@
         </ion-row>
       </ion-col>
       <ion-col>
-        <ion-row justify-content-center (click)="changeSort('created_by')">
+        <ion-row justify-content-center (click)="changeSort('user_name')">
           Created By
-          <ion-icon name="arrow-dropdown" *ngIf="order_by === 'created_by' && sort_by === 'DESC'"></ion-icon>
-          <ion-icon name="arrow-dropup" *ngIf="order_by === 'created_by' && sort_by === 'ASC'"></ion-icon>
+          <ion-icon name="arrow-dropdown" *ngIf="order_by === 'user_name' && sort_by === 'DESC'"></ion-icon>
+          <ion-icon name="arrow-dropup" *ngIf="order_by === 'user_name' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
       </ion-col>
       <ion-col size="2">
@@ -98,7 +98,7 @@
         </ion-row>
       </ion-col>
     </ion-row>
-    <ion-row *ngFor="let data  of listMusic ; index as i" class="forecast_container" nowrap>
+    <ion-row *ngFor="let data of listMusic ; index as i" class="forecast_container" nowrap>
       <ion-col size="1" align-self-center>
         <ion-row justify-content-center>
         {{i + 1}}
@@ -116,7 +116,7 @@
       </ion-col>
       <ion-col align-self-center>
         <ion-row justify-content-center>
-          {{data?.created_by}}
+          {{data?.user_name}}
         </ion-row>
       </ion-col>
       <ion-col size="2" align-self-center>
@@ -243,7 +243,7 @@
       </ion-col>
       <ion-col >
         <ion-row justify-content-center>
-          <ion-button color="warning">
+          <ion-button color="warning" disabled>
             {{resp?.page_information?.currentPage}}
           </ion-button>
         </ion-row>
