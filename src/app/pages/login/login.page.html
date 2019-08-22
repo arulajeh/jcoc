@@ -14,20 +14,20 @@
   </ion-toolbar>
 </ion-header> -->
   
-  <ion-content color="dark">
-    <div class="login-logo">
+  <ion-content>
+    <div class="login-logo" color="dark">
       <img src="assets/img/jcoc.png" alt="Ionic logo">
     </div>
   
     <form id="loginForm" novalidate>
       <ion-list>
-        <ion-item color="dark">
+        <ion-item>
           <ion-label position="floating">Username</ion-label>
           <ion-input [(ngModel)]="username" name="username" type="text" spellcheck="false" autocapitalize="off"
             required>
           </ion-input>
         </ion-item>
-        <ion-item color="dark">
+        <ion-item>
           <ion-label position="floating">Password</ion-label>
           <ion-input [(ngModel)]="password" name="password" type="password" required>
           </ion-input>
