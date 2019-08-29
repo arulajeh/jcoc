@@ -42,6 +42,8 @@ var checkJWT = (args => {
   });
 });
 
+var idUser = [];
+
 app.post('/api/login', (req, res)=>{
   let a = req.body;
   console.log(a);
@@ -846,6 +848,17 @@ app.post('/api/schedule/create', (req, res) => {
               schedule_id: id_schedule,
               files_id: created.id
             });
+            let idEmail = await getEmailUser(args);
+            db.sequelize.query(`SELECT email FROM v_user WHERE id IN (${idUser.join(',')})`, { type: db.sequelize.QueryTypes.SELECT})
+            .then(async (resultEm) => {
+              // console.log(resultEm);
+              let listEmailing = [];
+              await resultEm.forEach((val, inde) => {
+                return listEmailing.push(val.email);
+              });
+              console.log(listEmailing);
+              // sendEmail(resultEm.email, 'New event is up coming to your team', 'New Event on jcocmusic.org');
+            })
             res.json({
               sukses: true,
               msg: "Schedule created successfully",
@@ -882,6 +895,17 @@ app.post('/api/schedule/create', (req, res) => {
     // });
   // }
 })
+
+const getEmailUser = async (data) => {
+  idUser = await  [];
+  data.basis ? await parseMyId(data.basis) : {};
+  data.gitaris ? await parseMyId(data.gitaris) : {};
+  data.drummer ? await parseMyId(data.drummer) : {};
+  data.pianis ? await parseMyId(data.pianis) : {};
+  await parseMyId(data.vokalis);
+  await parseMyId(data.song_leader);
+  return idUser;
+}
 
 // Schedule Detail
 app.post('/api/schedule/detail', (req, res) => {
@@ -1516,22 +1540,35 @@ app.post('/api/article/update', (req, res) => {
       msg: 'Unauthrized user'
     })
   }
-})
+});
 
 app.post('/api/email', (req, res) => {
   sendEmail();
 });
 
-const sendEmail = () => {
+const parseMyId = async (data) => {
+  if (Array.isArray(data)) {
+      idUser.concat(data);
+      data.forEach((val, ind) => {
+          return idUser.push(val);
+      });
+      return idUser;
+  } else {
+      idUser.push(data);
+      return idUser;
+  };
+}
+
+const sendEmail = (email, subject, text) => {
   // using Twilio SendGrid's v3 Node.js Library
   // https://github.com/sendgrid/sendgrid-nodejs
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey('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');
 const msg = {
-  to: 'syahrulloh3@gmail.com',
+  to: email,
   from: 'eleomessiah@gmail.com',
-  subject: 'Sending with Twilio SendGrid is Fun',
-  text: 'and easy to do anywhere, even with Node.js',
+  subject: subject,
+  text: text,
   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
 };
 sgMail.send(msg);
