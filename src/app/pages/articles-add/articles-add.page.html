@@ -96,7 +96,10 @@
       </ion-col>
       <ion-col align-self-center size="5">
         <ion-row justify-content-center>
-          <ion-img class="yt" [src]="article.file ? article.file : imgNotFound"></ion-img>
+          <ion-thumbnail>
+            <img [src]="article.file ? article.file : imgNotFound" />
+          </ion-thumbnail>
+          <!-- <ion-img class="yt" [src]="article.file ? article.file : imgNotFound"></ion-img> -->
         </ion-row>
       </ion-col>
       <ion-col size="2" align-self-center>

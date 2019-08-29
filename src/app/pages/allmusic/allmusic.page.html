@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="warning">
+  <ion-toolbar color="head">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="dark">
+<ion-content color="light">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
       pullingIcon="arrow-dropdown"
@@ -19,7 +19,7 @@
   <ion-grid fixed>
     <ion-row justify-content-center>
       <ion-col size="4">
-        <ion-item color="medium">
+        <ion-item color="body">
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" name="ionSelect" (ionChange)="getDataMusic()">
             <ion-select-option value="5">5</ion-select-option>
@@ -29,14 +29,14 @@
         </ion-item>
       </ion-col>
       <ion-col size="8">
-        <ion-searchbar color="medium" placeholder="Search Music" class="searchbar" debounce="500" [(ngModel)]="search" (ionChange)="getDataMusic()"></ion-searchbar>
+        <ion-searchbar color="body" placeholder="Search Music" class="searchbar" debounce="500" [(ngModel)]="search" (ionChange)="getDataMusic()"></ion-searchbar>
       </ion-col>
     </ion-row>
   </ion-grid>
   <ion-grid style="margin-right: 1.5%" class="marginku" color="medium">
     <ion-row justify-content-center>
       <ion-col *ngFor ="let data of safeUrl" size="md">
-        <ion-card class="card_music" color="medium">
+        <ion-card class="card_music" color="body">
           <iframe class="yt" height="315"
             [src]="data.url">
           </iframe>

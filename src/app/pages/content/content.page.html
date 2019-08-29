@@ -92,7 +92,10 @@
       </ion-col>
       <ion-col align-self-center size="4">
         <ion-row justify-content-center>
-          <ion-img [src]="content.file ? content.file : imgNotFound"></ion-img>
+          <ion-thumbnail>
+            <img [src]="content.file ? content.file : imgNotFound" />
+          </ion-thumbnail>
+          <!-- <ion-img [src]="content.file ? content.file : imgNotFound"></ion-img> -->
           <!-- {{user?.email}} -->
         </ion-row>
       </ion-col>

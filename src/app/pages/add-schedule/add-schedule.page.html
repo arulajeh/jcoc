@@ -225,7 +225,10 @@
       </ion-col>
       <ion-col size="2" align-self-center>
         <ion-row justify-content-center>
-          <ion-img [src]="schedule?.file ? schedule.file : imgNotFound" style="width: 100%; height: 100%"></ion-img>
+          <ion-thumbnail>
+            <img [src]="schedule?.file ? schedule.file : imgNotFound" />
+          </ion-thumbnail>
+          <!-- <ion-img [src]="schedule?.file ? schedule.file : imgNotFound" style="width: 100%; height: 100%"></ion-img> -->
         </ion-row>
       </ion-col>
       <ion-col size="2" align-self-center>
