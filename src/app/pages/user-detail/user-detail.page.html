@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>User Detail</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- <ion-content>
+
+</ion-content> -->
+
+<ion-content class="FR03 CP012">
+  <!-- <ion-grid class="navbar-header CP001"  no-padding no-margin text-right>
+    <span class="img"  no-padding no-margin>
+        <img [src]="resp.file ? resp.file : imgNotFound" class="logo">
+    </span>
+    <span  no-padding no-margin>Hello, User</span>
+  </ion-grid> -->
+  <ion-grid class="content-header" no-padding no-margin> 
+    <span class="content-header--content FR03">
+      <span><img [src]="resp?.file ? resp.file : imgNotFound"> </span>
+      <span text-center> {{resp?.name}} </span>
+    </span>
+  </ion-grid>
+    
+  <ion-grid  class="content-detail FR06">
+    <ion-row>
+        <ion-col no-margin no-padding size="5">Name</ion-col>
+        <ion-col no-margin no-padding size="7">{{resp?.name}}</ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col no-margin no-padding size="5">Telephone</ion-col>
+        <ion-col no-margin no-padding size="7">{{resp?.phone ? resp?.phone : '-'}}</ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col no-margin no-padding size="5">Company Name</ion-col>
+        <ion-col no-margin no-padding size="7">{{resp?.email}}</ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col no-margin no-padding size="5">Position</ion-col>
+        <ion-col no-margin no-padding size="7">{{resp?.position_name}}</ion-col>
+    </ion-row>
+
+  </ion-grid>
+  <!-- <ion-grid>
+    <ion-row>
+      <ion-col class="FR02 CP012 contact-support">
+        Support email : scp.bandarlampung@gmail.com
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+</ion-content>

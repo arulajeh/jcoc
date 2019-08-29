@@ -1518,6 +1518,25 @@ app.post('/api/article/update', (req, res) => {
   }
 })
 
+app.post('/api/email', (req, res) => {
+  sendEmail();
+});
+
+const sendEmail = () => {
+  // using Twilio SendGrid's v3 Node.js Library
+  // https://github.com/sendgrid/sendgrid-nodejs
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey('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');
+const msg = {
+  to: 'syahrulloh3@gmail.com',
+  from: 'eleomessiah@gmail.com',
+  subject: 'Sending with Twilio SendGrid is Fun',
+  text: 'and easy to do anywhere, even with Node.js',
+  html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+};
+sgMail.send(msg);
+};
+
 const request = require('request');
 
 app.use(express.static('www'));

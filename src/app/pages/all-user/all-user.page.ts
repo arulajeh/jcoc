@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, LoadingController, ToastController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-all-user',
@@ -114,6 +115,17 @@ export class AllUserPage implements OnInit {
         });
       })
     );
+  }
+
+  detail(id){
+    console.log(id);
+    const extras: NavigationExtras = {
+      queryParams: {
+        id: JSON.stringify(id)
+      }
+    };
+
+    this.navCtrl.navigateForward('member-detail', extras);
   }
 
 }
