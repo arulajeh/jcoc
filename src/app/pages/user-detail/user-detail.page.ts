@@ -8,6 +8,7 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./user-detail.page.scss'],
 })
 export class UserDetailPage implements OnInit {
+  imgNotFound = 'assets/img/image.png';
   id:number;
   resp: any;
 
