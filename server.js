@@ -857,7 +857,7 @@ app.post('/api/schedule/create', (req, res) => {
                 return listEmailing.push(val.email);
               });
               console.log(listEmailing);
-              // sendEmail(resultEm.email, 'New event is up coming to your team', 'New Event on jcocmusic.org');
+              sendEmail(listEmailing, 'New event is up coming to your team', 'New Event on jcocmusic.org');
             })
             res.json({
               sukses: true,
