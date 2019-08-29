@@ -850,8 +850,13 @@ app.post('/api/schedule/create', (req, res) => {
             });
             let idEmail = await getEmailUser(args);
             db.sequelize.query(`SELECT email FROM v_user WHERE id IN (${idUser.join(',')})`, { type: db.sequelize.QueryTypes.SELECT})
-            .then((resultEm) => {
-              console.log(resultEm);
+            .then(async (resultEm) => {
+              // console.log(resultEm);
+              let listEmailing = [];
+              await resultEm.forEach((val, inde) => {
+                return listEmailing.push(val.email);
+              });
+              console.log(listEmailing);
               // sendEmail(resultEm.email, 'New event is up coming to your team', 'New Event on jcocmusic.org');
             })
             res.json({
