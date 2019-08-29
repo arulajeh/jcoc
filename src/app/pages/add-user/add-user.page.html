@@ -31,7 +31,7 @@
       <ion-row>
         <ion-col size="6">
           <ion-item color="dark">
-            <ion-label position="stacked">Name</ion-label>
+            <ion-label position="floating">Name</ion-label>
             <ion-input [(ngModel)]="dataUser.name" name="name" type="text" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
@@ -39,7 +39,7 @@
         </ion-col>
         <ion-col size="6">
           <ion-item color="dark">
-            <ion-label position="stacked">Username</ion-label>
+            <ion-label position="floating">Username</ion-label>
             <ion-input [(ngModel)]="dataUser.username" name="username" type="text" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
@@ -49,7 +49,7 @@
       <ion-row>
         <ion-col size="6">
           <ion-item color="dark">
-            <ion-label position="stacked">Password</ion-label>
+            <ion-label position="floating">Password</ion-label>
             <ion-input [(ngModel)]="pass" name="password" type="password" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
@@ -57,7 +57,7 @@
         </ion-col>
         <ion-col size="6">
           <ion-item color="dark">
-            <ion-label position="stacked">Phone</ion-label>
+            <ion-label position="floating">Phone</ion-label>
             <ion-input [(ngModel)]="dataUser.phone" name="phone" type="text" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
@@ -66,7 +66,7 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-label position="stacked">Position</ion-label>
+          <ion-label>Position</ion-label>
           <ionic-selectable color="dark"
           [(ngModel)]="position"
           [items]="listPostions"
@@ -78,7 +78,7 @@
           </ionic-selectable>
         </ion-col>
         <ion-col size="6">
-          <ion-label position="stacked">Gender</ion-label>
+          <ion-label>Gender</ion-label>
           <ionic-selectable
           [(ngModel)]="selectGender"
           [items]="gender"
@@ -93,7 +93,7 @@
       <ion-row>
         <ion-col size="6">
           <ion-item color="dark">
-            <ion-label position="stacked">Email</ion-label>
+            <ion-label position="floating">Email</ion-label>
             <ion-input [(ngModel)]="dataUser.email" name="email" type="text" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
@@ -101,7 +101,7 @@
         </ion-col>
         <ion-col size="6">
           <ion-item color="dark">
-            <ion-label position="stacked">Photo</ion-label>
+            <ion-label>Photo</ion-label>
             <ion-input type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
           </ion-item>
         </ion-col>
@@ -208,7 +208,10 @@
       </ion-col>
       <ion-col size="2" align-self-center>
         <ion-row justify-content-center>
-          <ion-img [src]="user?.file ? user.file : imgNotFound" style="width: 100%; height: 100%"></ion-img>
+          <ion-thumbnail>
+            <img [src]="user?.file ? user.file : imgNotFound" />
+          </ion-thumbnail>
+          <!-- <ion-img [src]="user?.file ? user.file : imgNotFound" style="width: 100%; height: 100%"></ion-img> -->
         </ion-row>
       </ion-col>
       <ion-col size="2" align-self-center>
