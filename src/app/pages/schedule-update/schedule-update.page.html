@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="warning">
+  <ion-toolbar color="head">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -7,12 +7,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="dark">
-  <ion-grid fixed color="dark">
+<ion-content color="light">
+  <ion-grid fixed color="light">
     <form id="updateScheduleForm">
       <ion-row>
         <ion-col size="12">
-          <ion-item color="dark">
+          <ion-item color="light">
             <ion-label position="stacked">Event Name</ion-label>
             <ion-input [(ngModel)]="dataSchedule.event_name" name="title" type="text" spellcheck="false" autocapitalize="off"></ion-input>
           </ion-item>
@@ -20,13 +20,13 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-item color="dark">
+          <ion-item color="light">
             <ion-label>Date</ion-label>
             <ion-datetime display-format="DD-MM-YYYY" [(ngModel)]="dataSchedule.event_date" name="event_date"></ion-datetime>
           </ion-item>
         </ion-col>
         <ion-col size="6">
-          <ion-item color="dark">
+          <ion-item color="light">
             <ion-label position="stacked">Event Picture</ion-label>
             <ion-input type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
           </ion-item>

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="warning">
+  <ion-toolbar color="head">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -7,18 +7,18 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="dark">
+<ion-content color="light">
   <ion-row justify-content-center>
-    <ion-searchbar color="medium" placeholder="Search Article..." class="searchbar" debounce="500" [(ngModel)]="search"></ion-searchbar>
+    <ion-searchbar color="body" placeholder="Search Article..." class="searchbar" debounce="500" [(ngModel)]="search"></ion-searchbar>
   </ion-row>
   <ion-grid class="marginku">
       <!-- style="margin-right: 1.5%" -->
     <ion-row justify-content-center>
       <ion-col *ngFor ="let data of listArticle" size="md">
-        <ion-card class="card_article" color="medium">
+        <ion-card class="card_article" color="body">
           <img class="yt" [src]="data.file ? data.file : imgNotFound" alt="">
           <ion-card-header>
-            <ion-card-title color="light">{{data.title}}</ion-card-title>
+            <ion-card-title>{{data.title}}</ion-card-title>
             <ion-row>
               <ion-col size="6"><ion-card-subtitle>{{data.name}}</ion-card-subtitle></ion-col>
               <ion-col size="6"><ion-card-subtitle>

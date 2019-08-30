@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="warning">
+  <ion-toolbar color="head">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -7,12 +7,14 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="dark">
-  <ion-card color="dark">
+<ion-content color="light">
+  <ion-card color="light">
   <!-- <ion-card-title>{{data_article?.title}}</ion-card-title> -->
-  <img [src]="dataArticle?.file" class="headerImg" alt="">
+  <ion-row justify-content-center>
+    <img [src]="dataArticle?.file" class="headerImg" alt="">
+  </ion-row>
   <ion-card-title>{{dataArticle?.title}}</ion-card-title>
-    <ion-grid color="dark">
+    <ion-grid color="light">
       <ion-row>
         <ion-col><ion-card-subtitle>Created by : {{dataArticle?.name}}</ion-card-subtitle></ion-col>
         <ion-col><ion-card-subtitle>
