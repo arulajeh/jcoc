@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="head">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>User Detail</ion-title>
+    <ion-title>User Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -11,44 +11,101 @@
 
 </ion-content> -->
 
-<ion-content class="FR03 CP012">
-  <!-- <ion-grid class="navbar-header CP001"  no-padding no-margin text-right>
-    <span class="img"  no-padding no-margin>
-        <img [src]="resp.file ? resp.file : imgNotFound" class="logo">
-    </span>
-    <span  no-padding no-margin>Hello, User</span>
-  </ion-grid> -->
-  <ion-grid class="content-header" no-padding no-margin> 
-    <span class="content-header--content FR03">
-      <span><img [src]="resp?.file ? resp.file : imgNotFound"> </span>
-      <span text-center> {{resp?.name}} </span>
-    </span>
-  </ion-grid>
-    
-  <ion-grid  class="content-detail FR06">
-    <ion-row>
-        <ion-col no-margin no-padding size="5">Name</ion-col>
-        <ion-col no-margin no-padding size="7">{{resp?.name}}</ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-col no-margin no-padding size="5">Telephone</ion-col>
-        <ion-col no-margin no-padding size="7">{{resp?.phone ? resp?.phone : '-'}}</ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-col no-margin no-padding size="5">Company Name</ion-col>
-        <ion-col no-margin no-padding size="7">{{resp?.email}}</ion-col>
-    </ion-row>
-    <ion-row>
-        <ion-col no-margin no-padding size="5">Position</ion-col>
-        <ion-col no-margin no-padding size="7">{{resp?.position_name}}</ion-col>
-    </ion-row>
 
-  </ion-grid>
-  <!-- <ion-grid>
-    <ion-row>
-      <ion-col class="FR02 CP012 contact-support">
-        Support email : scp.bandarlampung@gmail.com
-      </ion-col>
-    </ion-row>
-  </ion-grid> -->
+
+<ion-content *ngIf="resp" color="light">
+  <ion-card color="light">
+    <!-- <h5>Username : {{resp?.username}}</h5> -->
+    <ion-grid>
+      <!-- <ion-row>
+        <ion-col><ion-card-subtitle>{{data_music?.penyanyi}}</ion-card-subtitle></ion-col>
+        <ion-col><ion-card-subtitle>Created by : {{data_music?.user_name}}</ion-card-subtitle></ion-col>
+      </ion-row> -->
+      <ion-row>
+        <ion-col>
+          <ion-row justify-content-center>
+            <img style="border-radius: 50%; width:150px; height:150px;" [src]="resp?.file ? resp.file : imgNotFound">
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4">
+          <ion-card-title>Name</ion-card-title>
+        </ion-col>
+        <ion-col size="8">
+          <ion-card-content class="spacing">{{resp?.name}}</ion-card-content>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4">
+          <ion-card-title>Telephone</ion-card-title>
+        </ion-col>
+        <ion-col size="8">
+          <ion-card-content class="spacing">{{resp?.phone ? resp?.phone : '-'}}</ion-card-content>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4">
+          <ion-card-title>Email</ion-card-title>
+        </ion-col>
+        <ion-col size="8">
+          <ion-card-content class="spacing">{{resp?.email}}</ion-card-content>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="4">
+          <ion-card-title>Position</ion-card-title>
+        </ion-col>
+        <ion-col size="8">
+          <ion-card-content class="spacing">{{resp?.position_name}}</ion-card-content>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</ion-content>
+
+<ion-content *ngIf="!resp" color="light">
+  <ion-card>
+    <ion-card-title color="body">
+      <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+    </ion-card-title>
+    <ion-grid>
+      <!-- <ion-row>
+        <ion-col><ion-card-subtitle>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </ion-card-subtitle></ion-col>
+        <ion-col><ion-card-subtitle color="light">
+          Created by : 
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+        </ion-card-subtitle></ion-col>
+      </ion-row> -->
+      <ion-row>
+        <!-- <ion-col>
+          <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          <ion-card-title color="light">Lyric</ion-card-title>
+          <ion-card-content class="spacing">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </ion-card-content>
+        </ion-col> -->
+        <ion-col>
+          <ion-card-title>Name</ion-card-title>
+          <ion-card-content class="spacing">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </ion-card-content>
+          <ion-card-title>Telephone</ion-card-title>
+          <ion-card-content class="spacing">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </ion-card-content>
+          <ion-card-title>Email</ion-card-title>
+          <ion-card-content class="spacing">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </ion-card-content>
+          <ion-card-title>Position</ion-card-title>
+          <ion-card-content class="spacing">
+            <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
+          </ion-card-content>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
 </ion-content>

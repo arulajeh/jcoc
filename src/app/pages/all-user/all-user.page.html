@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="warning">
+  <ion-toolbar color="head">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="dark">
+<ion-content color="light">
   <img src="assets/img/bg_4.jpg" class="headerImg" alt="JCOC Music Banner">
   <ion-grid no-padding>
     <ion-row>
@@ -23,7 +23,7 @@
   <ion-grid style="margin-right: 1.5%" class="marginku">
     <ion-row>
       <ion-col size="4">
-        <ion-item color="medium">
+        <ion-item color="body">
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" (ionChange)="getMemberList()">
             <ion-select-option value="5">5</ion-select-option>
@@ -33,12 +33,12 @@
         </ion-item>
       </ion-col>
       <ion-col size="8">
-        <ion-searchbar color="medium" showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getMemberList()"></ion-searchbar>
+        <ion-searchbar color="body" showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getMemberList()"></ion-searchbar>
       </ion-col>
     </ion-row>
     <ion-row justify-content-center>
       <ion-col *ngFor ="let data of listMembers" size="xs">
-        <ion-card class="card_music" color="medium" (click)="detail(data.id)">
+        <ion-card class="card_music" color="body">
           <ion-row justify-content-center class="topMargin">
             <img [src]="data.file ? data.file : imgNotFound" alt="" class="yt user-img mb-4">
           </ion-row>
@@ -53,9 +53,13 @@
               <ion-card-subtitle>{{data?.position_name}}</ion-card-subtitle>
             </ion-row>
           </ion-card-header>
-          <ion-card-content>
-
-          </ion-card-content>
+          <ion-row justify-content-center>
+            <ion-card-content>
+              <ion-button color="warning" (click)="detail(data.id)">
+                See Profile
+              </ion-button>
+            </ion-card-content>
+          </ion-row>
         </ion-card>
       </ion-col>
     </ion-row>

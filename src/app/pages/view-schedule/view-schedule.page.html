@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="warning">
+  <ion-toolbar color="head">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -7,15 +7,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="dark">
-  <ion-card *ngIf="resp" color="dark">
-    <img [src]="resp?.file" alt="">
-    <ion-card-title color="warning">{{resp?.event_name}}</ion-card-title>
+<ion-content color="light">
+  <ion-card *ngIf="resp" color="light">
+    <ion-row justify-content-center>
+      <img [src]="resp?.file" alt="" class="headerImg">
+    </ion-row>
+    <ion-card-title>{{resp?.event_name}}</ion-card-title>
     <ion-card-subtitle>{{resp?.event_date | date: 'EEE, d MMM y'}}</ion-card-subtitle>
     <ion-grid fixed>
       <ion-row>
         <ion-col>
-          <ion-card-title color="warning">Member List</ion-card-title>
+          <ion-card-title>Member List</ion-card-title>
           <ion-row>
             <ion-col size="12">
               <ion-card-subtitle class="sub">Vokalis</ion-card-subtitle>
@@ -68,7 +70,7 @@
           </ion-row>
         </ion-col>
         <ion-col>
-          <ion-card-title color="warning">Music List</ion-card-title>
+          <ion-card-title>Music List</ion-card-title>
           <ion-row *ngFor="let music of resp?.music_name">
             <ion-col size="12">
               <ion-card-subtitle>{{music}}</ion-card-subtitle>
@@ -79,7 +81,7 @@
     </ion-grid>  
   </ion-card>
 
-  <ion-card *ngIf="!resp" color="dark">
+  <ion-card *ngIf="!resp" color="light">
     <img [src]="resp?.file" alt="">
     <ion-card-title color="warning">NAMA EVENT</ion-card-title>
       <ion-skeleton-text animated style="width: 60%"></ion-skeleton-text>
