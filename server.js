@@ -1686,7 +1686,7 @@ const sendEmail = (email, subject, text, body, id) => {
   <tr style="vertical-align: top;" valign="top">
   <td style="word-break: break-word; vertical-align: top;" valign="top">
   <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" style="background-color:#E6E6E6"><![endif]-->
-  <div style="background-image:url(${body.image.base64});background-position:top center;background-repeat:no-repeat;background-color:transparent;">
+  <div style="background-image:url(https://jcocmusic.herokuapp.com/assets/img/hand.jpg);background-position:top center;background-repeat:no-repeat;background-color:transparent;">
   <div class="block-grid" style="Margin: 0 auto; min-width: 320px; max-width: 700px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; background-color: transparent;">
   <div style="border-collapse: collapse;display: table;width: 100%;background-color:transparent;">
   <!--[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-image:url('images/photo-1531206715517-5c0ba140b2b8.jpg');background-position:top center;background-repeat:no-repeat;background-color:transparent;"><tr><td align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:700px"><tr class="layout-full-width" style="background-color:transparent"><![endif]-->
@@ -1727,7 +1727,7 @@ const sendEmail = (email, subject, text, body, id) => {
   <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding-right: 10px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px; font-family: Tahoma, Verdana, sans-serif"><![endif]-->
   <div style="color:#555555;font-family:'Roboto', Tahoma, Verdana, Segoe, sans-serif;line-height:120%;padding-top:0px;padding-right:10px;padding-bottom:0px;padding-left:0px;">
   <div style="line-height: 14px; font-size: 12px; font-family: 'Roboto', Tahoma, Verdana, Segoe, sans-serif; color: #555555;">
-  <p style="line-height: 36px; font-size: 12px; margin: 0;"><span style="font-size: 30px;"><span style="color: #ffffff; font-size: 30px; line-height: 36px;"><span style="line-height: 36px; font-size: 30px;">Event at ${new Date(body.event_date).getDate()}/${new Date(body.event_date).getMonth()}/${new Date(body.event_date).getFullYear()} ${new Date(body.event_date).getHours()}: ${new Date(body.event_date).getMinutes()}</span></span></span></p>
+  <p style="line-height: 36px; font-size: 12px; margin: 0;"><span style="font-size: 30px;"><span style="color: #ffffff; font-size: 30px; line-height: 36px;"><span style="line-height: 36px; font-size: 30px;">Event at ${new Date(body.event_date).getDate()}/${new Date(body.event_date).getMonth()}/${new Date(body.event_date).getFullYear()}</span></span></span></p>
   </div>
   </div>
   <!--[if mso]></td></tr></table><![endif]-->
