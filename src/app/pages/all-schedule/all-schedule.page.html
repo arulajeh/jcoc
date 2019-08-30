@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="warning">
+  <ion-toolbar color="head">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -7,17 +7,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="dark">
+<ion-content color="light">
   <ion-row justify-content-center>
-    <ion-searchbar color="medium" placeholder="Search Schedule" class="searchbar" debounce="500" [(ngModel)]="search"></ion-searchbar>
+    <ion-searchbar color="body" placeholder="Search Schedule" class="searchbar" debounce="500" [(ngModel)]="search"></ion-searchbar>
   </ion-row>
   <ion-grid style="margin-right: 1.5%" class="marginku">
     <ion-row justify-content-center>
       <ion-col *ngFor ="let data of listSchedule" size="md">
-        <ion-card class="card_schedule" color="medium">
+        <ion-card class="card_schedule" color="body">
           <img class="yt" [src]="data.file ? data.file : imgNotFound" alt="">
           <ion-card-header>
-            <ion-card-title color="light">{{data.event_name}}</ion-card-title>
+            <ion-card-title>{{data.event_name}}</ion-card-title>
             <ion-card-subtitle>{{data.event_date | date: 'EEE, MMM d, y'}}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>

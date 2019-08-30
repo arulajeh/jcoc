@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="warning">
+  <ion-toolbar color="head">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="dark">
+<ion-content color="light">
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
       pullingIcon="arrow-dropdown"
@@ -30,7 +30,7 @@
     <form id="loginForm">
       <ion-row>
         <ion-col size="6">
-          <ion-item color="dark">
+          <ion-item color="light">
             <ion-label position="floating">Name</ion-label>
             <ion-input [(ngModel)]="dataUser.name" name="name" type="text" spellcheck="false" autocapitalize="off"
               required>
@@ -38,7 +38,7 @@
           </ion-item>
         </ion-col>
         <ion-col size="6">
-          <ion-item color="dark">
+          <ion-item color="light">
             <ion-label position="floating">Username</ion-label>
             <ion-input [(ngModel)]="dataUser.username" name="username" type="text" spellcheck="false" autocapitalize="off"
               required>
@@ -48,7 +48,7 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-item color="dark">
+          <ion-item color="light">
             <ion-label position="floating">Password</ion-label>
             <ion-input [(ngModel)]="pass" name="password" type="password" spellcheck="false" autocapitalize="off"
               required>
@@ -56,7 +56,7 @@
           </ion-item>
         </ion-col>
         <ion-col size="6">
-          <ion-item color="dark">
+          <ion-item color="light">
             <ion-label position="floating">Phone</ion-label>
             <ion-input [(ngModel)]="dataUser.phone" name="phone" type="text" spellcheck="false" autocapitalize="off"
               required>
@@ -67,7 +67,7 @@
       <ion-row>
         <ion-col size="6">
           <ion-label>Position</ion-label>
-          <ionic-selectable color="dark"
+          <ionic-selectable color="light"
           [(ngModel)]="position"
           [items]="listPostions"
           itemValueField="id"
@@ -92,7 +92,7 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-item color="dark">
+          <ion-item color="light">
             <ion-label position="floating">Email</ion-label>
             <ion-input [(ngModel)]="dataUser.email" name="email" type="text" spellcheck="false" autocapitalize="off"
               required>
@@ -100,7 +100,7 @@
           </ion-item>
         </ion-col>
         <ion-col size="6">
-          <ion-item color="dark">
+          <ion-item color="light">
             <ion-label>Photo</ion-label>
             <ion-input type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
           </ion-item>
