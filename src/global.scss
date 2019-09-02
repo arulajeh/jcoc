@@ -76,3 +76,17 @@ app-home.ion-page{
     
 
 }
+ion-searchbar.searchbar{
+    padding: 0px 0.5vmax;
+    margin: 0px;
+
+    & .searchbar-input-container.sc-ion-searchbar-ios{
+        --height: 5vmax !important;
+        --border: 1px solid var(--CR005);
+        --border-radius: 1vmax;
+
+        & .searchbar-input{
+            color: var(--CR003);
+        }
+    }
+}

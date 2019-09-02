@@ -9,7 +9,7 @@
 
 <ion-content class="content">
 
-  <ion-grid class="slider">
+  <ion-grid class="slider" no-padding no-margin>
     <ion-slides 
       [options]="slideOpts" 
       class="content" 
@@ -31,31 +31,30 @@
         </ion-row>
       </ion-slide>
     </ion-slides>
+  </ion-grid>
 
+  <ion-grid class="search" no-padding no-margin>
     <ion-row justify-content-center>
-      <ion-col size="12">
-        <ion-searchbar color="body" placeholder="Search Music" class="searchbar" debounce="500" [(ngModel)]="search" (ionChange)="getMusicList()"></ion-searchbar>
+      <ion-col size="12" no-padding no-margin>
+        <ion-searchbar placeholder="Search Music..." class="searchbar" debounce="500" [(ngModel)]="search" (ionChange)="getMusicList()"></ion-searchbar>
       </ion-col>
     </ion-row>
   </ion-grid>
 
-  <ion-grid style="margin-right: 1.5%" class="marginku">
+  <ion-grid no-padding no-margin class="card-music">
     <ion-row justify-content-center>
-      <ion-col *ngFor ="let data of safeUrl" size="md">
-        <ion-card class="card_music" color="body">
-          <iframe class="yt" height="315"
-            [src]="data.url">
-          </iframe>
+        <ion-card  *ngFor ="let data of safeUrl" size="md"  no-padding no-margin>
+          <iframe [src]="data.url"></iframe>
           <ion-card-header>
             <ion-card-title>{{data.title}}</ion-card-title>
             <ion-card-subtitle>{{data.artist}}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            <ion-button (click)="sendIdMusic(data.id)" type="submit" color="warning">View Lyrics</ion-button>
+            <ion-button (click)="sendIdMusic(data.id)" type="submit">View Lyrics</ion-button>
           </ion-card-content>
         </ion-card>
-      </ion-col>
     </ion-row>
+
     <ion-row>
       <ion-col class="hide-mobile">
         <ion-row justify-content-start>
@@ -107,6 +106,7 @@
         </ion-row>
       </ion-col>
     </ion-row>
+
     <ion-row class="hide-desktop">
       <ion-col>
         <ion-row justify-content-start>

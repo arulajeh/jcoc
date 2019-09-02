@@ -53,6 +53,18 @@ ion-content{
             & ion-slides{
                 max-height: 30vmax;
 
+                & .swiper-wrapper{
+
+                    & .swiper-pagination-bullets{
+                       
+                        & .swiper-pagination-bullet{
+                            
+                            background: var(--CR001);
+                            opacity: 1;
+                        }
+                   }
+                }
+
                 & ion-row{
 
                     & ion-col{
@@ -60,19 +72,59 @@ ion-content{
                         & .box{
 
                             & img{
-
-                                object-fit: content;
+                                
+                                object-fit: cover !important;
+                                height: 235px !important;
                                 margin: auto;
-                                max-width: 100%;
+                                width: 100%;
+                                border: 1px solid var(--CR005);
+                                border-radius: 2px;
                             }
 
                             & .content-text{
-                                transform: translate(3vmax,-20vmax);
-                                display: block; 
-                                position: absolute;
+                                transform: translateY(-15vmax) !important;
+                                border-radius: 8px;
+                                border: 1px solid var( --CR004);
+                                display: block;
+                                color: red;
                                 z-index: 1000;
+                                text-align: center;
+                                margin: 0px 10px;
+                                opacity: 0.85;
+                                background: var( --CR002);
                             }
                         }
+                    }
+                }
+            }
+        }
+
+        &.card-music{
+
+            & ion-card{
+                width: 100%;
+                margin: 0.5vmax;
+                border: 1px solid var(--CR004);
+                padding: 0.5vmax;
+                min-height: 45vmax;
+
+                & iframe{
+                    width: 100%;
+                    border-radius: inherit;
+                    height: 25vmax;
+                }
+
+                & ion-card-header{
+                    margin: 1vmax 1.5vmax;
+                    padding: 0px;
+                }
+                & ion-card-content{
+                    padding: 0px;
+                    margin: 0px 1.5vmax 0px;
+                    float: right;
+
+                    & ion-button{
+                        --border: none !important
                     }
                 }
             }
