@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="warning">
+  <ion-toolbar color="head">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="dark">
+<ion-content color="light">
   <!-- <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
       pullingIcon="arrow-dropdown"
@@ -26,11 +26,11 @@
       </ion-row>
     </ion-col>
   </ion-row>
-  <ion-grid fixed color="dark">
+  <ion-grid fixed color="light">
     <form id="loginForm">
       <ion-row>
         <ion-col size="12">
-          <ion-item color="dark">
+          <ion-item>
             <ion-label position="stacked">Event Name</ion-label>
             <ion-input placeholder="Please enter your schedule's name here" [(ngModel)]="dataSchedule.event_name" name="title" type="text" spellcheck="false" autocapitalize="off"></ion-input>
           </ion-item>
@@ -38,13 +38,13 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-item color="dark">
+          <ion-item>
             <ion-label>Date</ion-label>
             <ion-datetime display-format="DD-MM-YYYY" [(ngModel)]="dataSchedule.event_date" name="event_date"></ion-datetime>
           </ion-item>
         </ion-col>
         <ion-col size="6">
-          <ion-item color="dark">
+          <ion-item>
             <ion-label position="stacked">Event Picture</ion-label>
             <ion-input type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
           </ion-item>
@@ -160,10 +160,10 @@
       </ion-row>
     </form>
   </ion-grid>
-  <ion-grid fixed color="dark">
+  <ion-grid fixed color="light">
     <ion-row>
       <ion-col size="4">
-        <ion-item color="medium">
+        <ion-item color="body">
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" (ionChange)="getScheduleList()">
             <ion-select-option value="5">5</ion-select-option>
@@ -173,7 +173,7 @@
         </ion-item>
       </ion-col>
       <ion-col size="8">
-        <ion-searchbar color="medium" showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getScheduleList()"></ion-searchbar>
+        <ion-searchbar color="body" showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getScheduleList()"></ion-searchbar>
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
