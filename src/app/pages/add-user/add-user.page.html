@@ -122,7 +122,7 @@
   <ion-grid fixed>
     <ion-row>
       <ion-col size="4">
-        <ion-item color="medium">
+        <ion-item color="body">
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" (ionChange)="getMemberList()">
             <ion-select-option value="5">5</ion-select-option>
@@ -132,7 +132,7 @@
         </ion-item>
       </ion-col>
       <ion-col size="8">
-        <ion-searchbar color="medium" showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getMemberList()"></ion-searchbar>
+        <ion-searchbar color="body" showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getMemberList()"></ion-searchbar>
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
