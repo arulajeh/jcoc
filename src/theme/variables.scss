@@ -76,7 +76,7 @@
   --ion-color-light-tint: #f5f6f9;
 
   /** head **/
-  --ion-color-head: #ffd32a;
+  --ion-color-head: #004AC4;
   --ion-color-head-rgb: 255,211,42;
   --ion-color-head-contrast: #ffff;
   --ion-color-head-contrast-rgb: 0,0,0;
@@ -84,12 +84,12 @@
   --ion-color-head-tint: #ffd73f;
 
   /** body **/
-  --ion-color-body: #ffdd59;
+  --ion-color-body: #004AC4;
   --ion-color-body-rgb: 255,221,89;
   --ion-color-body-contrast: #000000;
   --ion-color-body-contrast-rgb: 0,0,0;
-  --ion-color-body-shade: #e0c24e;
-  --ion-color-body-tint: #ffe06a;
+  --ion-color-body-shade: #004AC4;
+  --ion-color-body-tint: #004AC4;
 
   /** content **/
   --ion-color-content: rgba(236, 240, 241, 0.2);
@@ -98,6 +98,13 @@
   --ion-color-content-contrast-rgb: 255, 255, 255;
   --ion-color-content-shade: #86888f;
   --ion-color-content-tint: #a2a4ab;
+
+  --CR001:#ffffff;
+  --CR002:#cccccc;
+  --CR003:#6e6e6e;
+  --CR004:#044e79;
+  --CR005:#0000FF;
+  --CR006:#00a8be;
 }
 
 .ion-color-head {
@@ -127,5 +134,131 @@
   --ion-color-tint: var(--ion-color-content-tint);
 }
 
+@mixin font-size($sizeValue) {
 
+  @media  only screen and (min-width: 360px){
+    font-size: calc(#{$sizeValue+px} - 0.20vw) !important;
+  }
+
+  @media  only screen and (min-width: 375px){
+    font-size: calc(#{$sizeValue+px}) !important;
+  }
+
+  @media  only screen and (min-width: 414px){
+    font-size: calc(#{$sizeValue+px} + 0.20vw) !important;
+  }
+  @media  only screen and (min-width: 504px){
+    font-size: calc(#{$sizeValue+px} + 0.30vw) !important;
+  }
+}
+
+/*Font Style*/
+@font-face {
+  font-family: 'Futura - Regular';
+  src: url('/assets/font/futura/futura.ttf') format('truetype') ;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Futura - Bold';
+  src: url('/assets/font/futura/futura-bold.ttf') format('truetype') ;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Futura - Italic';
+  src: url('/assets/font/futura/futura.ttf') format('truetype') ;
+  font-style: italic;
+}
+
+
+@font-face {
+  font-family: 'Garamond - Regular';
+  src: url('/assets/font/garamond/garamond.ttf') format('truetype') ;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Garamond - Bold';
+  src: url('/assets/font/garamond/garamond-bold.ttf') format('truetype') ;
+  font-style: bold;
+}
+
+@font-face {
+  font-family: 'FutGaramondura - Italic';
+  src: url('/assets/font/garamond/garamond.ttf') format('truetype') ;
+  font-style: italic;
+}
+
+.FFR01{
+  @include font-size(12);
+  font-family: 'Futura - Regular' !important;
+}
+.FFR02{
+  @include font-size(14);
+  font-family: 'Futura - Regular' !important;
+}
+.FFR03{
+  @include font-size(16);
+  font-family: 'Futura - Regular' !important;
+}
+
+.FGR01{
+  @include font-size(12);
+  font-family: 'Garamond - Regular' !important;
+}
+.FGR02{
+  @include font-size(14);
+  font-family: 'Garamond - Regular' !important;
+}
+.FGR03{
+  @include font-size(16);
+  font-family: 'Garamond - Regular' !important;
+}
+
+.FB01{
+  @include font-size(12);
+  font-family: 'Futura - Bold' !important;
+}
+.FB02{
+  @include font-size(14);
+  font-family: 'Futura - Bold' !important;
+}
+.FB03{
+  @include font-size(16);
+  font-family: 'Futura - Bold' !important;
+}
+
+.FI01{
+  @include font-size(12);
+  font-family: 'Futura - Italic' !important;
+}
+.FI02{
+  @include font-size(14);
+  font-family: 'Futura - Italic' !important;
+}
+.FI03{
+  @include font-size(16);
+  font-family: 'Futura - Italic' !important;
+}
+
+
+.CR001{
+  color:var(--CR001);
+}
+.CR002{
+  color:var(--CR002);
+}
+.CR003{
+  color:var(--CR003);
+}
+.CR004{
+  color:var(--CR004);
+}
+.CR005{
+  color:var(--CR005);
+}
+.CR006{
+  color:var(--CR006);
+}
 

@@ -7,33 +7,28 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding color="light">
-  <ion-grid fixed>
+<ion-content class="content">
+
+  <ion-grid class="slider">
     <ion-slides 
-    [options]="slideOpts" 
-    class="content" 
-    loop="true" 
-    speed="500" 
-    pager="true" 
-    autoplay="5000"
-    #mySlider 
-    (ionSlidesDidLoad)="ionSlidesDidLoad()"
-    *ngIf="respContent"
-    >
+      [options]="slideOpts" 
+      class="content" 
+      loop="true" 
+      speed="500" 
+      pager="true" 
+      autoplay="5000"
+      #mySlider 
+      (ionSlidesDidLoad)="ionSlidesDidLoad()"
+      *ngIf="respContent">
       <ion-slide *ngFor="let img of contentList" >
         <ion-row>
           <ion-col size="12">
             <div class="box">
               <img [src]="img?.file ? img.file : imgNotFound" alt="">
-              <p class="tengah">{{img.title}}</p>
+              <p class="content-text">{{img.title}}</p>
             </div>
           </ion-col>
         </ion-row>
-        <!-- <ion-row>
-          <ion-col size="12">
-            {{img.title}}
-          </ion-col>
-        </ion-row> -->
       </ion-slide>
     </ion-slides>
 
@@ -43,6 +38,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
   <ion-grid style="margin-right: 1.5%" class="marginku">
     <ion-row justify-content-center>
       <ion-col *ngFor ="let data of safeUrl" size="md">

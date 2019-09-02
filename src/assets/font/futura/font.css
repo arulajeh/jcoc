@@ -1,0 +1,11 @@
+@font-face {
+	font-family: 'ufontscomfuturabook';
+	src: url('./ufontscomfuturabook.eot');
+	src: local('ufontscomfuturabook'), url('./ufontscomfuturabook.woff') format('woff'), url('./ufontscomfuturabook.ttf') format('truetype');
+}
+/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_59767">Text with this font applied</p> */
+.fontsforweb_fontid_59767 {
+	font-family: 'ufontscomfuturabook' !important;
+}
+
+/* Font downloaded from FontsForWeb.com */

@@ -1,12 +1,16 @@
 <ion-menu contentId="content" *ngIf="hasLogin" color="dark">
 
     <ion-header>
-      <ion-toolbar color="head">
-        <ion-title>Menu</ion-title>
+      <ion-toolbar class="title">
+        <ion-title>
+          <div class="login-logo" color="dark">
+            <img src="assets/img/jcoc.png" alt="Ionic logo">
+          </div>
+        </ion-title>
       </ion-toolbar>
     </ion-header>
   
-    <ion-content>
+    <ion-content class="FFR02">
   
       <div *ngFor="let p of pages">
   
@@ -14,7 +18,7 @@
         <ion-menu-toggle *ngIf="p.url" [hidden]="p.hidden" color="light">
           <ion-item [routerLink]="p.url" routerDirection="root" routerLinkActive="active">
             <ion-icon [name]="p.icon" slot="start"></ion-icon>
-            <ion-label>
+            <ion-label class="FFR03">
               {{ p.title }}
             </ion-label>
           </ion-item>
@@ -24,7 +28,7 @@
         <ion-item button *ngIf="p.children?.length > 0" (click)="p.open = !p.open" [class.parent-active]="p.open" detail="false" [hidden]="p.hidden">
           <ion-icon slot="start" name="arrow-forward" *ngIf="!p.open"></ion-icon>
           <ion-icon slot="start" name="arrow-down" *ngIf="p.open"></ion-icon>
-          <ion-label>{{ p.title }}</ion-label>
+          <ion-label  class="FFR03">{{ p.title }}</ion-label>
         </ion-item>
   
         <!-- Children List for clicked Item -->

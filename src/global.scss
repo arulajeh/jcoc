@@ -25,18 +25,13 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-
-.anu {
-    color: aqua
-}
-
-.spacing{
-    white-space: pre-wrap;
-}
-
 // .hide-mobile {
 //     // background: silver;
 // }
+ion-app{
+    color:var(--CR005);
+}
+
 @media (max-width: 600px) {
     .hide-mobile {
         display: none;
@@ -48,14 +43,36 @@
     }
 }
 
-@import "./theme/test.scss";
+app-dashboard.ion-page{
+    padding:0px;
+    margin:0px;
 
-ion-skeleton-text {
-    // color: rgb(255, 255, 255);
-    --background-rgb: 0, 0, 0;
 }
 
-// ion-toolbar{
-//     background-color: #f39c12;
-//     color: #ffff;
-// }
+ion-title{
+    color: var(--CR001);
+}
+
+app-home.ion-page{
+
+    & .login-logo{
+
+        & img {
+            width: 80px;
+            margin: auto;
+        }      
+    }
+
+    & .active {
+        --ion-text-color: var(--CR004);
+    
+        ion-icon {
+            --ion-text-color-rgb:  var(--CR006);
+        }
+    }
+    .parent-active {
+        font-weight: 500;
+    }
+    
+
+}
