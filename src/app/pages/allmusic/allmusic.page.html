@@ -17,10 +17,10 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <ion-grid fixed>
-    <ion-row justify-content-center>
-      <ion-col col-xl-4 col-lg-3 col-md-4>
-        <ion-item>
+  <ion-grid class="searchbar"  no-padding no-margin>
+    <ion-row justify-content-center  no-padding no-margin>
+      <ion-col col-xl-4 col-lg-3 col-md-4 no-padding no-margin>
+        <ion-item lines='none'>
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" name="ionSelect" (ionChange)="getDataMusic()">
             <ion-select-option value="5">5</ion-select-option>
@@ -29,8 +29,10 @@
           </ion-select>
         </ion-item>
       </ion-col>
-      <ion-col col-xl-8 col-lg-9 col-md-8>
-        <ion-searchbar color="body" placeholder="Search Music" class="searchbar" debounce="500" [(ngModel)]="search" (ionChange)="getDataMusic()"></ion-searchbar>
+      <ion-col col-xl-8 col-lg-9 col-md-8 no-padding no-margin>
+        <ion-row  justify-content-center>
+            <ion-searchbar placeholder="Search Music" debounce="500" [(ngModel)]="search" (ionChange)="getDataMusic()"></ion-searchbar>
+        </ion-row>
       </ion-col>
       <!-- <ion-col size="1">
 
@@ -48,66 +50,56 @@
             <ion-card-title>{{data.title}}</ion-card-title>
             <ion-card-subtitle>{{data.artist}}</ion-card-subtitle>
           </ion-card-header>
-          <ion-item class="footer" lines="none" float-right>
-              <ion-button (click)="sendIdArticle(data.id)" type="submit" >Read More...</ion-button>
+          <ion-item class="footer " lines="none" float-right   no-padding no-margin>
+              <ion-button (click)="sendIdArticle(data.id)" type="submit" class="FFR01"  >Read More...</ion-button>
           </ion-item>
         </ion-card>
       </ion-col>
     </ion-row>
-    <ion-row>
-      
-      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
-        <ion-row justify-content-end>
-            
-        </ion-row>
-      </ion-col>
-      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
-        <ion-row justify-content-end>
-          <ion-button color="warning">
-            1
-          </ion-button>
-        </ion-row>
-      </ion-col>
-      <ion-col >
-        <ion-row justify-content-center>
-          <ion-button color="warning" disabled>
-            {{resp?.page_information?.currentPage}}
-          </ion-button>
-        </ion-row>
-      </ion-col>
-      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
-        <ion-row justify-content-start >
-          <ion-button color="warning">
-            {{resp?.page_information?.totalPage}}
-          </ion-button>
-        </ion-row>
-      </ion-col>
-      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
-        <ion-row justify-content-start >
-            
-        </ion-row>
-      </ion-col>
-      
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-row justify-content-start>
-          <ion-button 
-          (click)="nextPrev('prev')"
-          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
-            Prev
-          </ion-button>
-        </ion-row>
-      </ion-col>
-      <ion-col>
-          <ion-row justify-content-end>
+  </ion-grid>
+  <ion-grid class="paginations">
+
+      <ion-row>
+        
+        <ion-col size=2>
             <ion-button 
-            (click)="nextPrev('next')"
-            [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
-              Next
+            (click)="nextPrev('prev')"
+            [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+              Prev
+            </ion-button>
+        </ion-col> 
+        <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
+          <ion-row justify-content-end>
+            <ion-button color="warning">
+              1
             </ion-button>
           </ion-row>
         </ion-col>
-    </ion-row>
+        <ion-col>
+          <ion-row justify-content-center >
+            <ion-button color="warning" disabled>
+              {{resp?.page_information?.currentPage}}
+            </ion-button>
+          </ion-row>
+        </ion-col>
+        
+        <ion-col size=1 class="sparator"  *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage">
+          .....
+        </ion-col>
+        <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
+          <ion-row justify-content-center >
+            <ion-button color="warning">
+              {{resp?.page_information?.totalPage}}
+            </ion-button>
+          </ion-row>
+        </ion-col>      
+        <ion-col size=2>
+            <ion-button 
+            (click)="nextPrev('next')"
+            [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage" float-right>
+              Next
+            </ion-button>
+        </ion-col>
+      </ion-row>
   </ion-grid>
 </ion-content>

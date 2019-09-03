@@ -103,8 +103,9 @@
   --CR002:#cccccc;
   --CR003:#6e6e6e;
   --CR004:#044e79;
-  --CR005:#0000FF;
+  --CR005:#0080ff;
   --CR006:#00a8be;
+  --CR007:#0000FF;
 }
 
 .ion-color-head {
@@ -191,19 +192,26 @@
 }
 
 .FFR01{
-  @include font-size(12);
+  @include font-size(8);
   font-family: 'Futura - Regular' !important;
 }
 .FFR02{
-  @include font-size(14);
+  @include font-size(10);
   font-family: 'Futura - Regular' !important;
 }
 .FFR03{
+  @include font-size(12);
+  font-family: 'Futura - Regular' !important;
+}
+.FFR04{
+  @include font-size(14);
+  font-family: 'Futura - Regular' !important;
+}
+.FFR05{
   @include font-size(16);
   font-family: 'Futura - Regular' !important;
 }
-
-.FFR04{
+.FFR06{
   @include font-size(18);
   font-family: 'Futura - Regular' !important;
 }
@@ -254,21 +262,21 @@
 
 
 .CR001{
-  color:var(--CR001);
+  --color:var(--CR001) !important;
 }
 .CR002{
-  color:var(--CR002);
+ --color:var(--CR002) !important;
 }
 .CR003{
-  color:var(--CR003);
+  --color:var(--CR003) !important;
 }
 .CR004{
-  color:var(--CR004);
+  --color:var(--CR004) !important;
 }
 .CR005{
-  color:var(--CR005);
+  --color:var(--CR005) !important;
 }
 .CR006{
-  color:var(--CR006);
+  --color:var(--CR006) !important;
 }
 

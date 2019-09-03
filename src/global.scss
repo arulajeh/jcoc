@@ -64,10 +64,18 @@ app-home.ion-page{
     }
 
     & .active {
-        --ion-text-color: var(--CR004);
+        --ion-text-color: var(--CR004);  
+        --color: var(--CR004) !important;
+
     
         ion-icon {
-            --ion-text-color-rgb:  var(--CR006);
+            --ion-text-color-rgb:  var(--CR004);
+        }
+
+        & ion-label{
+            
+            --ion-text-color: var(--CR004);  
+            --color: var(--CR004) !important;
         }
     }
     .parent-active {
@@ -77,13 +85,15 @@ app-home.ion-page{
 
 }
 ion-searchbar.searchbar{
-    padding: 0px 0.5vmax;
+    padding:0px 1vmax;
     margin: 0px;
 
     & .searchbar-input-container.sc-ion-searchbar-ios{
-        --height: 5vmax !important;
-        --border: 1px solid var(--CR005);
-        --border-radius: 1vmax;
+        margin: auto;
+        border: 1px solid var(--CR004);
+        border-radius: 1vmax;
+        --background: var(--CR001);
+        display: table-cell;
 
         & .searchbar-input{
             color: var(--CR003);
@@ -96,6 +106,28 @@ app-allmusic.ion-page , app-articles-all.ion-page{
     & ion-content{
 
         & ion-grid{
+
+            &.searchbar{
+                border-bottom-right-radius: 8px;
+                border-bottom-left-radius: 8px;
+                display: block;
+                position: fixed;
+                width: 100%;
+                z-index: 11;
+                top: 43px;
+                opacity: 1;
+                --background: white;
+                margin: 0px;
+                height: 55px;
+                padding: 0px;
+                background: white;
+                border-bottom: 1px solid var(--CR005);
+
+                & ion-searchbar{
+                    padding-top: 0px !important;
+                    padding-bottom: 7px !important;
+                }
+            }
 
             &.card-content--lists{
 
@@ -117,25 +149,47 @@ app-allmusic.ion-page , app-articles-all.ion-page{
                         height: 25vmax;
                         margin: 0.5vmax;
                         width: -webkit-fill-available;
+                        max-width: 100% ;
                     } 
 
                     & ion-card-header{
                         margin: 1vmax 1.5vmax;
                         padding: 0px;
+
+                        & ion-card-title{
+                            min-height: 4vmax;
+                        }
+                        & ion-card-subtitle{
+                            margin-top: 0.5vmax;
+                        }
                     }
                     & ion-card-content{
                         padding: 0px;
                         margin: 0px 1.5vmax 1vmax 1.5vmax;
+                        min-height: 50px;
                     }
                     & .footer{
 
                         & ion-button{
-                            height: 5vmax;
+                            height: 8vmin;
                             display: block;
                             float: left;
-                            width: 12vmax;
+                            width: 10vmax;
                         }
                     }
+                }
+            }
+
+            &.paginations{
+
+                & ion-button{
+                    max-width: 100%;
+                }
+                & .sparator{
+                    margin: auto;
+                    text-align: center;
+                    vertical-align: bottom;
+                    display: table
                 }
             }
         }

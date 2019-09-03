@@ -10,7 +10,7 @@
       </ion-toolbar>
     </ion-header>
   
-    <ion-content class="FFR02">
+    <ion-content>
   
       <div *ngFor="let p of pages">
   
@@ -18,7 +18,7 @@
         <ion-menu-toggle *ngIf="p.url" [hidden]="p.hidden" color="light">
           <ion-item [routerLink]="p.url" routerDirection="root" routerLinkActive="active">
             <ion-icon [name]="p.icon" slot="start"></ion-icon>
-            <ion-label class="FFR03">
+            <ion-label  class="FFR05 CR005">
               {{ p.title }}
             </ion-label>
           </ion-item>
@@ -28,7 +28,7 @@
         <ion-item button *ngIf="p.children?.length > 0" (click)="p.open = !p.open" [class.parent-active]="p.open" detail="false" [hidden]="p.hidden">
           <ion-icon slot="start" name="arrow-forward" *ngIf="!p.open"></ion-icon>
           <ion-icon slot="start" name="arrow-down" *ngIf="p.open"></ion-icon>
-          <ion-label  class="FFR03">{{ p.title }}</ion-label>
+          <ion-label class="FFR05 CR005">{{ p.title }}</ion-label>
         </ion-item>
   
         <!-- Children List for clicked Item -->
@@ -37,7 +37,7 @@
             <ion-item *ngFor="let sub of p.children" class="sub-item" [routerLink]="sub.url" routerDirection="root"
               routerLinkActive="active">
               <ion-icon [name]="sub.icon" slot="start"></ion-icon>
-              <ion-label>
+              <ion-label class="FFR03 CR005">
                 {{ sub.title }}
               </ion-label>
             </ion-item>
