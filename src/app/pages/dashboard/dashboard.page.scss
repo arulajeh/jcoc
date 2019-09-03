@@ -74,7 +74,7 @@ ion-content{
                             & img{
                                 
                                 object-fit: cover !important;
-                                height: 235px !important;
+                                height: 315px !important;
                                 margin: auto;
                                 width: 100%;
                                 border: 1px solid var(--CR005);
@@ -82,7 +82,7 @@ ion-content{
                             }
 
                             & .content-text{
-                                transform: translateY(-15vmax) !important;
+                                transform: translateY(-20vmax) !important;
                                 border-radius: 8px;
                                 border: 1px solid var( --CR004);
                                 display: block;
@@ -102,11 +102,11 @@ ion-content{
         &.card-music{
 
             & ion-card{
-                width: 100%;
+                width: 35vmax;
                 margin: 0.5vmax;
                 border: 1px solid var(--CR004);
                 padding: 0.5vmax;
-                min-height: 45vmax;
+                min-height: 40vmax;
 
                 & iframe{
                     width: 100%;
@@ -127,6 +127,15 @@ ion-content{
                         --border: none !important
                     }
                 }
+            }
+        }
+
+        &.search{
+
+            & ion-searchbar{
+                width: 90%;
+                margin-top: 2vmax;
+                margin-bottom: 1vmax;
             }
         }
     }

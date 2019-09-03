@@ -36,7 +36,9 @@
   <ion-grid class="search" no-padding no-margin>
     <ion-row justify-content-center>
       <ion-col size="12" no-padding no-margin>
-        <ion-searchbar placeholder="Search Music..." class="searchbar" debounce="500" [(ngModel)]="search" (ionChange)="getMusicList()"></ion-searchbar>
+        <ion-row justify-content-center>
+            <ion-searchbar placeholder="Search Music..." class="searchbar" debounce="500" [(ngModel)]="search" (ionChange)="getMusicList()"></ion-searchbar>
+        </ion-row>
       </ion-col>
     </ion-row>
   </ion-grid>
