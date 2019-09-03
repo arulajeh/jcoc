@@ -203,6 +203,11 @@
   font-family: 'Futura - Regular' !important;
 }
 
+.FFR04{
+  @include font-size(18);
+  font-family: 'Futura - Regular' !important;
+}
+
 .FGR01{
   @include font-size(12);
   font-family: 'Garamond - Regular' !important;
@@ -213,6 +218,11 @@
 }
 .FGR03{
   @include font-size(16);
+  font-family: 'Garamond - Regular' !important;
+}
+
+.FGR04{
+  @include font-size(18);
   font-family: 'Garamond - Regular' !important;
 }
 

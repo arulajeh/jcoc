@@ -7,38 +7,33 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="light">
+<ion-content>
   <ion-row justify-content-center>
-    <ion-searchbar color="body" placeholder="Search Article..." class="searchbar" debounce="500" [(ngModel)]="search"></ion-searchbar>
+    <ion-searchbar placeholder="Search Article..." class="searchbar" debounce="500" [(ngModel)]="search"></ion-searchbar>
   </ion-row>
-  <ion-grid class="marginku">
-      <!-- style="margin-right: 1.5%" -->
-    <ion-row justify-content-center>
-      <ion-col *ngFor ="let data of listArticle" size="md">
-        <ion-card class="card_article" color="body">
-          <img class="yt" [src]="data.file ? data.file : imgNotFound" alt="">
+
+  <ion-grid class="card-content--lists">
+    <ion-row>
+      <ion-col *ngFor ="let data of listArticle" col-12 col-xl-2 col-lg-3 col-md-4>
+        <ion-card no-padding no-margin>
+          <img [src]="data.file ? data.file : imgNotFound" alt="">
           <ion-card-header>
             <ion-card-title>{{data.title}}</ion-card-title>
             <ion-row>
-              <ion-col size="6"><ion-card-subtitle>{{data.name}}</ion-card-subtitle></ion-col>
-              <ion-col size="6"><ion-card-subtitle>
-                <ion-row justify-content-end>
-                  {{data.createdAt | date: 'EEE, MMM d, y'}}
-                </ion-row>
-              </ion-card-subtitle></ion-col>
+              <ion-col size="6">{{data.name}}</ion-col>
+              <ion-col size="6"  justify-content-end>{{data.createdAt | date: 'EEE, MMM d, y'}}</ion-col>
             </ion-row>
-            <ion-card-content>
-              <p class="elipsis">
-                {{data.content}}
-              </p>
-            </ion-card-content>
           </ion-card-header>
-          <ion-card-content>
-            <ion-button (click)="sendIdArticle(data.id)" type="submit" color="warning">Read More...</ion-button>
+          <ion-card-content  class="FFR04 elipsis">
+              {{data.content}}
           </ion-card-content>
+          <ion-item class="footer" lines="none" float-right>
+              <ion-button (click)="sendIdArticle(data.id)" type="submit" >Read More...</ion-button>
+          </ion-item>
         </ion-card>
       </ion-col>
     </ion-row>
+
     <ion-row>
       <ion-col class="hide-mobile">
         <ion-row justify-content-start>

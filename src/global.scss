@@ -90,3 +90,55 @@ ion-searchbar.searchbar{
         }
     }
 }
+
+app-allmusic.ion-page , app-articles-all.ion-page{
+        
+    & ion-content{
+
+        & ion-grid{
+
+            &.card-content--lists{
+
+                & ion-card{
+                    border: 1px solid var(--CR004);
+                    min-height: 42vmax;
+                    padding-bottom: 1vmax;
+
+                    & iframe{
+                        width: -webkit-fill-available;
+                        border-radius: inherit;
+                        height: 25vmax;
+                        margin: 0.5vmax;
+                    }
+                    & img{
+                        min-width: 100%;
+                        max-width: unset;
+                        border-radius: inherit;
+                        height: 25vmax;
+                        margin: 0.5vmax;
+                        width: -webkit-fill-available;
+                    } 
+
+                    & ion-card-header{
+                        margin: 1vmax 1.5vmax;
+                        padding: 0px;
+                    }
+                    & ion-card-content{
+                        padding: 0px;
+                        margin: 0px 1.5vmax 1vmax 1.5vmax;
+                    }
+                    & .footer{
+
+                        & ion-button{
+                            height: 5vmax;
+                            display: block;
+                            float: left;
+                            width: 12vmax;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
