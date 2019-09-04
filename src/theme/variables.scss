@@ -106,6 +106,7 @@
   --CR005:#0080ff;
   --CR006:#00a8be;
   --CR007:#0000FF;
+  --CR008:#ff0000;
 }
 
 .ion-color-head {
@@ -151,6 +152,41 @@
   @media  only screen and (min-width: 504px){
     font-size: calc(#{$sizeValue+px} + 0.30vw) !important;
   }
+}
+@mixin multiLineEllipsis($lineHeight, $lineCount, $bgColor){
+  overflow: hidden;
+  position: relative;
+  line-height: $lineHeight;
+  max-height: $lineHeight * $lineCount; 
+  text-align: justify;
+  
+  display: block;
+  display: -webkit-box;
+  max-width: 100%;
+  margin: 0 auto;
+  font-size: 14px;
+  -webkit-line-clamp: $lineCount;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:before {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+  &:after {
+    position: absolute;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    background: $bgColor;
+  }
+}
+
+.block-with-text {
+  @include multiLineEllipsis($lineHeight: 1.2em, $lineCount: 3, $bgColor: white);  
 }
 
 /*Font Style*/
@@ -280,3 +316,33 @@
   --color:var(--CR006) !important;
 }
 
+/*BTN*/
+
+@mixin BTN($width, $height,$bgColor,$color,$bgColorActive){
+ 
+  height:  $height;
+  display: block;
+  width: $width; 
+  background: $bgColor;
+  color:$color;
+
+  &:before {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+  &:after {
+    position: absolute;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    background: $bgColorActive;
+  }
+  &:hover,:active{
+    background: $bgColorActive;
+  }
+}
+.BTN001{
+  @include BTN(10em,3em,'',var(--CR001),red);
+}

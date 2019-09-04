@@ -20,16 +20,22 @@
           <iframe class="yt" height="250"
           [src]='data_music?.link'>
           </iframe>
-          <ion-card-title>Lyric</ion-card-title>
-          <ion-card-content class="spacing">{{data_music?.lirik}}</ion-card-content>
-        </ion-col>
-        <ion-col>
-          <ion-card-title>Chord</ion-card-title>
-          <ion-card-content class="spacing">{{data_music?.chord}}</ion-card-content>
         </ion-col>
       </ion-row>
     </ion-grid>
   </ion-card>
+<ion-toggle (click)="isClicked($event)" [(ngModel)]="myToggle" color="primary"></ion-toggle>
+
+<div *ngIf="myToggle; then lirik else chord"></div>
+<ng-template #lirik>
+  <ion-card>{{data_music?.lirik}}</ion-card>
+</ng-template>
+
+<ng-template #chord>
+  <ion-card>
+    {{data_music?.chord}}
+  </ion-card>
+</ng-template>
 </ion-content>
 
 <ion-content *ngIf="!data_music">

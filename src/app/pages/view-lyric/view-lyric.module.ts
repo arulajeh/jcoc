@@ -7,6 +7,10 @@ import { IonicModule } from '@ionic/angular';
 
 import { ViewLyricPage } from './view-lyric.page';
 
+import { ComponentsModule } from '../../components/components.module';
+
+
+
 const routes: Routes = [
   {
     path: '',
@@ -19,7 +23,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ComponentsModule
   ],
   declarations: [ViewLyricPage]
 })

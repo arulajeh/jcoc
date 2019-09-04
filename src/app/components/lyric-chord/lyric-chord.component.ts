@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 import { ApiService } from 'src/app/services/api.service';
 import { ActivatedRoute } from '@angular/router';
+import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-view-lyric',
-  templateUrl: './view-lyric.page.html',
-  styleUrls: ['./view-lyric.page.scss'],
+  selector: 'app-lyric-chord',
+  templateUrl: './lyric-chord.component.html',
+  styleUrls: ['./lyric-chord.component.scss'],
 })
-export class ViewLyricPage implements OnInit {
+export class LyricChordComponent implements OnInit {
 
   public myToggle = false;
   trustedVideoUrl: SafeResourceUrl;
@@ -17,8 +17,8 @@ export class ViewLyricPage implements OnInit {
   safeUrl = [];
   constructor(
     public route: ActivatedRoute,
-    public api: ApiService,
-    public domSanitizer: DomSanitizer
+    public domSanitizer: DomSanitizer,
+    public api: ApiService
   ) { }
 
   async ionViewDidEnter(){
@@ -39,12 +39,9 @@ export class ViewLyricPage implements OnInit {
       this.id = JSON.parse(params['id']);
     })
   }
-  
   isClicked($event){
     this.myToggle = !this.myToggle;
   }
 
-  ngOnInit() {
-  }
-
+  ngOnInit() { }
 }

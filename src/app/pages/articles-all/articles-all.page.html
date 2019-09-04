@@ -24,11 +24,11 @@
               <ion-col size="6"  justify-content-end class="FFR01"  no-padding no-margin>{{data.createdAt | date: 'EEE, MMM d, y'}}</ion-col>
             </ion-row>
           </ion-card-header>
-          <ion-card-content  class="FFR04 elipsis">
+          <ion-card-content  class="FFR04 block-with-text">
               {{data.content}}
           </ion-card-content>
           <ion-item class="footer" lines="none" float-right  no-padding no-margin>
-              <ion-button (click)="sendIdArticle(data.id)" class="FFR01" type="submit" >Read More...</ion-button>
+              <ion-button (click)="sendIdArticle(data.id)" class="FFR01 BTN001" type="submit" >Read More...</ion-button>
           </ion-item>
         </ion-card>
       </ion-col>
