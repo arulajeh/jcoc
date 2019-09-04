@@ -57,7 +57,7 @@
         </ion-card>
     </ion-row>
 
-    <ion-row>
+    <!-- <ion-row>
       <ion-col class="hide-mobile">
         <ion-row justify-content-start>
           <ion-button 
@@ -128,6 +128,138 @@
           </ion-button>
         </ion-row>
       </ion-col>
+    </ion-row> -->
+  </ion-grid>
+  
+  <!-- Jangan dihapus dulu yaa -->
+  <!-- <ion-grid no-padding no-margin class="pagination">
+    <ion-row justify-content-center>
+      <ion-col>
+        <ion-row justify-content-start>
+          <ion-button (click)="nextPrev('next')">
+            <ion-icon name="skip-backward"></ion-icon>
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          <ion-button (click)="nextPrev('next')">
+            <ion-icon name="arrow-dropleft"></ion-icon>
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          <ion-button (click)="nextPrev('next')">
+            1
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          <ion-button (click)="nextPrev('next')">
+            2
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          <ion-button (click)="nextPrev('next')">
+            3
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          <ion-button (click)="nextPrev('next')">
+            4
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          <ion-button (click)="nextPrev('next')">
+            <ion-icon name="arrow-dropright"></ion-icon>
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-end>
+          <ion-button (click)="nextPrev('next')">
+            <ion-icon name="skip-forward"></ion-icon>
+          </ion-button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+
+  <ion-grid class="paginations">
+    <ion-row>
+      <!-- <ion-col>
+        <ion-row justify-content-start>
+        </ion-row>
+      </ion-col> -->
+      <ion-col>
+        <ion-row justify-content-end>
+          <ion-button 
+          (click)="nextPrev('prev')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+            Prev
+          </ion-button>
+        </ion-row>
+      </ion-col> 
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
+        <ion-row justify-content-center>
+          <ion-button>
+            1
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <!-- <ion-col size="1" *ngIf="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+
+      </ion-col> -->
+      <!-- <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+        <ion-row justify-content-center >
+          <ion-button disabled>
+            First
+          </ion-button>
+        </ion-row>
+      </ion-col> -->
+      <ion-col>
+        <ion-row justify-content-center >
+          <ion-button disabled>
+            {{resp?.page_information?.currentPage}}
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col class="sparator"  *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage">
+        <ion-row justify-content-center>
+          <ion-button disabled>
+            ...
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
+        <ion-row justify-content-center >
+          <ion-button>
+            {{resp?.page_information?.totalPage}}
+          </ion-button>
+        </ion-row>
+      </ion-col>      
+      <ion-col>
+        <ion-row justify-content-start>
+          <ion-button 
+          (click)="nextPrev('next')"
+          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage" float-right>
+            Next
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <!-- <ion-col>
+        <ion-row justify-content-end>
+        </ion-row>
+      </ion-col> -->
     </ion-row>
   </ion-grid>
+
 </ion-content>
