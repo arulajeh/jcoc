@@ -86,7 +86,7 @@ ion-content{
                                 border-radius: 8px;
                                 border: 1px solid var( --CR004);
                                 display: block;
-                                color: red;
+                                color: #044e79;
                                 z-index: 1000;
                                 text-align: center;
                                 margin: 0px 10px;
@@ -136,24 +136,6 @@ ion-content{
                 width: 90%;
                 margin-top: 2vmax;
                 margin-bottom: 1vmax;
-            }
-        }
-
-        &.pagination{
-
-            & ion-grid{
-                
-                & ion-row{
-
-                    & ion-col{
-
-                        & ion-button{
-                            --border: none !important;
-                            margin-right:0.5px;
-                            // width: 0.5vmax;
-                        }
-                    }
-                }
             }
         }
     }
