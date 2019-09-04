@@ -57,7 +57,7 @@
         </ion-card>
     </ion-row>
 
-    <ion-row>
+    <!-- <ion-row>
       <ion-col class="hide-mobile">
         <ion-row justify-content-start>
           <ion-button 
@@ -128,6 +128,68 @@
           </ion-button>
         </ion-row>
       </ion-col>
+    </ion-row> -->
+  </ion-grid>
+  
+  <ion-grid no-padding no-margin class="pagination">
+    <ion-row justify-content-center>
+      <ion-col>
+        <ion-row justify-content-start>
+          <ion-button (click)="nextPrev('next')">
+            <ion-icon name="skip-backward"></ion-icon>
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          <ion-button (click)="nextPrev('next')">
+            <ion-icon name="arrow-dropleft"></ion-icon>
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          <ion-button (click)="nextPrev('next')">
+            1
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          <ion-button (click)="nextPrev('next')">
+            2
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          <ion-button (click)="nextPrev('next')">
+            3
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          <ion-button (click)="nextPrev('next')">
+            4
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-center>
+          <ion-button (click)="nextPrev('next')">
+            <ion-icon name="arrow-dropright"></ion-icon>
+          </ion-button>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <ion-row justify-content-end>
+          <ion-button (click)="nextPrev('next')">
+            <ion-icon name="skip-forward"></ion-icon>
+          </ion-button>
+        </ion-row>
+      </ion-col>
     </ion-row>
   </ion-grid>
+
 </ion-content>

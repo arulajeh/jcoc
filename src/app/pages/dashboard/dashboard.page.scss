@@ -138,5 +138,23 @@ ion-content{
                 margin-bottom: 1vmax;
             }
         }
+
+        &.pagination{
+
+            & ion-grid{
+                
+                & ion-row{
+
+                    & ion-col{
+
+                        & ion-button{
+                            --border: none !important;
+                            margin-right:0.5px;
+                            // width: 0.5vmax;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

@@ -66,6 +66,7 @@ export class DashboardPage implements OnInit {
       .then((res) => {
         this.loadingCtrl.dismiss();
         this.resp = JSON.parse(JSON.stringify(res));
+        console.log(this.resp);
         if (parseInt(this.page_number) > this.resp.page_information.totalPage) {
           this.page_number = this.resp.page_information.totalPage.toString();
           this.getMusicList();
