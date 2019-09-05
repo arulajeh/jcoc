@@ -43,9 +43,28 @@
     </ion-row>
   </ion-grid>
 
-  <ion-grid no-padding no-margin class="card-music">
-    <ion-row justify-content-center>
-        <ion-card  *ngFor ="let data of safeUrl" size="md"  no-padding no-margin>
+  <ion-grid class="card-content--lists">
+    <ion-row>
+      <ion-col *ngFor ="let data of safeUrl" col-12 col-xl-2 col-lg-3 col-md-4 > 
+        <ion-card no-padding no-margin>
+          <iframe  [src]="data.url">
+          </iframe>
+          <ion-card-header>
+            <ion-card-title>{{data.title}}</ion-card-title>
+            <ion-card-subtitle>{{data.artist}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-item class="footer " lines="none" float-right   no-padding no-margin>
+              <ion-button (click)="sendIdMusic(data.id)" type="submit" class="FFR01 BTN001"  >View Lyrics</ion-button>
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid no-padding no-margin class="card-content--lists">
+    <!-- <ion-row justify-content-center>
+      <ion-col *ngFor ="let data of safeUrl" col-12 col-xl-2 col-lg-3 col-md-4>
+        <ion-card  no-padding no-margin>
           <iframe [src]="data.url"></iframe>
           <ion-card-header>
             <ion-card-title>{{data.title}}</ion-card-title>
@@ -55,7 +74,8 @@
             <ion-button (click)="sendIdMusic(data.id)" type="submit">View Lyrics</ion-button>
           </ion-card-content>
         </ion-card>
-    </ion-row>
+      </ion-col>
+    </ion-row> -->
 
     <!-- <ion-row>
       <ion-col class="hide-mobile">
@@ -193,13 +213,13 @@
     </ion-row>
   </ion-grid> -->
 
-  <ion-grid class="paginations">
+  <ion-grid style="padding: 0px !important; margin : 0px, 2px;" class="paginations">
     <ion-row>
       <!-- <ion-col>
         <ion-row justify-content-start>
         </ion-row>
       </ion-col> -->
-      <ion-col>
+      <ion-col class="col-pag">
         <ion-row justify-content-end>
           <ion-button 
           (click)="nextPrev('prev')"
@@ -208,7 +228,7 @@
           </ion-button>
         </ion-row>
       </ion-col> 
-      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
+      <ion-col class="col-pag" *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
         <ion-row justify-content-center>
           <ion-button>
             1
@@ -225,28 +245,28 @@
           </ion-button>
         </ion-row>
       </ion-col> -->
-      <ion-col>
+      <ion-col class="col-pag">
         <ion-row justify-content-center >
           <ion-button disabled>
             {{resp?.page_information?.currentPage}}
           </ion-button>
         </ion-row>
       </ion-col>
-      <ion-col class="sparator"  *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage">
+      <ion-col class="sparator col-pag"  *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage">
         <ion-row justify-content-center>
           <ion-button disabled>
             ...
           </ion-button>
         </ion-row>
       </ion-col>
-      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
+      <ion-col class="col-pag" *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
         <ion-row justify-content-center >
           <ion-button>
             {{resp?.page_information?.totalPage}}
           </ion-button>
         </ion-row>
       </ion-col>      
-      <ion-col>
+      <ion-col class="col-pag">
         <ion-row justify-content-start>
           <ion-button 
           (click)="nextPrev('next')"

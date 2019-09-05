@@ -99,36 +99,36 @@ ion-content{
             }
         }
 
-        &.card-music{
+        // &.card-music{
 
-            & ion-card{
-                width: 35vmax;
-                margin: 0.5vmax;
-                border: 1px solid var(--CR004);
-                padding: 0.5vmax;
-                min-height: 40vmax;
+        //     & ion-card{
+        //         width: 35vmax;
+        //         margin: 0.5vmax;
+        //         border: 1px solid var(--CR004);
+        //         padding: 0.5vmax;
+        //         min-height: 40vmax;
 
-                & iframe{
-                    width: 100%;
-                    border-radius: inherit;
-                    height: 25vmax;
-                }
+        //         & iframe{
+        //             width: 100%;
+        //             border-radius: inherit;
+        //             height: 25vmax;
+        //         }
 
-                & ion-card-header{
-                    margin: 1vmax 1.5vmax;
-                    padding: 0px;
-                }
-                & ion-card-content{
-                    padding: 0px;
-                    margin: 0px 1.5vmax 0px;
-                    float: right;
+        //         & ion-card-header{
+        //             margin: 1vmax 1.5vmax;
+        //             padding: 0px;
+        //         }
+        //         & ion-card-content{
+        //             padding: 0px;
+        //             margin: 0px 1.5vmax 0px;
+        //             float: right;
 
-                    & ion-button{
-                        --border: none !important
-                    }
-                }
-            }
-        }
+        //             & ion-button{
+        //                 --border: none !important
+        //             }
+        //         }
+        //     }
+        // }
 
         &.search{
 
@@ -139,4 +139,8 @@ ion-content{
             }
         }
     }
+}
+
+.col-pag{
+    padding: 0px !important;
 }
