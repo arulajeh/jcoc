@@ -74,7 +74,7 @@ ion-content{
                             & img{
                                 
                                 object-fit: cover !important;
-                                height: 315px !important;
+                                height: 25vmax !important;
                                 margin: auto;
                                 width: 100%;
                                 border: 1px solid var(--CR005);
@@ -82,7 +82,7 @@ ion-content{
                             }
 
                             & .content-text{
-                                transform: translateY(-20vmax) !important;
+                                transform: translateY(-15vmax) !important;
                                 border-radius: 8px;
                                 border: 1px solid var( --CR004);
                                 display: block;
@@ -134,7 +134,7 @@ ion-content{
 
             & ion-searchbar{
                 width: 90%;
-                margin-top: 2vmax;
+                margin-top: 1vmax;
                 margin-bottom: 1vmax;
             }
         }
