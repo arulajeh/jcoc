@@ -1,45 +1,38 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content>
-  <ion-button (click)="submit()">Music</ion-button>
-</ion-content> -->
-
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>Login</ion-title>
-  </ion-toolbar>
-</ion-header> -->
-  
-  <ion-content>
-    <div class="login-logo" color="dark">
-      <img src="assets/img/jcoc.png" alt="Ionic logo">
-    </div>
-  
-    <form id="loginForm" novalidate>
-      <ion-list>
-        <ion-item>
-          <ion-label position="floating">Username</ion-label>
-          <ion-input [(ngModel)]="username" name="username" type="text" spellcheck="false" autocapitalize="off"
-            required>
-          </ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating">Password</ion-label>
-          <ion-input [(ngModel)]="password" name="password" type="password" required>
-          </ion-input>
-        </ion-item>
-      </ion-list>
-  
-      <ion-row>
-        <ion-col>
-          <ion-button color="warning" (click)="submit()" type="submit" expand="block" [disabled]="username === '' || password === ''">Login</ion-button>
-        </ion-col>
-      </ion-row>
-    </form>
-  
-  </ion-content>
-  
+  <ion-content  class="no-scroll login"  scrollbar-x="false" scrollbar-y="false"    overflow-scroll="false" no-bounce>
+      <ion-grid class="logo" no-padding no-margin>
+          <div class="img">
+            <img src="assets/img/jcoc.png" class="logo-login" alt="">
+          </div>
+      </ion-grid>
+    
+      <ion-grid class="content" no-padding no-margin>
+          <form class="list-form" #loginForm="ngForm" (ngSubmit)="submit()" autocomplete="off">
+            <ion-row>
+                <ion-col size="1" no-padding no-margin class="img"><img src="../../../assets/icon/IC001.svg"></ion-col>
+                <ion-col size="11" no-padding no-margin class="input-group"><ion-input type="text" name="username" text-lowercase class="FLB01" [(ngModel)]="username" clearInput ></ion-input></ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="1" no-padding no-margin class="img"><img src="../../../assets/icon/IC002.svg"></ion-col>
+                <ion-col size="11" no-padding no-margin class="input-group"><ion-input type="password" name="password" class="FLB01" [(ngModel)]="password" clearInput ></ion-input></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col no-padding no-margin class="rememberme">
+                <ion-checkbox></ion-checkbox>
+                <ion-text class="FR06 CP012">
+                  Remember Me
+                </ion-text>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col no-padding no-margin >
+                <ion-button class="BTN001 login" tappable type="submit"  expand="block" [disabled]="username === '' || password === ''">
+                  Login
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </form>
+      </ion-grid>
+    
+    </ion-content>
+    

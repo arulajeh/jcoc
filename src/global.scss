@@ -52,13 +52,17 @@ app-dashboard.ion-page{
 ion-title{
     color: var(--CR001);
 }
+app-login.ion-page {
+    position: absolute;
+    transform: translateY(20%);
 
+}
 app-home.ion-page{
 
     & .login-logo{
 
         & img {
-            width: 80px;
+            width: 50px;
             margin: auto;
         }      
     }

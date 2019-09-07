@@ -1,20 +1,106 @@
-.login-logo {
-    padding: 20px 0;
-    // margin-top: 100px;
-    // min-height: 100px;
-    text-align: center;
-  }
+ion-content.login{
   
-  .login-logo img {
-    max-width: 150px;
-  }
-  
-  .list {
-    margin-bottom: 0;
-  }
+  overflow-x: scroll;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;  // IE 10+
+  scrollbar-width: none;  // Firefox
+  scroll-behavior: smooth;
 
-  form{
-    width:50%;
-    margin-left: 25%;
+  &::-webkit-scrollbar {
+    display: none; // Safari and Chrome
   }
+  & .inner-scroll.scroll-y.overscroll {
+    display: none !important;
+  }
+  & ion-grid{
+      &.logo{
+          margin-bottom: 20px;
   
+         & .img{    
+              & img{
+                  width: 37vw;
+                  min-width: 160px;
+                  max-width: 25vmax;
+                  margin: auto;
+                  display: block;
+              }
+         }
+      }
+  
+      &.content{
+          width: 74.156vw;
+          margin: auto;
+
+          & ion-row{
+              margin-bottom: 10px;
+          }
+  
+          & .img {
+              display: block;
+              border: 1px solid #ddd;
+              text-align: center;
+              
+              border-top-left-radius: 8px;
+              border-bottom-left-radius: 8px;
+  
+              & img {
+                  margin: auto;
+                  display: unset;
+                  transform: translateY(50%);
+              }
+          }
+          
+          & .input-group{
+
+              & ion-input {
+                  display: inline-flex;
+                  width: 100%;
+                  margin: 0px;
+                  background:#f2f2f2; 
+                  border:1px solid #ddd;
+                  border-left:none;
+                  border-top-right-radius: 8px;
+                  border-bottom-right-radius: 8px;
+                  padding-left: 10px !important;
+                  
+                  & input {
+                      background-color: transparent !important;
+                      padding-left: 10px;
+                      padding-top: 5px;
+                      margin: auto;
+                      display: table-cell;
+                      vertical-align: super;
+                  }
+              }
+          }
+          
+          & .rememberme {
+              display: flex;
+              font-size:12px;
+
+              & ion-text {
+                  margin: auto 0px;
+              }
+          }
+          
+      }
+  
+      ion-checkbox{
+          border-width: 1px !important;
+          border-style: solid !important;
+          border-radius: 4px;
+          border-color :var(--CP003);
+          height : 22px;
+          width: 22px;
+          --background-checked: var(--CR004);
+          --border-color: #FFFFFF;
+          --border-color-checked :#FFFFFF;
+          margin: auto 5px auto 0px;
+      }
+  
+      & ion-button{
+          background: none;
+          width: 98%;
+      }
+  }
+}

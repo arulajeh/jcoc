@@ -24,7 +24,7 @@
       </ion-row>
     </ion-grid>
   </ion-card>
-<ion-toggle (click)="isClicked($event)" [(ngModel)]="myToggle" color="primary"></ion-toggle>
+<ion-toggle (click)="isClicked($event)" [(ngModel)]="myToggle" color="primary" class="toggle-lyric-cord"></ion-toggle>
 
 <div *ngIf="myToggle; then lirik else chord"></div>
 <ng-template #lirik>

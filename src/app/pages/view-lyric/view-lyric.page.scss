@@ -1,8 +1,12 @@
-.yt{
-    width :100%;
-    max-height: 250px;
+ion-card{
+    margin: 1vmax;
+    white-space: pre;
+    padding: 1vmax;
 }
-
-.spacing{
-    white-space: pre-wrap;
+.toggle-lyric-cord {
+    margin: 0px 2vmax;
+    zoom: 0.7;
+}
+.back-button-text .back-default::after {
+    content: "";
 }
