@@ -7,61 +7,50 @@
   </ion-toolbar>
 </ion-header>
 
-<!-- <ion-content>
-
-</ion-content> -->
-
-
-
-<ion-content *ngIf="resp" color="light">
-  <ion-card color="light">
-    <!-- <h5>Username : {{resp?.username}}</h5> -->
-    <ion-grid>
-      <!-- <ion-row>
-        <ion-col><ion-card-subtitle>{{data_music?.penyanyi}}</ion-card-subtitle></ion-col>
-        <ion-col><ion-card-subtitle>Created by : {{data_music?.user_name}}</ion-card-subtitle></ion-col>
-      </ion-row> -->
+<ion-content *ngIf="resp">
+    <ion-grid class="user-detail">
       <ion-row>
-        <ion-col>
-          <ion-row justify-content-center>
-            <img style="border-radius: 50%; width:150px; height:150px;" [src]="resp?.file ? resp.file : imgNotFound">
-          </ion-row>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="4">
-          <ion-card-title>Name</ion-card-title>
-        </ion-col>
-        <ion-col size="8">
-          <ion-card-content class="spacing">{{resp?.name}}</ion-card-content>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="4">
-          <ion-card-title>Telephone</ion-card-title>
-        </ion-col>
-        <ion-col size="8">
-          <ion-card-content class="spacing">{{resp?.phone ? resp?.phone : '-'}}</ion-card-content>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="4">
-          <ion-card-title>Email</ion-card-title>
-        </ion-col>
-        <ion-col size="8">
-          <ion-card-content class="spacing">{{resp?.email}}</ion-card-content>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="4">
-          <ion-card-title>Position</ion-card-title>
-        </ion-col>
-        <ion-col size="8">
-          <ion-card-content class="spacing">{{resp?.position_name}}</ion-card-content>
-        </ion-col>
+        <ion-card>
+            <img [src]="resp?.file ? resp.file : imgNotFound">
+        </ion-card>
       </ion-row>
     </ion-grid>
-  </ion-card>
+    <ion-grid  class="user-detail">
+      <ion-card class="content FFR04 CR004">
+        <ion-row>
+            <ion-col size="3" no-padding no-margin>
+              Name
+            </ion-col>
+            <ion-col size="9" no-padding no-margin>
+            {{resp?.name}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3" no-padding no-margin>
+              Telephone
+            </ion-col>
+            <ion-col size="9" no-padding no-margin>
+            {{resp?.phone ? resp?.phone : '-'}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3" no-padding no-margin>
+              Email
+            </ion-col>
+            <ion-col size="9" no-padding no-margin>
+            {{resp?.email}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3" no-padding no-margin>
+              Position
+            </ion-col>
+            <ion-col size="9" no-padding no-margin>
+            {{resp?.position_name}}
+            </ion-col>
+          </ion-row>
+      </ion-card>
+    </ion-grid>
 </ion-content>
 
 <ion-content *ngIf="!resp" color="light">

@@ -106,7 +106,7 @@
   --CR005:#0080ff;
   --CR006:#00a8be;
   --CR007:#0000FF;
-  --CR008:#ff0000;
+  --CR008:#000033;
 }
 
 .ion-color-head {
@@ -270,15 +270,43 @@
   font-family: 'Garamond - Regular' !important;
 }
 
-.FB01{
+.FGB01{
+  @include font-size(12);
+  font-family: 'Garamond - Bold' !important;
+  font-weight: bold;
+}
+.FGB02{
+  @include font-size(14);
+  font-family: 'Garamond - Bold' !important;
+  font-weight: bold;
+}
+.FGB03{
+  @include font-size(16);
+  font-family: 'Garamond - Bold' !important;
+  font-weight: bold;
+}
+
+.FGB04{
+  @include font-size(18);
+  font-family: 'Garamond - Bold' !important;
+  font-weight: bold;
+}
+
+.FGB05{
+  @include font-size(20);
+  font-family: 'Garamond - Bold' !important;
+  font-weight: bold;
+}
+
+.FFB01{
   @include font-size(12);
   font-family: 'Futura - Bold' !important;
 }
-.FB02{
+.FFB02{
   @include font-size(14);
   font-family: 'Futura - Bold' !important;
 }
-.FB03{
+.FFB03{
   @include font-size(16);
   font-family: 'Futura - Bold' !important;
 }

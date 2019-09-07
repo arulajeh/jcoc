@@ -51,6 +51,8 @@ app-dashboard.ion-page{
 
 ion-title{
     color: var(--CR001);
+    padding: 0px !important;
+    margin-left: 1vmax !important;
 }
 app-login.ion-page {
     position: absolute;
@@ -63,7 +65,7 @@ app-home.ion-page{
 
         & img {
             width: 50px;
-            margin: auto;
+            margin: 0px 2vmax;
         }      
     }
 
@@ -105,9 +107,10 @@ ion-searchbar.searchbar{
     }
 }
 
-app-allmusic.ion-page , app-articles-all.ion-page, app-dashboard.ion-page{
+app-allmusic.ion-page , app-articles-all.ion-page, app-dashboard.ion-page, app-all-user.ion-page, app-user-detail.ion-page{
         
     & ion-content{
+        
 
         & ion-grid{
 
@@ -122,7 +125,6 @@ app-allmusic.ion-page , app-articles-all.ion-page, app-dashboard.ion-page{
                 opacity: 1;
                 --background: white;
                 margin: 0px;
-                height: 55px;
                 padding: 0px;
                 background: white;
                 border-bottom: 1px solid var(--CR005);
@@ -134,6 +136,7 @@ app-allmusic.ion-page , app-articles-all.ion-page, app-dashboard.ion-page{
             }
 
             &.card-content--lists{
+                margin-top: 30px;
 
                 & ion-card{
                     border: 1px solid var(--CR004);
@@ -154,6 +157,7 @@ app-allmusic.ion-page , app-articles-all.ion-page, app-dashboard.ion-page{
                         margin: 0.5vmax;
                         width: -webkit-fill-available;
                         max-width: 100% ;
+                        object-fit: contain;
                     } 
 
                     & ion-card-header{
