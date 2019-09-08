@@ -7,77 +7,54 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="light">
-  <ion-card *ngIf="resp" color="light">
+<ion-content class="view-schedule">
+  <ion-card *ngIf="resp">
+    
     <ion-row justify-content-center>
       <img [src]="resp?.file" alt="" class="headerImg">
     </ion-row>
-    <ion-card-title>{{resp?.event_name}}</ion-card-title>
-    <ion-card-subtitle>{{resp?.event_date | date: 'EEE, d MMM y'}}</ion-card-subtitle>
-    <ion-grid fixed>
-      <ion-row>
-        <ion-col>
-          <ion-card-title>Member List</ion-card-title>
-          <ion-row>
-            <ion-col size="12">
-              <ion-card-subtitle class="sub">Vokalis</ion-card-subtitle>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngFor="let data of resp?.vokalis">
-            <ion-col size="12">
-              {{data}}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <ion-card-subtitle class="sub">Song Leader</ion-card-subtitle>
-            </ion-col>
-          </ion-row>
-          <ion-row *ngFor="let data of resp?.song_leader">
-            <ion-col size="12">
-              {{data}}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <ion-card-subtitle class="sub">Basis</ion-card-subtitle>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-                {{resp?.basis}}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <ion-card-subtitle class="sub">Drummer</ion-card-subtitle>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-                {{resp?.drummer}}
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-              <ion-card-subtitle class="sub">Gitaris</ion-card-subtitle>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="12">
-                {{resp?.gitaris}}
-            </ion-col>
-          </ion-row>
-        </ion-col>
-        <ion-col>
-          <ion-card-title>Music List</ion-card-title>
-          <ion-row *ngFor="let music of resp?.music_name">
-            <ion-col size="12">
-              <ion-card-subtitle>{{music}}</ion-card-subtitle>
-            </ion-col>
-          </ion-row>
-        </ion-col>
+    <ion-row class="title">
+        <ion-col class="FFB06">
+          {{resp?.event_name}}
+        </ion-col >
+    </ion-row>
+    <ion-row class="date">
+        <ion-col  class="FFR03" text-right>
+            {{resp?.event_date | date: 'EEE, d MMM y'}}
+        </ion-col >
+    </ion-row>
+    <ion-grid>
+      <ion-row class="label">
+          <ion-col size=12 class="FFB05">Member List</ion-col>
       </ion-row>
+      <ion-row>
+        <ion-col size=3>Vocalis</ion-col>
+        <ion-col size=9>{{resp?.vokalis}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size=3>Song Leader</ion-col>
+        <ion-col size=9>{{resp?.song_leader}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size=3>Basis</ion-col>
+        <ion-col size=9>{{resp?.basis}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size=3>Drummer</ion-col>
+        <ion-col size=9>{{resp?.drummer}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size=3>Gitaris</ion-col>
+        <ion-col size=9>{{resp?.gitaris}}</ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-grid>
+        <ion-row class="FFB05 label">Music List</ion-row>
+        <ion-row *ngFor="let music of resp?.music_name">
+          <ion-col size="12">
+            <ion-card-subtitle>{{music}}</ion-card-subtitle>
+          </ion-col>
+        </ion-row>
     </ion-grid>  
   </ion-card>
 

@@ -310,6 +310,18 @@
   @include font-size(16);
   font-family: 'Futura - Bold' !important;
 }
+.FFB04{
+  @include font-size(18);
+  font-family: 'Futura - Bold' !important;
+}
+.FFB05{
+  @include font-size(20);
+  font-family: 'Futura - Bold' !important;
+}
+.FFB06{
+  @include font-size(24);
+  font-family: 'Futura - Bold' !important;
+}
 
 .FI01{
   @include font-size(12);

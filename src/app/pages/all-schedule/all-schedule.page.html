@@ -1,101 +1,78 @@
 <ion-header>
-  <ion-toolbar color="head">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Schedules</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content color="light">
-  <ion-row justify-content-center>
-    <ion-searchbar color="body" placeholder="Search Schedule" class="searchbar" debounce="500" [(ngModel)]="search"></ion-searchbar>
-  </ion-row>
-  <ion-grid style="margin-right: 1.5%" class="marginku">
-    <ion-row justify-content-center>
-      <ion-col *ngFor ="let data of listSchedule" size="md">
-        <ion-card class="card_schedule" color="body">
-          <img class="yt" [src]="data.file ? data.file : imgNotFound" alt="">
-          <ion-card-header>
-            <ion-card-title>{{data.event_name}}</ion-card-title>
-            <ion-card-subtitle>{{data.event_date | date: 'EEE, MMM d, y'}}</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content>
-              <ion-button (click)="sendIdSchedule(data.id)" type="submit" color="warning">View Shedule</ion-button>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="hide-mobile">
-        <ion-row justify-content-start>
-          <ion-button 
-          (click)="nextPrev('prev')"
-          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
-            Prev
-          </ion-button>
+    <ion-toolbar color="head">
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Schedules</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-grid class="searchbar">
+        <ion-searchbar placeholder="Search Schedules..." debounce="500" [(ngModel)]="search"></ion-searchbar>
+    </ion-grid>
+  
+    <ion-grid class="card-content--lists" size="12">
+      <ion-row>
+        <ion-col *ngFor ="let data of listSchedule" col-12 col-xl-2 col-lg-3 col-md-4>
+          <ion-card no-padding no-margin>
+            <img [src]="data.file ? data.file : imgNotFound" alt="">
+            <ion-card-header>
+              <ion-card-title>{{data.title}}</ion-card-title>
+              <ion-row>
+                <ion-col size="12"  no-padding no-margin class="FFR02">{{data.event_name}}</ion-col>
+                <ion-col size="12"  float-right class="FFR01"  no-padding no-margin>{{data.event_date | date: 'EEE, MMM d, y'}}</ion-col>
+              </ion-row>
+            </ion-card-header>
+            <ion-item class="footer" lines="none" float-right  no-padding no-margin>
+                <ion-button (click)="sendIdSchedule(data.id)" class="FFR01 BTN001" type="submit" >View Shedule</ion-button>
+            </ion-item>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+    <ion-grid class="paginations">
+        <ion-row>
+          <ion-col size=2>
+              <ion-button 
+              (click)="nextPrev('prev')"
+              [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+                Prev
+              </ion-button>
+          </ion-col> 
+          <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
+            <ion-row justify-content-end>
+              <ion-button color="warning">
+                1
+              </ion-button>
+            </ion-row>
+          </ion-col>
+          <ion-col>
+            <ion-row justify-content-center >
+              <ion-button color="warning" disabled>
+                {{resp?.page_information?.currentPage}}
+              </ion-button>
+            </ion-row>
+          </ion-col>   
+          <ion-col size=1 class="sparator"  *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage">
+            .....
+          </ion-col>
+          <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
+            <ion-row justify-content-center >
+              <ion-button color="warning">
+                {{resp?.page_information?.totalPage}}
+              </ion-button>
+            </ion-row>
+          </ion-col>      
+          <ion-col size=2>
+              <ion-button 
+              (click)="nextPrev('next')"
+              [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage" float-right>
+                Next
+              </ion-button>
+          </ion-col>
         </ion-row>
-      </ion-col>
-      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
-        <ion-row justify-content-end>
-            
-        </ion-row>
-      </ion-col>
-      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
-        <ion-row justify-content-end>
-          <ion-button color="warning">
-            1
-          </ion-button>
-        </ion-row>
-      </ion-col>
-      <ion-col >
-        <ion-row justify-content-center>
-          <ion-button color="warning" disabled>
-            {{resp?.page_information?.currentPage}}
-          </ion-button>
-        </ion-row>
-      </ion-col>
-      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
-        <ion-row justify-content-start >
-          <ion-button color="warning">
-            {{resp?.page_information?.totalPage}}
-          </ion-button>
-        </ion-row>
-      </ion-col>
-      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
-        <ion-row justify-content-start >
-            
-        </ion-row>
-      </ion-col>
-      <ion-col class="hide-mobile">
-        <ion-row justify-content-end>
-          <ion-button 
-          (click)="nextPrev('next')"
-          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
-            Next
-          </ion-button>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-    <ion-row class="hide-desktop">
-      <ion-col>
-        <ion-row justify-content-start>
-          <ion-button 
-          (click)="nextPrev('prev')"
-          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
-            Prev
-          </ion-button>
-        </ion-row>
-      </ion-col>
-      <ion-col>
-        <ion-row justify-content-end>
-          <ion-button 
-          (click)="nextPrev('next')"
-          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
-            Next
-          </ion-button>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+    </ion-grid>
+  </ion-content>
+  

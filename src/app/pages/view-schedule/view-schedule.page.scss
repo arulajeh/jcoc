@@ -1,11 +1,38 @@
-.sub{
-    text-decoration: underline;
-    text-decoration-color: #ffce00;
-}
+ion-content.view-schedule{
 
-.headerImg{
-    width: 90%;
-    height: 350px;
-    min-width: 150px;
-    position: relative;
+    & ion-card{
+        padding: 1vmax;
+
+        & img{
+            object-fit: scale-down;
+            height: 200px;
+            width: 250px;
+        }
+
+        & ion-row{
+
+            &.title{
+                margin-bottom: 1vmax;
+            }
+            &.date{
+                text-align: right;
+            }
+
+        }
+        
+        & ion-grid{
+
+            margin-bottom: 2vmax;
+                
+            & ion-row{
+
+                padding-left: 2vmax;
+
+                &.label{
+                    padding-left: 0px;
+                }
+
+            }
+        }
+    }
 }
