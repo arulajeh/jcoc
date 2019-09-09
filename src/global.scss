@@ -185,5 +185,40 @@ app-allmusic.ion-page , app-articles-all.ion-page, app-dashboard.ion-page{
             }
         }
     }
+}
 
+app-add-music.ion-page , app-add-schedule.ion-page, app-add-user.ion-page, app-articles-add.ion-page{
+
+    & ion-content{
+
+        & .headerImg{
+            width: 100% !important;
+            height: 25vmax !important;
+            position: relative;
+        }
+
+        & ion-item{
+            border-radius: 1vmax;
+        }
+
+        & ion-grid{
+
+            & ion-searchbar{
+                padding:0px !important
+            }
+
+            & .forecast_container{
+                overflow-x: scroll !important;
+                overflow-y: hidden;
+                word-wrap: break-word;
+                margin: 15px;
+                border-bottom: 1px black solid;
+                // height:20vw;
+                font-size:1em;
+                // font-weight:300;
+            }
+        }
+
+        
+    }
 }

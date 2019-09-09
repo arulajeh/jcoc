@@ -17,30 +17,30 @@
     </ion-refresher-content>
   </ion-refresher>
   <form style="margin-left: 15px; margin-right: 15px;">
-    <ion-item color="light">
+    <ion-item>
       <ion-label position="floating">Title</ion-label>
       <ion-input placeholder="Please enter Music's title here.." [(ngModel)]="dataMusic.judul" name="title" type="text" spellcheck="false" autocapitalize="off"></ion-input>
     </ion-item>
-    <ion-item color="light">
+    <ion-item>
       <ion-label position="floating">Artist</ion-label>
       <ion-input placeholder="Please enter Artist's name here.." [(ngModel)]="dataMusic.penyanyi" name="artist" type="text" spellcheck="false" autocaptalize="off"></ion-input>
     </ion-item>
-    <ion-item color="light">
+    <ion-item>
       <ion-label position="floating">Lyrics</ion-label>
       <ion-textarea placeholder="Please enter Music's lyrics here.." rows="6" cols="20" [(ngModel)]="dataMusic.lirik" name="lyric" spellcheck="false" autocapitalize="off"></ion-textarea>
     </ion-item>
-    <ion-item color="light">
+    <ion-item>
       <ion-label position="floating">Chord</ion-label>
       <ion-textarea placeholder="Please enter Music's chord here.." rows="6" cols="20" [(ngModel)]="dataMusic.chord" name="chord" spellcheck="false" autocapitalize="off"></ion-textarea>
     </ion-item>
-    <ion-item color="light">
+    <ion-item>
       <ion-label position="floating">Link/URL</ion-label>
       <ion-input (ionChange)="isValid(dataMusic.link)" placeholder="Please enter Music's link/url here.." [(ngModel)]="dataMusic.link" name="link" spellcheck="false" autocapitalize="off"></ion-input>
     </ion-item>
     <ion-card-subtitle>*format input ex : https://www.youtube.com/watch?v=videoID</ion-card-subtitle>
     <ion-row>
       <ion-col text-center>
-        <ion-button ion-button block color="warning"
+        <ion-button ion-button block
         (click)="submit()"
         type="submit"
         >
@@ -52,7 +52,7 @@
 <ion-grid fixed>
     <ion-row>
       <ion-col size="4">
-        <ion-item color="body">
+        <ion-item class="CR004">
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" name="ionSelect" (ionChange)="getMusicList()">
             <ion-select-option value="5">5</ion-select-option>
@@ -61,8 +61,8 @@
           </ion-select>
         </ion-item>
       </ion-col>
-      <ion-col size="8">
-        <ion-searchbar color="body" showCancelButton="focus" placeholder="Search Music" debounce="500" [(ngModel)]="search" (ionChange)="getMusicList()"></ion-searchbar>
+      <ion-col class="col-search" size="8">
+        <ion-searchbar style="padding:0px !important;" class="CR004" showCancelButton="focus" placeholder="Search Music" debounce="500" [(ngModel)]="search" (ionChange)="getMusicList()"></ion-searchbar>
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
@@ -123,14 +123,14 @@
         <ion-row justify-content-center>
           <ion-row>
             <ion-col size="12">
-              <ion-button color="warning" (click)="deleteMusic(data?.id)" type="submit">
+              <ion-button (click)="deleteMusic(data?.id)" type="submit">
                   <ion-icon name="trash"></ion-icon>
               </ion-button>
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col size="12">
-              <ion-button color="warning" (click)="sendIdMusic(data?.id)" type="submit">
+              <ion-button (click)="sendIdMusic(data?.id)" type="submit">
                   <ion-icon name="create"></ion-icon>
               </ion-button>
             </ion-col>
@@ -219,76 +219,74 @@
         </ion-row>
       </ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col class="hide-mobile">
-        <ion-row justify-content-start>
-          <ion-button 
-          (click)="nextPrev('prev')"
-          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
-            Prev
-          </ion-button>
-        </ion-row>
-      </ion-col>
-      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
-        <ion-row justify-content-end>
-            
-        </ion-row>
-      </ion-col>
-      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
-        <ion-row justify-content-end>
-          <ion-button color="warning">
-            1
-          </ion-button>
-        </ion-row>
-      </ion-col>
-      <ion-col >
-        <ion-row justify-content-center>
-          <ion-button color="warning" disabled>
-            {{resp?.page_information?.currentPage}}
-          </ion-button>
-        </ion-row>
-      </ion-col>
-      <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
-        <ion-row justify-content-start >
-          <ion-button color="warning">
-            {{resp?.page_information?.totalPage}}
-          </ion-button>
-        </ion-row>
-      </ion-col>
-      <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
-        <ion-row justify-content-start >
-            
-        </ion-row>
-      </ion-col>
-      <ion-col class="hide-mobile">
-        <ion-row justify-content-end>
-          <ion-button 
-          (click)="nextPrev('next')"
-          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
-            Next
-          </ion-button>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-    <ion-row class="hide-desktop">
-      <ion-col>
-        <ion-row justify-content-start>
-          <ion-button 
-          (click)="nextPrev('prev')"
-          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
-            Prev
-          </ion-button>
-        </ion-row>
-      </ion-col>
-      <ion-col>
-        <ion-row justify-content-end>
-          <ion-button 
-          (click)="nextPrev('next')"
-          [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage">
-            Next
-          </ion-button>
-        </ion-row>
-      </ion-col>
-    </ion-row>
   </ion-grid>
+
+<ion-grid style="padding: 0px !important; margin : 0px, 2px;" class="paginations">
+  <ion-row>
+    <!-- <ion-col>
+      <ion-row justify-content-start>
+      </ion-row>
+    </ion-col> -->
+    <ion-col class="col-pag">
+      <ion-row justify-content-end>
+        <ion-button 
+        (click)="nextPrev('prev')"
+        [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+          Prev
+        </ion-button>
+      </ion-row>
+    </ion-col> 
+    <ion-col class="col-pag" *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
+      <ion-row justify-content-center>
+        <ion-button>
+          1
+        </ion-button>
+      </ion-row>
+    </ion-col>
+    <!-- <ion-col size="1" *ngIf="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+
+    </ion-col> -->
+    <!-- <ion-col *ngIf="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+      <ion-row justify-content-center >
+        <ion-button disabled>
+          First
+        </ion-button>
+      </ion-row>
+    </ion-col> -->
+    <ion-col class="col-pag">
+      <ion-row justify-content-center >
+        <ion-button disabled>
+          {{resp?.page_information?.currentPage}}
+        </ion-button>
+      </ion-row>
+    </ion-col>
+    <ion-col class="sparator col-pag"  *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage">
+      <ion-row justify-content-center>
+        <ion-button disabled>
+          ...
+        </ion-button>
+      </ion-row>
+    </ion-col>
+    <ion-col class="col-pag" *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
+      <ion-row justify-content-center >
+        <ion-button>
+          {{resp?.page_information?.totalPage}}
+        </ion-button>
+      </ion-row>
+    </ion-col>      
+    <ion-col class="col-pag">
+      <ion-row justify-content-start>
+        <ion-button 
+        (click)="nextPrev('next')"
+        [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage" float-right>
+          Next
+        </ion-button>
+      </ion-row>
+    </ion-col>
+    <!-- <ion-col>
+      <ion-row justify-content-end>
+      </ion-row>
+    </ion-col> -->
+  </ion-row>
+</ion-grid>
 </ion-content>
