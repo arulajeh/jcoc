@@ -91,7 +91,7 @@ app-home.ion-page{
 
 }
 
-app-allmusic.ion-page , 
+// fix later app-allmusic.ion-page , 
 app-articles-all.ion-page, 
 app-dashboard.ion-page,
 app-all-user.ion-page,
@@ -151,12 +151,13 @@ app-all-schedule.ion-page{
 
                 & ion-card{
                     border: 1px solid var(--CR004);
-                    min-height: 42vmax;
                     padding-bottom: 1vmax;
 
                     & iframe{
+                        min-width: 100%;
                         width: -webkit-fill-available;
                         border-radius: inherit;
+                        max-width: unset;
                         height: 25vmax;
                         margin: 0.5vmax;
                     }
@@ -170,7 +171,7 @@ app-all-schedule.ion-page{
                         max-width: 100% ;
                         object-fit: contain;
                     } 
-                    & .heder{
+                    & .header{
 
                         & .title{
                             min-height: 4vmax
