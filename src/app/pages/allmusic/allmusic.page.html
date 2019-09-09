@@ -42,14 +42,14 @@
 
   <ion-grid class="card-content--lists">
     <ion-row>
-      <ion-col *ngFor ="let data of safeUrl" col-12 col-xl-2 col-lg-3 col-md-4 > 
+      <ion-col *ngFor ="let data of safeUrl" ion-col col-12 col-xl-2 col-lg-3 col-md-4 > 
         <ion-card no-padding no-margin>
           <iframe  [src]="data.url">
           </iframe>
-          <ion-card-header>
-            <ion-card-title>{{data.title}}</ion-card-title>
-            <ion-card-subtitle>{{data.artist}}</ion-card-subtitle>
-          </ion-card-header>
+          <div class="header">
+            <div class="title">{{data.title}}</div>
+            <div class="subtitle">{{data.artist}}</div>
+          </div>
           <ion-item class="footer " lines="none" float-right   no-padding no-margin>
               <ion-button (click)="sendIdMusic(data.id)" type="submit" class="FFR01 BTN001"  >Read More...</ion-button>
           </ion-item>

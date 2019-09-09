@@ -170,6 +170,15 @@ app-all-schedule.ion-page{
                         max-width: 100% ;
                         object-fit: contain;
                     } 
+                    & .heder{
+
+                        & .title{
+                            min-height: 4vmax
+                        }
+                        & .subtitle{
+                            margin-top: 0.5vmax;
+                        }
+                    }
 
                     & ion-card-header{
                         padding: 1vmax;
