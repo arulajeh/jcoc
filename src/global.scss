@@ -176,6 +176,9 @@ app-allmusic.ion-page , app-articles-all.ion-page, app-dashboard.ion-page{
                 & ion-button{
                     max-width: 100%;
                 }
+                ion-text:hover{
+                    cursor:pointer;
+                }
                 & .sparator{
                     margin: auto;
                     text-align: center;
@@ -183,6 +186,15 @@ app-allmusic.ion-page , app-articles-all.ion-page, app-dashboard.ion-page{
                     display: table
                 }
             }
+
+            // &.pagination{
+                
+            //     padding-left: 1vmax;
+            //     ion-text:hover{
+            //         cursor:pointer;
+            //     }
+
+            // }
         }
     }
 }
@@ -216,6 +228,22 @@ app-add-music.ion-page , app-add-schedule.ion-page, app-add-user.ion-page, app-a
                 // height:20vw;
                 font-size:1em;
                 // font-weight:300;
+            }
+
+            &.paginations{
+
+                & ion-button{
+                    max-width: 100%;
+                }
+                ion-text:hover{
+                    cursor:pointer;
+                }
+                & .sparator{
+                    margin: auto;
+                    text-align: center;
+                    vertical-align: bottom;
+                    display: table
+                }
             }
         }
 
