@@ -215,6 +215,8 @@ app-add-music.ion-page , app-add-schedule.ion-page, app-add-user.ion-page, app-a
 
         & ion-grid{
 
+            width:98%;
+
             & .show-item{
                 border-radius: 3px !important;
                 height: 70px !important;
@@ -230,6 +232,12 @@ app-add-music.ion-page , app-add-schedule.ion-page, app-add-user.ion-page, app-a
                         border-bottom: 1.5px solid #DBDBDB;
                     }
                 }
+            }
+
+            & ion-row{
+
+                margin-left:0px !important;
+                margin-right:0px !important;
             }
 
             & .forecast_container{
