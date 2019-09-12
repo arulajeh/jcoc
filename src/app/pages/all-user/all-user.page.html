@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Our Members</ion-title>
+    <ion-title class="CR004">Our Members</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -23,7 +23,7 @@
   <ion-grid style="margin-right: 1.5%" class="marginku">
     <ion-row>
       <ion-col size="4">
-        <ion-item color="body">
+        <ion-item class="show-item CR004">
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" (ionChange)="getMemberList()">
             <ion-select-option value="5">5</ion-select-option>
@@ -33,7 +33,7 @@
         </ion-item>
       </ion-col>
       <ion-col size="8">
-        <ion-searchbar color="body" showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getMemberList()"></ion-searchbar>
+        <ion-searchbar class="CR004" showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getMemberList()"></ion-searchbar>
       </ion-col>
     </ion-row>
     <ion-row justify-content-center>

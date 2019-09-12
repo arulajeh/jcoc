@@ -177,7 +177,7 @@
   <ion-grid fixed color="light">
     <ion-row>
       <ion-col size="4">
-        <ion-item class="CR004">
+        <ion-item class="show-item CR004">
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" (ionChange)="getScheduleList()">
             <ion-select-option value="5">5</ion-select-option>
@@ -191,11 +191,6 @@
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
-      <ion-col size="1"  class="hide-mobile">
-        <ion-row justify-content-center>
-          No.
-        </ion-row>
-      </ion-col>
       <ion-col>
         <ion-row justify-content-center (click)="changeSort('event_name')">
           Event Name
@@ -222,11 +217,6 @@
       </ion-col>
     </ion-row>
     <ion-row *ngFor="let schedule of scheduleList; index as i" class="forecast_container" nowrap>
-      <ion-col size="1" align-self-center class="hide-mobile">
-        <ion-row justify-content-center>
-        {{i + 1}}
-        </ion-row>
-      </ion-col>
       <ion-col align-self-center>
         <ion-row>
           {{schedule?.event_name}}

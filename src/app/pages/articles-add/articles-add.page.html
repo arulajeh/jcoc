@@ -51,7 +51,7 @@
   <ion-grid fixed>
     <ion-row>
       <ion-col size="4">
-        <ion-item class="CR004">
+        <ion-item class="show-item CR004">
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" (ionChange)="getData()">
             <ion-select-option value="5">5</ion-select-option>
@@ -65,11 +65,6 @@
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
-      <!-- <ion-col size="1">
-        <ion-row justify-content-center>
-          No.
-        </ion-row>
-      </ion-col> -->
       <ion-col size="5">
         <ion-row justify-content-center (click)="changeSort('title')">
           Title
