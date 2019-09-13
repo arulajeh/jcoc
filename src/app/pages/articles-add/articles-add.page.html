@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Add Article</ion-title>
+    <ion-title class="FFR08">Add Article</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,24 +13,24 @@
       <ion-row>
         <ion-col size="6">
           <ion-item>
-            <ion-label position="stacked">Title</ion-label>
-            <ion-input placeholder="Enter your article's name here" [(ngModel)]="data.title" name="title" type="text" spellcheck="false" autocapitalize="off"
+            <ion-label position="stacked" class="FFR08">Title</ion-label>
+            <ion-input class="FFR04" placeholder="Enter your article's name here" [(ngModel)]="data.title" name="title" type="text" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
           <ion-item>
-            <ion-label position="stacked">Photo</ion-label>
-            <ion-input type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
+            <ion-label position="stacked" class="FFR08">Photo</ion-label>
+            <ion-input class="FFR04" type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="12">
           <ion-item>
-          <ion-label position="floating">Content</ion-label>
-            <ion-textarea placeholder="Please enter your article's content here" [(ngModel)]="data.content" name="content" rows="6" cols="20" spellcheck="false" autocapitalize="off"></ion-textarea>
+          <ion-label position="floating" class="FFR08">Content</ion-label>
+          <ion-textarea class="FFR04" placeholder="Please enter your article's content here" [(ngModel)]="data.content" name="content" rows="6" cols="20" spellcheck="false" autocapitalize="off"></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -65,31 +65,31 @@
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
-      <ion-col size="5">
+      <ion-col size="5" class="FFR06">
         <ion-row justify-content-center (click)="changeSort('title')">
           Title
           <ion-icon name="arrow-dropdown" *ngIf="order_by === 'title' && sort_by === 'DESC'"></ion-icon>
           <ion-icon name="arrow-dropup" *ngIf="order_by === 'title' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
       </ion-col>
-      <ion-col size="5">
+      <ion-col size="5" class="FFR06">
         <ion-row justify-content-center>
           Picture
         </ion-row>
       </ion-col>
-      <ion-col size="2">
+      <ion-col size="2" class="FFR06">
         <ion-row justify-content-center>
           Action
         </ion-row>
       </ion-col>
     </ion-row>
     <ion-row *ngFor="let article of listData; index as i" class="forecast_container" nowrap>
-      <ion-col size="5" align-self-center>
+      <ion-col size="5" align-self-center class="FFR05" text-center>
         <ion-row justify-content-center>
           {{article?.title}}
         </ion-row>
       </ion-col>
-      <ion-col align-self-center size="5">
+      <ion-col align-self-center size="5" class="FFR05" text-center>
         <ion-row justify-content-center>
           <ion-thumbnail>
             <img [src]="article.file ? article.file : imgNotFound" />
@@ -97,7 +97,7 @@
           <!-- <ion-img class="yt" [src]="article.file ? article.file : imgNotFound"></ion-img> -->
         </ion-row>
       </ion-col>
-      <ion-col size="2" align-self-center>
+      <ion-col size="2" align-self-center class="FFR05" text-center>
         <ion-row justify-content-center>
           <ion-row>
             <ion-col size="6">
