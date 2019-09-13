@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Content</ion-title>
+    <ion-title class="FFR08">Content</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -12,8 +12,8 @@
   <ion-row>
     <ion-col size="12">
       <ion-row justify-content-center>
-        <ion-text color="warning">
-          <h1>Add Content</h1>
+        <ion-text color="body">
+          <h1 class="FFR08">Add Content</h1>
         </ion-text>
       </ion-row>
     </ion-col>
@@ -22,17 +22,17 @@
     <form id="loginForm" [hidden]="inputForm">
       <ion-row>
         <ion-col size="6">
-          <ion-item color="light">
-            <ion-label position="stacked">Title</ion-label>
-            <ion-input [(ngModel)]="content.title" name="title" type="text" spellcheck="false" autocapitalize="off"
+          <ion-item>
+            <ion-label position="stacked" class="FFR08">Title</ion-label>
+            <ion-input class="FFR04" [(ngModel)]="content.title" name="title" type="text" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
-          <ion-item color="light">
-            <ion-label position="stacked">Photo</ion-label>
-            <ion-input type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
+          <ion-item>
+            <ion-label position="stacked" class="FFR08">Photo</ion-label>
+            <ion-input class="FFR04" type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -42,8 +42,7 @@
           (click)="submit()" 
           type="submit"
           [disabled]="!content.title || !content.image.base64"
-          expand="block"
-          color="warning">
+          expand="block">
           Add Content
           </ion-button>
           <!-- [disabled]="!dataUser.username || !dataUser.name || !pass || !dataUser.name || !dataUser.email || !dataUser.phone || !dataUser.image.isImage || !position.id || !selectGender.id" -->
@@ -58,39 +57,29 @@
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
-      <ion-col size="1">
-        <ion-row justify-content-center>
-          No.
-        </ion-row>
-      </ion-col>
-      <ion-col>
+      <ion-col size="5" class="FFR06">
         <ion-row justify-content-center>
           Title
         </ion-row>
       </ion-col>
-      <ion-col size="4">
+      <ion-col class="FFR06">
         <ion-row justify-content-center>
           Picture
         </ion-row>
       </ion-col>
-      <ion-col>
+      <ion-col class="FFR06">
         <ion-row justify-content-center>
           Action
         </ion-row>
       </ion-col>
     </ion-row>
     <ion-row *ngFor="let content of listContent; index as i" class="forecast_container" nowrap>
-      <ion-col size="1" align-self-center>
-        <ion-row justify-content-center>
-        {{i + 1}}
-        </ion-row>
-      </ion-col>
-      <ion-col align-self-center>
+      <ion-col size="5" align-self-center class="FFR05" text-center>
         <ion-row justify-content-center>
           {{content?.title}}
         </ion-row>
       </ion-col>
-      <ion-col align-self-center size="4">
+      <ion-col align-self-center class="FFR05" text-center>
         <ion-row justify-content-center>
           <ion-thumbnail>
             <img [src]="content.file ? content.file : imgNotFound" />
@@ -99,9 +88,9 @@
           <!-- {{user?.email}} -->
         </ion-row>
       </ion-col>
-      <ion-col align-self-center>
+      <ion-col align-self-center class="FFR05" text-center>
         <ion-row justify-content-center>
-          <ion-button color="warning" (click)="deleteContent(content.id)" type="submit">
+          <ion-button (click)="deleteContent(content.id)" type="submit">
             <ion-icon name="trash"></ion-icon>
           </ion-button>
           <!-- <ion-icon name="trash" size="large"></ion-icon> -->
