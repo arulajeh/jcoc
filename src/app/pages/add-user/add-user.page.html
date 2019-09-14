@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Add Member</ion-title>
+    <ion-title class="FFR08">Add Member</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -21,7 +21,7 @@
     <ion-col size="12">
       <ion-row justify-content-center>
         <ion-text color="head">
-          <h1>Add Members</h1>
+          <h1 class="FFR08">Add Members</h1>
         </ion-text>
       </ion-row>
     </ion-col>
@@ -30,35 +30,17 @@
     <form id="loginForm">
       <ion-row>
         <ion-col size="6">
-          <ion-item>
-            <ion-label position="floating">Name</ion-label>
-            <ion-input [(ngModel)]="dataUser.name" name="name" type="text" spellcheck="false" autocapitalize="off"
+          <ion-item class="item-input">
+            <ion-label position="floating" class="FFR08">Name</ion-label>
+            <ion-input class="FFR04" [(ngModel)]="dataUser.name" name="name" type="text" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
-          <ion-item>
-            <ion-label position="floating">Username</ion-label>
-            <ion-input [(ngModel)]="dataUser.username" name="username" type="text" spellcheck="false" autocapitalize="off"
-              required>
-            </ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col size="6">
-          <ion-item>
-            <ion-label position="floating">Password</ion-label>
-            <ion-input [(ngModel)]="pass" name="password" type="password" spellcheck="false" autocapitalize="off"
-              required>
-            </ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col size="6">
-          <ion-item>
-            <ion-label position="floating">Phone</ion-label>
-            <ion-input [(ngModel)]="dataUser.phone" name="phone" type="text" spellcheck="false" autocapitalize="off"
+          <ion-item class="item-input">
+            <ion-label position="floating" class="FFR08">Username</ion-label>
+            <ion-input class="FFR04" [(ngModel)]="dataUser.username" name="username" type="text" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
           </ion-item>
@@ -66,8 +48,26 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-item>
-          <ion-label>Position</ion-label>
+          <ion-item class="item-input">
+            <ion-label position="floating" class="FFR08">Password</ion-label>
+            <ion-input class="FFR04" [(ngModel)]="pass" name="password" type="password" spellcheck="false" autocapitalize="off"
+              required>
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item class="item-input">
+            <ion-label position="floating" class="FFR08">Phone</ion-label>
+            <ion-input class="FFR04" [(ngModel)]="dataUser.phone" name="phone" type="text" spellcheck="false" autocapitalize="off"
+              required>
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="6">
+          <ion-item class="item-input">
+          <ion-label class="FFR08">Position</ion-label>
           <ionic-selectable
           [(ngModel)]="position"
           [items]="listPostions"
@@ -80,8 +80,8 @@
           </ion-item>
         </ion-col>
         <ion-col size="6">
-          <ion-item>
-          <ion-label>Gender</ion-label>
+          <ion-item class="item-input">
+          <ion-label class="FFR08">Gender</ion-label>
           <ionic-selectable
           [(ngModel)]="selectGender"
           [items]="gender"
@@ -96,17 +96,17 @@
       </ion-row>
       <ion-row>
         <ion-col size="6">
-          <ion-item>
-            <ion-label position="floating">Email</ion-label>
-            <ion-input [(ngModel)]="dataUser.email" name="email" type="text" spellcheck="false" autocapitalize="off"
+          <ion-item class="item-input">
+            <ion-label position="floating" class="FFR08">Email</ion-label>
+            <ion-input class="FFR04" [(ngModel)]="dataUser.email" name="email" type="text" spellcheck="false" autocapitalize="off"
               required>
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="6">
-          <ion-item>
-            <ion-label>Photo</ion-label>
-            <ion-input type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
+          <ion-item class="item-input">
+            <ion-label class="FFR08">Photo</ion-label>
+            <ion-input class="FFR04" type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -140,67 +140,67 @@
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
-      <ion-col>
+      <ion-col class="FFR06">
         <ion-row justify-content-center (click)="changeSort('name')">
           Name
           <ion-icon name="arrow-dropdown" *ngIf="order_by === 'name' && sort_by === 'DESC'"></ion-icon>
           <ion-icon name="arrow-dropup" *ngIf="order_by === 'name' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
       </ion-col>
-      <ion-col class="hide-mobile">
+      <!-- <ion-col class="hide-mobile FFR06">
         <ion-row justify-content-center (click)="changeSort('email')">
           Email
           <ion-icon name="arrow-dropdown" *ngIf="order_by === 'email' && sort_by === 'DESC'"></ion-icon>
           <ion-icon name="arrow-dropup" *ngIf="order_by === 'email' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
       </ion-col>
-      <ion-col class="hide-mobile">
+      <ion-col class="hide-mobile FFR06">
         <ion-row justify-content-center (click)="changeSort('phone')">
           Phone
           <ion-icon name="arrow-dropdown" *ngIf="order_by === 'phone' && sort_by === 'DESC'"></ion-icon>
           <ion-icon name="arrow-dropup" *ngIf="order_by === 'phone' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
-      </ion-col>
-      <ion-col>
+      </ion-col> -->
+      <ion-col class="FFR06">
         <ion-row justify-content-center (click)="changeSort('position_name')">
           Position
           <ion-icon name="arrow-dropdown" *ngIf="order_by === 'position_name' && sort_by === 'DESC'"></ion-icon>
           <ion-icon name="arrow-dropup" *ngIf="order_by === 'position_name' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
       </ion-col>
-      <ion-col size="3">
+      <ion-col  class="FFR06">
         <ion-row justify-content-center>
           Picture
         </ion-row>
       </ion-col>
-      <ion-col size="3">
+      <ion-col  class="FFR06">
         <ion-row justify-content-center>
           Action
         </ion-row>
       </ion-col>
     </ion-row>
     <ion-row *ngFor="let user of listMembers; index as i" class="forecast_container" nowrap>
-      <ion-col align-self-center>
+      <ion-col align-self-center class="FFR05" text-center>
         <ion-row justify-content-center>
           {{user?.name}}
         </ion-row>
       </ion-col>
-      <ion-col align-self-center class="hide-mobile">
+      <!-- <ion-col align-self-center class="hide-mobile FFR05" text-center>
         <ion-row justify-content-center>
           {{user?.email}}
         </ion-row>
       </ion-col>
-      <ion-col align-self-center class="hide-mobile">
+      <ion-col align-self-center class="hide-mobile FFR05" text-center>
         <ion-row justify-content-center>
           {{user?.phone}}
         </ion-row>
-      </ion-col>
-      <ion-col align-self-center>
+      </ion-col> -->
+      <ion-col align-self-center class="FFR05" text-center>
         <ion-row justify-content-center>
           {{user?.position_name}}
         </ion-row>
       </ion-col>
-      <ion-col size="3" align-self-center>
+      <ion-col  align-self-center class="FFR05" text-center>
         <ion-row justify-content-center>
           <ion-thumbnail>
             <img [src]="user?.file ? user.file : imgNotFound" />
@@ -208,7 +208,7 @@
           <!-- <ion-img [src]="user?.file ? user.file : imgNotFound" style="width: 100%; height: 100%"></ion-img> -->
         </ion-row>
       </ion-col>
-      <ion-col size="3" align-self-center>
+      <ion-col  align-self-center class="FFR05" text-center>
         <ion-row justify-content-center>
           <ion-row>
             <ion-col size="12">

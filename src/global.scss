@@ -227,7 +227,7 @@ app-all-schedule.ion-page{
     }
 }
 
-app-add-music.ion-page , app-add-schedule.ion-page, app-add-user.ion-page, app-articles-add.ion-page{
+app-add-music.ion-page , app-add-schedule.ion-page, app-add-user.ion-page, app-articles-add.ion-page, app-content.ion-page{
 
     & ion-content{
 
@@ -242,6 +242,13 @@ app-add-music.ion-page , app-add-schedule.ion-page, app-add-user.ion-page, app-a
         }
 
         & ion-grid{
+
+            width:98%;
+
+            //later
+            // & .item-input{
+            //     height: 70px !important;
+            // }
 
             & .show-item{
                 border-radius: 3px !important;
@@ -258,6 +265,12 @@ app-add-music.ion-page , app-add-schedule.ion-page, app-add-user.ion-page, app-a
                         border-bottom: 1.5px solid #DBDBDB;
                     }
                 }
+            }
+
+            & ion-row{
+
+                margin-left:0px !important;
+                margin-right:0px !important;
             }
 
             & .forecast_container{

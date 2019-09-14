@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Add Music</ion-title>
+    <ion-title class="FFR08">Add Music</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -18,28 +18,33 @@
   </ion-refresher>
   <form style="margin-left: 15px; margin-right: 15px;">
     <ion-item>
-      <ion-label position="floating">Title</ion-label>
-      <ion-input placeholder="Please enter Music's title here.." [(ngModel)]="dataMusic.judul" name="title" type="text" spellcheck="false" autocapitalize="off"></ion-input>
+      <ion-label position="floating" class="FFR08">Title</ion-label>
+      <ion-input class="FFR04" placeholder="Please enter Music's title here.." [(ngModel)]="dataMusic.judul" name="title" type="text" spellcheck="false" autocapitalize="off"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Artist</ion-label>
-      <ion-input placeholder="Please enter Artist's name here.." [(ngModel)]="dataMusic.penyanyi" name="artist" type="text" spellcheck="false" autocaptalize="off"></ion-input>
+      <ion-label position="floating" class="FFR08">Artist</ion-label>
+      <ion-input class="FFR04" placeholder="Please enter Artist's name here.." [(ngModel)]="dataMusic.penyanyi" name="artist" type="text" spellcheck="false" autocaptalize="off"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Lyrics</ion-label>
-      <ion-textarea placeholder="Please enter Music's lyrics here.." rows="6" cols="20" [(ngModel)]="dataMusic.lirik" name="lyric" spellcheck="false" autocapitalize="off"></ion-textarea>
+      <ion-label position="floating" class="FFR08">Lyrics</ion-label>
+      <ion-textarea class="FFR04" placeholder="Please enter Music's lyrics here.." rows="6" cols="20" [(ngModel)]="dataMusic.lirik" name="lyric" spellcheck="false" autocapitalize="off"></ion-textarea>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Chord</ion-label>
-      <ion-textarea placeholder="Please enter Music's chord here.." rows="6" cols="20" [(ngModel)]="dataMusic.chord" name="chord" spellcheck="false" autocapitalize="off"></ion-textarea>
+      <ion-label position="floating" class="FFR08">Chord</ion-label>
+      <ion-textarea class="FFR04" placeholder="Please enter Music's chord here.." rows="6" cols="20" [(ngModel)]="dataMusic.chord" name="chord" spellcheck="false" autocapitalize="off"></ion-textarea>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Link/URL</ion-label>
-      <ion-input (ionChange)="isValid(dataMusic.link)" placeholder="Please enter Music's link/url here.." [(ngModel)]="dataMusic.link" name="link" spellcheck="false" autocapitalize="off"></ion-input>
+      <ion-label position="floating" class="FFR08">Link/URL</ion-label>
+      <ion-input class="FFR04" (ionChange)="isValid(dataMusic.link)" placeholder="Please enter Music's link/url here.." [(ngModel)]="dataMusic.link" name="link" spellcheck="false" autocapitalize="off"></ion-input>
     </ion-item>
-    <ion-card-subtitle>*format input ex : https://www.youtube.com/watch?v=videoID</ion-card-subtitle>
     <ion-row>
-      <ion-col text-center>
+      <ion-col text-end>
+        <ion-card-subtitle class="FFR03">*format input ex : https://www.youtube.com/watch?v=videoID</ion-card-subtitle>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col text-end>
         <ion-button ion-button block
         (click)="submit()"
         type="submit"
@@ -66,50 +71,50 @@
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
-      <ion-col>
+      <ion-col class="FFR06">
         <ion-row justify-content-center (click)="changeSort('judul')">
           Title
           <ion-icon name="arrow-dropdown" *ngIf="order_by === 'judul' && sort_by === 'DESC'"></ion-icon>
           <ion-icon name="arrow-dropup" *ngIf="order_by === 'judul' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
       </ion-col>
-      <ion-col>
+      <ion-col class="FFR06">
         <ion-row justify-content-center (click)="changeSort('penyanyi')">
           Artist
           <ion-icon name="arrow-dropdown" *ngIf="order_by === 'penyanyi' && sort_by === 'DESC'"></ion-icon>
           <ion-icon name="arrow-dropup" *ngIf="order_by === 'penyanyi' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
       </ion-col>
-      <ion-col size="3">
+      <ion-col size="4" class="FFR06">
         <ion-row justify-content-center (click)="changeSort('user_name')">
           Created By
           <ion-icon name="arrow-dropdown" *ngIf="order_by === 'user_name' && sort_by === 'DESC'"></ion-icon>
           <ion-icon name="arrow-dropup" *ngIf="order_by === 'user_name' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
       </ion-col>
-      <ion-col size="2">
+      <ion-col size="2" class="FFR06">
         <ion-row justify-content-center>
           Action
         </ion-row>
       </ion-col>
     </ion-row>
     <ion-row *ngFor="let data of listMusic ; index as i" class="forecast_container" nowrap>
-      <ion-col align-self-center>
+      <ion-col align-self-center class="FFR05" text-center>
         <ion-row justify-content-center>
           {{data?.judul}}
         </ion-row>
       </ion-col>
-      <ion-col align-self-center>
+      <ion-col align-self-center class="FFR05" text-center>
         <ion-row justify-content-center>
           {{data?.penyanyi}}
         </ion-row>
       </ion-col>
-      <ion-col size="3" align-self-center>
+      <ion-col size="4" align-self-center class="FFR05" text-center>
         <ion-row justify-content-center>
           {{data?.user_name}}
         </ion-row>
       </ion-col>
-      <ion-col size="2" align-self-center>
+      <ion-col size="2" align-self-center class="FFR06">
         <ion-row justify-content-center>
           <ion-row>
             <ion-col size="12">

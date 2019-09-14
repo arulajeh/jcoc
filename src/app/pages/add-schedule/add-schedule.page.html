@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Add Schedule</ion-title>
+    <ion-title class="FFR08">Add Schedule</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -21,7 +21,7 @@
     <ion-col size="12">
       <ion-row justify-content-center>
         <ion-text color="head">
-          <h1>Add Schedule</h1>
+          <h1 class="CR004 FFR08">Add Schedule</h1>
         </ion-text>
       </ion-row>
     </ion-col>
@@ -31,29 +31,29 @@
       <ion-row>
         <ion-col size="12">
           <ion-item>
-            <ion-label position="stacked">Event Name</ion-label>
-            <ion-input placeholder="Please enter your schedule's name here" [(ngModel)]="dataSchedule.event_name" name="title" type="text" spellcheck="false" autocapitalize="off"></ion-input>
+            <ion-label position="stacked" class="FFR08">Event Name</ion-label>
+            <ion-input class="FFR04" placeholder="Please enter your schedule's name here" [(ngModel)]="dataSchedule.event_name" name="title" type="text" spellcheck="false" autocapitalize="off"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="6">
           <ion-item>
-            <ion-label position="stacked">Date</ion-label>
-            <ion-datetime placeholder="Choose the date!" display-format="DD-MM-YYYY" [(ngModel)]="dataSchedule.event_date" name="event_date"></ion-datetime>
+            <ion-label position="stacked" class="FFR08">Date</ion-label>
+            <ion-datetime class="FFR04" placeholder="Choose the date!" display-format="DD-MM-YYYY" [(ngModel)]="dataSchedule.event_date" name="event_date"></ion-datetime>
           </ion-item>
         </ion-col>
         <ion-col size="6">
           <ion-item>
-            <ion-label position="stacked">Event Picture</ion-label>
-            <ion-input type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
+            <ion-label position="stacked" class="FFR08">Event Picture</ion-label>
+            <ion-input class="FFR04" type="file" accept="image/*" (change)="changeFile($event)"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="6">
           <ion-item>
-          <ion-label position="stacked">Song Leader</ion-label>
+          <ion-label position="stacked" class="FFR08">Song Leader</ion-label>
           <ionic-selectable
           [(ngModel)]="songLeader"
           [items]="listMembers.song_leader"
@@ -68,7 +68,7 @@
         </ion-col>
         <ion-col size="6">
           <ion-item>
-          <ion-label position="stacked">Singer</ion-label>
+          <ion-label position="stacked" class="FFR08">Singer</ion-label>
           <ionic-selectable
           [(ngModel)]="singer"
           [items]="listMembers.vokalis"
@@ -85,7 +85,7 @@
       <ion-row>
         <ion-col size="6">
           <ion-item>
-          <ion-label position="stacked">Gitaris</ion-label>
+          <ion-label position="stacked" class="FFR08">Gitaris</ion-label>
           <ionic-selectable
           [(ngModel)]="gitaris"
           [items]="listMembers.gitaris"
@@ -99,7 +99,7 @@
         </ion-col>
         <ion-col size="6">
           <ion-item> 
-          <ion-label position="stacked">Basis</ion-label>
+          <ion-label position="stacked" class="FFR08">Basis</ion-label>
           <ionic-selectable
           [(ngModel)]="basis"
           [items]="listMembers.basis"
@@ -115,7 +115,7 @@
       <ion-row>
         <ion-col size="6">
           <ion-item>
-          <ion-label position="stacked">Pianis</ion-label>
+          <ion-label position="stacked" class="FFR08">Pianis</ion-label>
           <ionic-selectable
           [(ngModel)]="pianis"
           [items]="listMembers.pianis"
@@ -129,7 +129,7 @@
         </ion-col>
         <ion-col size="6">
           <ion-item>
-          <ion-label position="stacked">Drummer</ion-label>
+          <ion-label position="stacked" class="FFR08">Drummer</ion-label>
           <ionic-selectable
           [(ngModel)]="drummer"
           [items]="listMembers.drummer"
@@ -145,7 +145,7 @@
       <ion-row>
         <ion-col size="12">
           <ion-item>
-          <ion-label position="stacked">Music</ion-label>
+          <ion-label position="stacked" class="FFR08">Music</ion-label>
           <ionic-selectable
           [(ngModel)]="music"
           [items]="listMusics"
@@ -191,43 +191,43 @@
       </ion-col>
     </ion-row>
     <ion-row class="forecast_container" nowrap>
-      <ion-col>
+      <ion-col class="FFR06">
         <ion-row justify-content-center (click)="changeSort('event_name')">
           Event Name
           <ion-icon name="arrow-dropdown" *ngIf="order_by === 'event_name' && sort_by === 'DESC'"></ion-icon>
           <ion-icon name="arrow-dropup" *ngIf="order_by === 'event_name' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
       </ion-col>
-      <ion-col>
+      <ion-col class="FFR06">
         <ion-row justify-content-center (click)="changeSort('event_date')">
           Event Date
           <ion-icon name="arrow-dropdown" *ngIf="order_by === 'event_date' && sort_by === 'DESC'"></ion-icon>
           <ion-icon name="arrow-dropup" *ngIf="order_by === 'event_date' && sort_by === 'ASC'"></ion-icon>
         </ion-row>
       </ion-col>
-      <ion-col size="2">
+      <ion-col size="2" class="FFR06">
         <ion-row justify-content-center>
           Picture
         </ion-row>
       </ion-col>
-      <ion-col size="2">
+      <ion-col size="2" class="FFR06">
         <ion-row justify-content-center>
           Action
         </ion-row>
       </ion-col>
     </ion-row>
     <ion-row *ngFor="let schedule of scheduleList; index as i" class="forecast_container" nowrap>
-      <ion-col align-self-center>
-        <ion-row>
+      <ion-col align-self-center class="FFR05" text-center>
+        <ion-row justify-content-center>
           {{schedule?.event_name}}
         </ion-row>
       </ion-col>
-      <ion-col align-self-center>
+      <ion-col align-self-center class="FFR05" text-center>
         <ion-row justify-content-center>
           {{schedule?.event_date | date: 'yyyy-MM-dd'}}
         </ion-row>
       </ion-col>
-      <ion-col size="2" align-self-center>
+      <ion-col size="2" align-self-center class="FFR05" text-center>
         <ion-row justify-content-center>
           <ion-thumbnail>
             <img [src]="schedule?.file ? schedule.file : imgNotFound" />
@@ -235,7 +235,7 @@
           <!-- <ion-img [src]="schedule?.file ? schedule.file : imgNotFound" style="width: 100%; height: 100%"></ion-img> -->
         </ion-row>
       </ion-col>
-      <ion-col size="2" align-self-center>
+      <ion-col size="2" align-self-center class="FFR05" text-center>
         <ion-row justify-content-center>
           <ion-row>
             <ion-col size="12">
