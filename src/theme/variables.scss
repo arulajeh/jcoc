@@ -76,7 +76,7 @@
   --ion-color-light-tint: #f5f6f9;
 
   /** head **/
-  --ion-color-head: #004AC4;
+  --ion-color-head: #2091FF;
   --ion-color-head-rgb: 255,211,42;
   --ion-color-head-contrast: #ffff;
   --ion-color-head-contrast-rgb: 0,0,0;
@@ -103,7 +103,7 @@
   --CR002:#cccccc;
   --CR003:#6e6e6e;
   --CR004:#044e79;
-  --CR005:#0080ff;
+  --CR005:#2091FF;
   --CR006:#00a8be;
   --CR007:#0000FF;
   --CR008:#000033;
@@ -217,12 +217,12 @@
 
 @font-face {
   font-family: 'Garamond - Bold';
-  src: url('/assets/font/garamond/garamond-bold.ttf') format('truetype') ;
+  src: url('/assets/font/garamond/garamond.ttf') format('truetype') ;
   font-style: bold;
 }
 
 @font-face {
-  font-family: 'FutGaramondura - Italic';
+  font-family: 'Garamond - Italic';
   src: url('/assets/font/garamond/garamond.ttf') format('truetype') ;
   font-style: italic;
 }

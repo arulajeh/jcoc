@@ -30,6 +30,10 @@
 // }
 ion-app{
     color:var(--CR005);
+
+    & ion-tab-bar.footer-nav--container {
+        height: 45px;
+    }
 }
 
 @media (max-width: 600px) {
