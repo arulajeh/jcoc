@@ -204,6 +204,9 @@ app-all-schedule.ion-page{
                 & ion-button{
                     max-width: 100%;
                 }
+                ion-text:hover{
+                    cursor:pointer;
+                }
                 & .sparator{
                     margin: auto;
                     text-align: center;
@@ -211,6 +214,15 @@ app-all-schedule.ion-page{
                     display: table
                 }
             }
+
+            // &.pagination{
+                
+            //     padding-left: 1vmax;
+            //     ion-text:hover{
+            //         cursor:pointer;
+            //     }
+
+            // }
         }
     }
 }
@@ -231,8 +243,21 @@ app-add-music.ion-page , app-add-schedule.ion-page, app-add-user.ion-page, app-a
 
         & ion-grid{
 
+            & .show-item{
+                border-radius: 3px !important;
+                height: 70px !important;
+            }
+
             & ion-searchbar{
-                padding:0px !important
+                padding:0px !important;
+                .searchbar-input-container{
+                    .searchbar-input{
+                        border-radius: 3px !important;
+                        height:48.5px !important;
+                        box-shadow: none !important;
+                        border-bottom: 1.5px solid #DBDBDB;
+                    }
+                }
             }
 
             & .forecast_container{
@@ -245,8 +270,54 @@ app-add-music.ion-page , app-add-schedule.ion-page, app-add-user.ion-page, app-a
                 font-size:1em;
                 // font-weight:300;
             }
+
+            &.paginations{
+
+                & ion-button{
+                    max-width: 100%;
+                }
+                ion-text:hover{
+                    cursor:pointer;
+                }
+                & .sparator{
+                    margin: auto;
+                    text-align: center;
+                    vertical-align: bottom;
+                    display: table
+                }
+            }
+        }
+    }
+}
+
+app-all-user.ion-page{
+
+    & ion-content{
+
+        & .headerImg{
+            width: 100% !important;
+            height: 25vmax !important;
+            position: relative;
         }
 
-        
+        & ion-grid{
+
+            & .show-item{
+                border-radius: 3px !important;
+                height: 70px !important;
+            }
+
+            & ion-searchbar{
+                padding:0px !important;
+                .searchbar-input-container{
+                    .searchbar-input{
+                        border-radius: 3px !important;
+                        height:48.5px !important;
+                        box-shadow: none !important;
+                        border-bottom: 1.5px solid #DBDBDB;
+                    }
+                }
+            }
+        }
     }
 }
