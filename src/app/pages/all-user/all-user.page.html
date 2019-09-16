@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title class="CR004">Our Members</ion-title>
+    <ion-title class="FFR08 CR004">Our Members</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,7 +14,7 @@
       <ion-col size="12">
         <ion-row justify-content-center>
           <ion-text>
-            <h1>Our Members</h1>
+            <h1 class="FFR08 CR004">Our Members</h1>
           </ion-text>
         </ion-row>
       </ion-col>
@@ -36,26 +36,33 @@
         <ion-searchbar class="CR004" showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getMemberList()"></ion-searchbar>
       </ion-col>
     </ion-row>
+  </ion-grid>
+  <ion-grid class="card-content--lists">
     <ion-row justify-content-center>
-      <ion-col *ngFor ="let data of listMembers" size="xs">
-        <ion-card class="card_music" color="body">
+      <ion-col *ngFor ="let data of listMembers"col-12 col-xl-2 col-lg-3 col-md-4>
+        <ion-card class="card_music">
           <ion-row justify-content-center class="topMargin">
-            <img [src]="data.file ? data.file : imgNotFound" alt="" class="yt user-img mb-4">
+            <ion-avatar>
+              <img [src]="data.file ? data.file : imgNotFound" />
+            </ion-avatar>
+            <!-- <img [src]="data.file ? data.file : imgNotFound" alt="" class="yt user-img mb-4"> -->
           </ion-row>
           <ion-row justify-content-center class="topMargin">
-            {{data?.email}}
+            <ion-text class="FFR04">
+              {{data?.email}}
+            </ion-text>
           </ion-row>
           <ion-card-header>
             <ion-row justify-content-center>
-              <ion-card-title color="light">{{data?.name}}</ion-card-title>
+              <ion-card-title class="FFR08">{{data?.name}}</ion-card-title>
             </ion-row>
             <ion-row justify-content-center>
-              <ion-card-subtitle>{{data?.position_name}}</ion-card-subtitle>
+              <ion-card-subtitle class="FFR06">{{data?.position_name}}</ion-card-subtitle>
             </ion-row>
           </ion-card-header>
           <ion-row justify-content-center>
             <ion-card-content>
-              <ion-button color="warning" (click)="detail(data.id)">
+              <ion-button (click)="detail(data.id)">
                 See Profile
               </ion-button>
             </ion-card-content>
