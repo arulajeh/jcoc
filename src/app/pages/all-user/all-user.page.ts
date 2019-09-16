@@ -10,7 +10,7 @@ import { NavigationExtras } from '@angular/router';
 })
 export class AllUserPage implements OnInit {
   imgNotFound = 'assets/img/image.png';
-  page_size = '8';
+  page_size = '5';
   page_number = '1';
   order_by = 'id';
   sort_by = 'ASC';
