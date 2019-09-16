@@ -1,44 +1,60 @@
 <ion-header>
-    <ion-toolbar color="head">
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Our Members</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  
-  <ion-content>
-      <ion-grid class="searchbar"  no-padding no-margin>
-      <ion-row justify-content-center  no-padding no-margin>
-        <ion-col col-xl-4 col-lg-3 col-md-4 no-padding no-margin>
-          <ion-item lines='none'>
-            <ion-label>Show</ion-label>
-            <ion-select interface="popover" [(ngModel)]="page_size" name="ionSelect" (ionChange)="getMemberList()">
-              <ion-select-option value="5">5</ion-select-option>
-              <ion-select-option value="10">10</ion-select-option>
-              <ion-select-option value="15">15</ion-select-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-        <ion-col col-xl-8 col-lg-9 col-md-8 no-padding no-margin>
-          <ion-row  justify-content-center>
-              <ion-searchbar placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getMemberList()"></ion-searchbar>
+  <ion-toolbar color="head">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="FFR08 CR004">Our Members</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+  <img src="assets/img/bg_4.jpg" class="headerImg" alt="JCOC Music Banner">
+  <ion-grid no-padding>
+    <ion-row>
+      <ion-col size="12">
+        <ion-row justify-content-center>
+          <ion-text>
+            <h1 class="FFR08 CR004">Our Members</h1>
+          </ion-text>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid style="margin-right: 1.5%" class="marginku">
+    <ion-row>
+      <ion-col size="4">
+        <ion-item class="show-item CR004">
+          <ion-label>Show</ion-label>
+          <ion-select interface="popover" [(ngModel)]="page_size" (ionChange)="getMemberList()">
+            <ion-select-option value="5">5</ion-select-option>
+            <ion-select-option value="10">10</ion-select-option>
+            <ion-select-option value="15">15</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="8">
+        <ion-searchbar class="CR004" showCancelButton="focus" placeholder="Search Members..." debounce="500" [(ngModel)]="search" (ionChange)="getMemberList()"></ion-searchbar>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="card-content--lists">
+    <ion-row justify-content-center>
+      <ion-col *ngFor ="let data of listMembers"col-12 col-xl-2 col-lg-3 col-md-4>
+        <ion-card class="card_music">
+          <ion-row justify-content-center class="topMargin">
+            <ion-avatar>
+              <img [src]="data.file ? data.file : imgNotFound" />
+            </ion-avatar>
+            <!-- <img [src]="data.file ? data.file : imgNotFound" alt="" class="yt user-img mb-4"> -->
           </ion-row>
-        </ion-col>
-        <!-- <ion-col size="1">
-  
-        </ion-col> -->
-      </ion-row>
-    </ion-grid>
-  
-    <ion-grid class="card-content--lists"  col-12 col-xl-2 col-lg-3 col-md-4>
-      <ion-row>
-        <ion-col *ngFor ="let data of listMembers"  col-xl-2 col-lg-3 col-md-4>
-          <ion-card no-padding no-margin>
-            <img  [src]="data.file ? data.file : imgNotFound" alt="" >
-           
-            <ion-row justify-content-center class="FGR01">
+          <ion-row justify-content-center class="topMargin">
+            <ion-text class="FFR04">
               {{data?.email}}
+            </ion-text>
+          </ion-row>
+          <ion-card-header>
+            <ion-row justify-content-center>
+              <ion-card-title class="FFR08">{{data?.name}}</ion-card-title>
             </ion-row>
             <ion-card-header>
               <ion-row justify-content-center>
@@ -49,26 +65,13 @@
               </ion-row>
             </ion-card-header>
             <ion-row justify-content-center>
-              <ion-card-content>
-                <ion-button color="warning" (click)="detail(data.id)">
-                  See Profile
-                </ion-button>
-              </ion-card-content>
+              <ion-card-subtitle class="FFR06">{{data?.position_name}}</ion-card-subtitle>
             </ion-row>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    
-    <ion-grid class="paginations">
-  
-        <ion-row>
-          
-          <ion-col size=2>
-              <ion-button 
-              (click)="nextPrev('prev')"
-              [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
-                Prev
+          </ion-card-header>
+          <ion-row justify-content-center>
+            <ion-card-content>
+              <ion-button (click)="detail(data.id)">
+                See Profile
               </ion-button>
           </ion-col> 
           <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
