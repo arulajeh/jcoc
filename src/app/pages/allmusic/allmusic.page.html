@@ -23,9 +23,9 @@
         <ion-item lines='none'>
           <ion-label>Show</ion-label>
           <ion-select interface="popover" [(ngModel)]="page_size" name="ionSelect" (ionChange)="getDataMusic()">
-            <ion-select-option value="5">5</ion-select-option>
-            <ion-select-option value="10">10</ion-select-option>
-            <ion-select-option value="15">15</ion-select-option>
+            <ion-select-option value="8">8</ion-select-option>
+            <ion-select-option value="20">20</ion-select-option>
+            <ion-select-option value="40">40</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -41,14 +41,14 @@
   </ion-grid>
 
   <ion-grid class="card-content--lists">
-    <ion-row>
+    <ion-row justify-content-center>
       <ion-col *ngFor ="let data of safeUrl"  size="auto" col-12 col-xl-2 col-lg-3 col-md-4 > 
         <ion-card no-padding no-margin>
           <iframe  [src]="data.url">
           </iframe>
           <div class="header">
-            <div class="title">{{data.title}}</div>
-            <div class="subtitle">{{data.artist}}</div>
+            <div class="title FFR08">{{data.title}}</div>
+            <div class="subtitle FFR06">{{data.artist}}</div>
           </div>
           <ion-item class="footer " lines="none" float-right   no-padding no-margin>
               <ion-button (click)="sendIdMusic(data.id)" type="submit" class="FFR01 BTN001"  >Read More...</ion-button>

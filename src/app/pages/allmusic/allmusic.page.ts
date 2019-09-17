@@ -14,7 +14,7 @@ export class AllmusicPage implements OnInit {
   //trustedVideoUrl: SafeResourceUrl;
   trustedVideoUrl: SafeResourceUrl;
 
-  page_size = '5';
+  page_size = '8';
   page_number = '1';
   order_by = 'id';
   sort_by = 'ASC';
