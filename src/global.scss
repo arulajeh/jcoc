@@ -25,6 +25,24 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@mixin font-size($sizeValue) {
+
+    @media  only screen and (min-width: 360px){
+        font-size: calc(#{$sizeValue+px} - 0.20vw) !important;
+    }
+
+    @media  only screen and (min-width: 375px){
+        font-size: calc(#{$sizeValue+px}) !important;
+    }
+
+    @media  only screen and (min-width: 414px){
+        font-size: calc(#{$sizeValue+px} + 0.20vw) !important;
+    }
+    @media  only screen and (min-width: 504px){
+        font-size: calc(#{$sizeValue+px} + 0.30vw) !important;
+    }
+}
+
 // .hide-mobile {
 //     // background: silver;
 // }
@@ -362,6 +380,26 @@ app-all-user.ion-page{
                         border-bottom: 1.5px solid #DBDBDB;
                     }
                 }
+            }
+        }
+    }
+}
+
+app-edit-music.ion-page, app-member-update.ion-page, app-articles-update.ion-page, app-schedule-update.ion-page{
+
+    & ion-content{
+
+        & ion-item{
+            border-radius: 1vmax;
+
+            & ion-label{
+                @include font-size(22);
+                font-family: 'Futura - Regular' !important;
+            }
+
+            & ion-input, & ion-textarea, & ion-datetime{
+                @include font-size(14);
+                font-family: 'Futura - Regular' !important;
             }
         }
     }
