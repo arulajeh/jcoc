@@ -31,47 +31,55 @@
       </ion-row>
     </ion-grid>
     
-    <ion-grid class="paginations">
-        <ion-row>
-          <ion-col size=2>
-              <ion-button 
-              (click)="nextPrev('prev')"
-              [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
-                Prev
-              </ion-button>
-          </ion-col> 
-          <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
-            <ion-row justify-content-end>
-              <ion-button color="warning">
-                1
-              </ion-button>
-            </ion-row>
-          </ion-col>
-          <ion-col>
-            <ion-row justify-content-center >
-              <ion-button color="warning" disabled>
-                {{resp?.page_information?.currentPage}}
-              </ion-button>
-            </ion-row>
-          </ion-col>   
-          <ion-col size=1 class="sparator"  *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage">
-            .....
-          </ion-col>
-          <ion-col *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
-            <ion-row justify-content-center >
-              <ion-button color="warning">
-                {{resp?.page_information?.totalPage}}
-              </ion-button>
-            </ion-row>
-          </ion-col>      
-          <ion-col size=2>
-              <ion-button 
-              (click)="nextPrev('next')"
-              [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage" float-right>
-                Next
-              </ion-button>
-          </ion-col>
-        </ion-row>
+    <ion-grid style="padding: 0px !important; margin : 0px, 2px;" class="paginations">
+      <ion-row>
+        <ion-col class="col-pag">
+          <ion-row justify-content-end>
+            <ion-button 
+            (click)="nextPrev('prev')"
+            [disabled]="resp?.page_information?.currentPage === resp?.page_information?.firstPage">
+              Prev
+            </ion-button>
+          </ion-row>
+        </ion-col> 
+        <ion-col class="sparator col-pag" *ngIf="resp?.page_information?.currentPage != resp?.page_information?.firstPage" (click)="nextPrev('first')">
+          <ion-row justify-content-center>
+            <ion-text class="FFR06" style="color: var(--CR003);">
+              1
+            </ion-text>
+          </ion-row>
+        </ion-col>
+        <ion-col class="sparator col-pag">
+          <ion-row justify-content-center >
+            <ion-text class="FFR06" style="color: var(--CR004);">
+              {{resp?.page_information?.currentPage}}
+            </ion-text>
+          </ion-row>
+        </ion-col>
+        <ion-col class="sparator col-pag"  *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage">
+          <ion-row justify-content-center>
+            <ion-text class="FFR06" style="color: var(--CR003);">
+              ...
+            </ion-text>
+          </ion-row>
+        </ion-col>
+        <ion-col class="sparator col-pag" *ngIf="resp?.page_information?.currentPage != resp?.page_information?.totalPage" (click)="nextPrev('last')">
+          <ion-row justify-content-center >
+            <ion-text class="FFR06" style="color: var(--CR003);">
+              {{resp?.page_information?.totalPage}}
+            </ion-text>
+          </ion-row>
+        </ion-col>      
+        <ion-col class="col-pag">
+          <ion-row justify-content-start>
+            <ion-button 
+            (click)="nextPrev('next')"
+            [disabled]="resp?.page_information?.currentPage === resp?.page_information?.totalPage" float-right>
+              Next
+            </ion-button>
+          </ion-row>
+        </ion-col>
+      </ion-row>
     </ion-grid>
   </ion-content>
   
