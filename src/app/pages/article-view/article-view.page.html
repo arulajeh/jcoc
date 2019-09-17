@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Review Article</ion-title>
+    <ion-title class="FFR08">Review Article</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,20 +13,24 @@
   <ion-row justify-content-center>
     <img [src]="dataArticle?.file" class="headerImg" alt="">
   </ion-row>
-  <ion-card-title>{{dataArticle?.title}}</ion-card-title>
+  <ion-card-title class="FFR08">{{dataArticle?.title}}</ion-card-title>
     <ion-grid color="light">
       <ion-row>
-        <ion-col><ion-card-subtitle>Created by : {{dataArticle?.name}}</ion-card-subtitle></ion-col>
+        <ion-col><ion-card-subtitle class="FFR04">Created by : {{dataArticle?.name}}</ion-card-subtitle></ion-col>
         <ion-col><ion-card-subtitle>
           <ion-row justify-content-end>
-            {{dataArticle?.createdAt | date: 'EEE, MMM d, y'}}
+            <ion-text class="FFR04">
+              {{dataArticle?.createdAt | date: 'EEE, MMM d, y'}}
+            </ion-text>
           </ion-row>
         </ion-card-subtitle></ion-col>
       </ion-row>
       <ion-row>
         <ion-col>  
-          <ion-card-content class="spacing">
-            {{dataArticle?.content}}
+          <ion-card-content class="spacing FFR06">
+            <!-- <ion-text > -->
+              {{dataArticle?.content}}
+            <!-- </ion-text> -->
           </ion-card-content>
         </ion-col>
       </ion-row>
