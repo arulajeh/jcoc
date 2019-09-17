@@ -3,10 +3,12 @@ ion-grid.schedules{
     & ion-card{
 
         min-height: unset !important;
+        width: 40vmax !important;
 
         & img{
-            max-height: 10vmax;
-            width: 200px;
+            // max-height: 10vmax;
+            height: 25vmax;
+            width: 100%;
         }
 
         & .ellipsis {
