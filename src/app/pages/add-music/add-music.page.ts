@@ -36,6 +36,8 @@ export class AddMusicPage implements OnInit {
   resp:any;
 
   validUrl = false;
+
+
   constructor(
     private api: ApiService,
     public toastController: ToastController,
@@ -58,6 +60,8 @@ export class AddMusicPage implements OnInit {
       this.notif("You haven't enter the Music Chord");
     }else if(this.dataMusic.link === ""){
       this.notif("You haven't enter the Music Link/URL");
+    }else if(this.validUrl === false){
+      this.notif("Your video's link is not valid! Please Check your video's link again!");
     }else{
       await this.api.postData('music/create', this.dataMusic).then((result) => {
         return this.status = JSON.parse(JSON.stringify(result)).sukses;
@@ -65,7 +69,7 @@ export class AddMusicPage implements OnInit {
       if(this.status == true){
         //alert('SUCCESS');
         this.getMusicList();
-        this.notif("Success! Music has been udded.");
+        this.notif("Success! Music has been added.");
         this.dataMusic.judul = "";
         this.dataMusic.penyanyi = "";
         this.dataMusic.lirik = "";
