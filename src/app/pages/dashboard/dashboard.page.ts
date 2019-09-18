@@ -62,7 +62,7 @@ export class DashboardPage implements OnInit {
 
   getMusicList() {
     return this.showLoading('Getting music data').then(() => {
-      return this.api.getListData('music/all', '5', this.page_number, 'judul', 'ASC', this.search ? this.search : ' ')
+      return this.api.getListData('music/all', '8', this.page_number, 'judul', 'ASC', this.search ? this.search : ' ')
       .then((res) => {
         this.loadingCtrl.dismiss();
         this.resp = JSON.parse(JSON.stringify(res));
