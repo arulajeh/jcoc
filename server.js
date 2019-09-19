@@ -1550,14 +1550,16 @@ app.post('/api/resetpassword', (req, res) => {
   // let hasilJWT = checkJWT(token);
   // if (hasilJWT) {
     db.users.findOne({where: {username: body.username, status: 1}})
-    .then((result) => {
+    .then((hasilku) => {
+      let result = hasilku.get({plain: true});
       if (result) {
-        var randomstring = Math.random().toString(18).slice(-12);
+        var randomstring = Math.random().toString(18).slice(-8);
+        console.log(randomstring)
         let newpassword = Md5.hashStr(randomstring)
         // let pass2 = Md5.hashStr(newpassword + result)
         const pass1 = Md5.hashStr(newpassword);
-        const pass2 = Md5.hashStr(pass1 + result.username);
-        db.sequelize.query(`UPDATE users SET "password" = ${pass2} WHERE username = ${body.username}`,
+        const pass2 = Md5.hashStr(pass1 + JSON.parse(JSON.stringify(result)).username);
+        db.sequelize.query(`UPDATE users SET "password" = '${pass2}' WHERE username = '${body.username}'`,
          {type: db.sequelize.QueryTypes.UPDATE})
         .then((reset) => {
           if (reset) {
@@ -1583,7 +1585,7 @@ app.post('/api/resetpassword', (req, res) => {
                         Hey, ${body.username} you have just made a request to reset your password.
                 
                         This is your new password.
-                        <b>${pass2.toString()}</b>
+                        <b>${randomstring}</b>
                     </p>
                     <p>
                         Best regards,
@@ -1607,7 +1609,8 @@ app.post('/api/resetpassword', (req, res) => {
             sgMail.send(msg);
             res.json({
               sukses: true,
-              msg: "Reset password successfully"
+              msg: "Reset password successfully",
+              newpassword: randomstring
             });
           } else {
             res.json({
@@ -1615,6 +1618,14 @@ app.post('/api/resetpassword', (req, res) => {
               msg: 'Failed reset password'
             })
           }
+        }).catch((err) => {
+          console.log(err);
+          res.json({
+            sukses: false,
+            msg: 'Failed Reset Password',
+            error: JSON.stringify(err),
+            newpass: pass2
+          })
         })
       } else {
         res.json({

@@ -6,7 +6,6 @@
       "host": "ec2-107-22-222-161.compute-1.amazonaws.com",
       "port":5432,
       "dialect": "postgres",
-      "operatorsAliases": false,
       "dialectOptions": {
         "ssl":true
       }
@@ -17,8 +16,7 @@
       "database": "api_node_demo",
       "host": "127.0.0.1",
       "port":8889,
-      "dialect": "mysql",
-      "operatorsAliases": false
+      "dialect": "mysql"
     },
     "production": {
       "username": "oofynstrmbqxhy",
@@ -26,7 +24,6 @@
       "database": "daf3093jovs5k4",
       "host": "ec2-107-22-222-161.compute-1.amazonaws.com",
       "port":5432,
-      "dialect": "postgres",
-      "operatorsAliases": false
+      "dialect": "postgres"
     }
   }
