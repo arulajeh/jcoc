@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar color="head">
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+    <ion-title class="FFR08">Reset Password</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  class="no-scroll login"  scrollbar-x="false" scrollbar-y="false"    overflow-scroll="false" no-bounce>
+  <ion-grid class="content" no-padding no-margin>
+      <form class="list-form" #loginForm="ngForm" (ngSubmit)="submit()" autocomplete="off">
+        <ion-row>
+            <ion-col size="1" no-padding no-margin class="img"><img src="../../../assets/icon/IC001.svg"></ion-col>
+            <ion-col size="11" no-padding no-margin class="input-group"><ion-input type="text" name="username" text-lowercase class="FLB01" [(ngModel)]="username" clearInput placeholder="Username"></ion-input></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col no-padding no-margin >
+            <ion-button class="BTN001 login" tappable type="submit"  expand="block" [disabled]="username === ''">
+              Reset Password
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </form>
+  </ion-grid>
+</ion-content>

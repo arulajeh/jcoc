@@ -16,7 +16,8 @@ const routes: Routes = [
   { path: 'articles-update', loadChildren: './pages/articles-update/articles-update.module#ArticlesUpdatePageModule' },
   { path: 'schedule-update', loadChildren: './pages/schedule-update/schedule-update.module#ScheduleUpdatePageModule' },
   { path: 'article-view', loadChildren: './pages/article-view/article-view.module#ArticleViewPageModule' },
-  { path: 'member-detail', loadChildren: './pages/user-detail/user-detail.module#UserDetailPageModule' }
+  { path: 'member-detail', loadChildren: './pages/user-detail/user-detail.module#UserDetailPageModule' },  { path: 'reset-pass', loadChildren: './pages/reset-pass/reset-pass.module#ResetPassPageModule' }
+
 
 
 
