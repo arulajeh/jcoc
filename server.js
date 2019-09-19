@@ -1609,8 +1609,7 @@ app.post('/api/resetpassword', (req, res) => {
             sgMail.send(msg);
             res.json({
               sukses: true,
-              msg: "Reset password successfully",
-              newpassword: randomstring
+              msg: "Reset password successfully"
             });
           } else {
             res.json({
