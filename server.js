@@ -1557,7 +1557,7 @@ app.post('/api/resetpassword', (req, res) => {
         // let pass2 = Md5.hashStr(newpassword + result)
         const pass1 = Md5.hashStr(newpassword);
         const pass2 = Md5.hashStr(pass1 + result.username);
-        db.sequelize.query(`UPDATE users SET password = ${pass2} WHERE id = ${result.id}`, {type: db.sequelize.QueryTypes.UPDATE})
+        db.sequelize.query(`UPDATE users SET password = ${pass2.toString()} WHERE id = ${result.id}`, {type: db.sequelize.QueryTypes.UPDATE})
         .then((reset) => {
           if (reset) {
             const html = `
@@ -1582,7 +1582,7 @@ app.post('/api/resetpassword', (req, res) => {
                         Hey, ${result.username} you have just made a request to reset your password.
                 
                         This is your new password.
-                        <b>${pass2}</b>
+                        <b>${pass2.toString()}</b>
                     </p>
                     <p>
                         Best regards,
