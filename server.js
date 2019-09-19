@@ -1554,9 +1554,7 @@ app.post('/api/resetpassword', (req, res) => {
       let result = hasilku.get({plain: true});
       if (result) {
         var randomstring = Math.random().toString(18).slice(-8);
-        console.log(randomstring)
         let newpassword = Md5.hashStr(randomstring)
-        // let pass2 = Md5.hashStr(newpassword + result)
         const pass1 = Md5.hashStr(newpassword);
         const pass2 = Md5.hashStr(pass1 + JSON.parse(JSON.stringify(result)).username);
         db.sequelize.query(`UPDATE users SET "password" = '${pass2}' WHERE username = '${body.username}'`,
@@ -1618,7 +1616,6 @@ app.post('/api/resetpassword', (req, res) => {
             })
           }
         }).catch((err) => {
-          console.log(err);
           res.json({
             sukses: false,
             msg: 'Failed Reset Password',
@@ -1633,12 +1630,6 @@ app.post('/api/resetpassword', (req, res) => {
         })
       }
     })
-  // } else {
-  //   res.json({
-  //     sukses: false,
-  //     message: 'Invalid Token'
-  //   });
-  // }
 })
 
 app.post('/api/email', (req, res) => {
