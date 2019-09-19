@@ -1543,6 +1543,90 @@ app.post('/api/article/update', (req, res) => {
   }
 });
 
+app.post('/api/resetpassword', (req, res) => {
+  const head = req.headers;
+  const body = req.body;
+  let token = head.authorization;
+  let hasilJWT = checkJWT(token);
+  if (hasilJWT) {
+    db.users.findOne({where: {username: body.username, status: 1}})
+    .then((result) => {
+      if (result) {
+        var randomstring = Math.random().toString(18).slice(-12);
+        let newpassword = Md5.hashStr(randomstring)
+        // let pass2 = Md5.hashStr(newpassword + result)
+        const pass1 = Md5.hashStr(newpassword);
+        const pass2 = Md5.hashStr(pass1 + result.username);
+        db.sequelize.query(`UPDATE users SET password = ${pass2} WHERE id = ${args.id}`, {type: db.sequelize.QueryTypes.UPDATE})
+        .then((reset) => {
+          if (reset) {
+            const html = `
+            <!DOCTYPE html>
+            <html>
+                <head>
+                    <meta charset='utf-8'>
+                    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+                    <title>Your new password for JCOC Music</title>
+                    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+                    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+                    <meta name='viewport' content='width=device-width, initial-scale=1'>
+                    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+                    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" 
+                    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+                </head>
+                <body>
+                    <p>
+                        Hey, ${result.username} you have just made a request to reset your password.
+                
+                        This is your new password.
+                        <b>${pass2}</b>
+                    </p>
+                    <p>
+                        Best regards,
+
+
+                        
+                        JCOC Music Admin
+                    </p>
+                </body>
+            </html>
+            `;
+            const sgMail = require('@sendgrid/mail');
+            sgMail.setApiKey('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');
+            const msg = {
+              to: result.email,
+              from: 'admin@jcocmusic.herokuapp.com',
+              subject: 'Your new Password for JCOC Music',
+              text: 'You have requested reset password for your account on JCOC Music',
+              html: html,
+            };
+            sgMail.send(msg);
+          } else {
+            res.json({
+              sukses: false,
+              msg: 'Failed reset password'
+            })
+          }
+        })
+        
+      } else {
+        res.json({
+          sukses: false,
+          msg: "User Not Found"
+        })
+      }
+    })
+  } else {
+    res.json({
+      sukses: false,
+      message: 'Invalid Token'
+    });
+  }
+})
+
 app.post('/api/email', (req, res) => {
   sendEmail();
 });
@@ -1819,7 +1903,7 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey('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');
 const msg = {
   to: email,
-  from: 'eleomessiah@gmail.com',
+  from: 'admin@jcocmusic.herokuapp.com',
   subject: subject,
   text: text,
   html: html,
