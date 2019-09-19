@@ -35,7 +35,7 @@ export class ApiService {
       page_size ? this.headers = this.headers.set('page_size', page_size) : '';
       order_by ? this.headers = this.headers.set('order_by', order_by) : '';
       sort_by ? this.headers = this.headers.set('sort_by', sort_by) : '';
-      search ? this.headers = this.headers.set('search', search) : '';
+      search ? this.headers = this.headers.set('search', search) : this.headers = this.headers.set('search', ' ');
       this.headers = await this.headers.set('authorization', localStorage.getItem('token'));
       this.httpClt.get(this.apiUrl + url, {headers: this.headers}).subscribe(
         res => { resolve(res) },
