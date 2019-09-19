@@ -1547,8 +1547,8 @@ app.post('/api/resetpassword', (req, res) => {
   const head = req.headers;
   const body = req.body;
   let token = head.authorization;
-  let hasilJWT = checkJWT(token);
-  if (hasilJWT) {
+  // let hasilJWT = checkJWT(token);
+  // if (hasilJWT) {
     db.users.findOne({where: {username: body.username, status: 1}})
     .then((result) => {
       if (result) {
@@ -1619,12 +1619,12 @@ app.post('/api/resetpassword', (req, res) => {
         })
       }
     })
-  } else {
-    res.json({
-      sukses: false,
-      message: 'Invalid Token'
-    });
-  }
+  // } else {
+  //   res.json({
+  //     sukses: false,
+  //     message: 'Invalid Token'
+  //   });
+  // }
 })
 
 app.post('/api/email', (req, res) => {
