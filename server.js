@@ -1557,7 +1557,7 @@ app.post('/api/resetpassword', (req, res) => {
         // let pass2 = Md5.hashStr(newpassword + result)
         const pass1 = Md5.hashStr(newpassword);
         const pass2 = Md5.hashStr(pass1 + result.username);
-        db.sequelize.query(`UPDATE users SET password = ${pass2} WHERE id = ${args.id}`, {type: db.sequelize.QueryTypes.UPDATE})
+        db.sequelize.query(`UPDATE users SET password = ${pass2} WHERE id = ${result.id}`, {type: db.sequelize.QueryTypes.UPDATE})
         .then((reset) => {
           if (reset) {
             const html = `
