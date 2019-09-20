@@ -1,3 +1,31 @@
+<!-- <script type="text/javascript">
+  players = new Array();
+
+  function onYouTubeIframeAPIReady() {
+      var temp = $("iframe.yt_players");
+      for (var i = 0; i < temp.length; i++) {
+          var t = new YT.Player($(temp[i]).attr('id'), {
+              events: {
+                  'onStateChange': onPlayerStateChange
+              }
+          });
+          players.push(t);
+      }
+  }
+  onYouTubeIframeAPIReady();
+
+  function onPlayerStateChange(event) {
+      if (event.data == YT.PlayerState.PLAYING) {
+          var temp = event.target.a.src;
+          var tempPlayers = $("iframe.yt_players");
+          for (var i = 0; i < players.length; i++) {
+              if (players[i].a.src != temp) 
+                  players[i].stopVideo();
+          }
+      }
+  }
+</script> -->
+
 <ion-header>
   <ion-toolbar color="head">
     <ion-buttons slot="start">
@@ -11,7 +39,6 @@
           </div>
         </ion-col>
       </ion-row>
-      
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -56,7 +83,7 @@
     <ion-row>
       <ion-col *ngFor ="let data of safeUrl" col-12 col-xl-2 col-lg-3 col-md-4 > 
         <ion-card no-padding no-margin>
-          <iframe  [src]="data.url">
+          <iframe class="yt_players" id="data.vidId" [src]="data.url">
           </iframe>
           <div class="header">
             <div class="title FFR06">{{data.title}}</div>

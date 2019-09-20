@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastController, NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-pass',
@@ -14,6 +15,7 @@ export class ResetPassPage implements OnInit {
 
   constructor(
     private api: ApiService,
+    private route: Router,
     public toastController: ToastController
   ) { }
 
@@ -30,7 +32,8 @@ export class ResetPassPage implements OnInit {
       });
       if(this.status == true){
         //alert('SUCCESS');
-        this.notif("Success! Please check your email!")
+        this.notif("Success! Please check your email!");
+        this.route.navigateByUrl('/login');
       }else{
         // alert('FAILED!');
         this.notif("Failed!");

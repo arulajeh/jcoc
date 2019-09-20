@@ -50,16 +50,16 @@
   </ion-menu>
   
   <ion-router-outlet id="content" main></ion-router-outlet>
-  <ion-tabs color="head" class="footer-nav">
-    <ion-tab-bar slot="bottom"  color="head" class="footer-nav--container">
-        <ion-tab-button tab="all-music">
-              <img src="assets/icon/video.png" alt="Ionic logo">
+  <ion-tabs color="head" class="footer-nav hide-desktop">
+    <ion-tab-bar slot="bottom"  color="head" class="footer-nav--container hide-desktop">
+        <ion-tab-button tab="all-music" class="hide-desktop">
+              <img src="assets/icon/video.png" alt="Ionic logo" class="hide-desktop">
         </ion-tab-button>
-        <ion-tab-button tab="dashboard">
-            <img src="assets/icon/home.png" alt="Ionic logo">
+        <ion-tab-button tab="dashboard" class="hide-desktop">
+            <img src="assets/icon/home.png" alt="Ionic logo" class="hide-desktop">
         </ion-tab-button>
-        <ion-tab-button tab="articles-all">
-            <img src="assets/icon/article.png" alt="Ionic logo">
+        <ion-tab-button tab="articles-all" class="hide-desktop">
+            <img src="assets/icon/article.png" alt="Ionic logo" class="hide-desktop">
         </ion-tab-button>
     </ion-tab-bar>
   </ion-tabs>

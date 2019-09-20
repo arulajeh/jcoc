@@ -35,6 +35,10 @@ export class DashboardPage implements OnInit {
   safeUrl = [];
   trustedVideoUrl:any;
 
+  players:any;
+  // i:any;
+  YT:any;
+
   constructor(
     private api: ApiService,
     private toastCtrl: ToastController,
@@ -44,6 +48,29 @@ export class DashboardPage implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  onYouTubeIframeAPIReady() {
+    var temp = $("iframe.yt_players");
+    for ( let i = 0; i < temp.length; i++) {
+        const t = this.YT.Player($(temp[i]).attr('id'), {
+            events: {
+                'onStateChange': this.onPlayerStateChange
+            }
+        });
+        this.players.push(t);
+    }
+  }
+
+  onPlayerStateChange(event) {
+    if (event.data == this.YT.PlayerState.PLAYING) {
+        var temp = event.target.getVideoUrl();
+        var tempPlayers = $("iframe.yt_players");
+        for (var i = 0; i < this.players.length; i++) {
+            if (this.players[i].getVideoUrl() != temp) 
+                this.players[i].stopVideo();
+        }
+    }
   }
 
   getDataContent() {
@@ -85,6 +112,7 @@ export class DashboardPage implements OnInit {
   async ionViewDidEnter() {
     await this.getDataContent();
     await this.getMusicList();
+    await this.onYouTubeIframeAPIReady();
     this.getImages();
   }
 
@@ -116,15 +144,18 @@ export class DashboardPage implements OnInit {
   convertSafeUrl(data){
     this.safeUrl = [];
     for (let index of data) {
-      const x = this.api.parseEmbedUrl(index.link);
+      const x = this.api.parseEmbedUrl(index.link+'?rel=0&wmode=Opaque&enablejsapi=1');
+      // console.log(x);
       this.trustedVideoUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(x);
       this.safeUrl.push({
         url:this.trustedVideoUrl,
         title: index.judul,
         artist: index.penyanyi,
-        id: index.id
+        id: index.id,
+        vidId: "player"+index.id
       });
     }
+    // console.log(this.safeUrl);
   }
 
   sendIdMusic(id){
