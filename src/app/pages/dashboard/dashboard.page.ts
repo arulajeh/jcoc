@@ -3,6 +3,8 @@ import { ApiService } from 'src/app/services/api.service';
 import { ToastController, LoadingController, NavController, IonSlides } from '@ionic/angular';
 import { NavigationExtras } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
+// import * as youtube from '../../../assets/js/youtube';
+// declare var youtube: any;
 
 @Component({
   selector: 'app-dashboard',
@@ -47,7 +49,8 @@ export class DashboardPage implements OnInit {
     private domSanitizer: DomSanitizer
   ) { }
 
-  ngOnInit() {
+  ngOnInit(){
+    // youtube();
   }
 
   // onYouTubeIframeAPIReady() {
@@ -113,6 +116,7 @@ export class DashboardPage implements OnInit {
     await this.getDataContent();
     await this.getMusicList();
     // await this.onYouTubeIframeAPIReady();
+    // await youtube();
     this.getImages();
   }
 
