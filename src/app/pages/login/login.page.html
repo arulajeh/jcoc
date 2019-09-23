@@ -10,17 +10,22 @@
           <form class="list-form" #loginForm="ngForm" (ngSubmit)="submit()" autocomplete="off">
             <ion-row>
                 <ion-col size="1" no-padding no-margin class="img"><img src="../../../assets/icon/IC001.svg"></ion-col>
-                <ion-col size="11" no-padding no-margin class="input-group"><ion-input type="text" name="username" text-lowercase class="FLB01" [(ngModel)]="username" clearInput ></ion-input></ion-col>
+                <ion-col size="11" no-padding no-margin class="input-group"><ion-input type="text" name="username" text-lowercase class="FLB01" [(ngModel)]="username" clearInput placeholder="Username"></ion-input></ion-col>
             </ion-row>
             <ion-row>
                 <ion-col size="1" no-padding no-margin class="img"><img src="../../../assets/icon/IC002.svg"></ion-col>
-                <ion-col size="11" no-padding no-margin class="input-group"><ion-input type="password" name="password" class="FLB01" [(ngModel)]="password" clearInput ></ion-input></ion-col>
+                <ion-col size="11" no-padding no-margin class="input-group"><ion-input type="password" name="password" class="FLB01" [(ngModel)]="password" clearInput placeholder="Password" ></ion-input></ion-col>
             </ion-row>
             <ion-row>
               <ion-col no-padding no-margin class="rememberme">
                 <ion-checkbox></ion-checkbox>
                 <ion-text class="FR06 CP012">
                   Remember Me
+                </ion-text>
+              </ion-col>
+              <ion-col text-end no-padding no-margin class="forgot">
+                <ion-text class="FR06 CP012" (click)="moveReset()">
+                  Forgot Your Password?
                 </ion-text>
               </ion-col>
             </ion-row>

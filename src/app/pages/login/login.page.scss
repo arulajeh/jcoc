@@ -82,6 +82,20 @@ ion-content.login{
                   margin: auto 0px;
               }
           }
+
+          & .forgot {
+            // display: flex;
+            font-size:12px;
+            // color: blue;
+            text-decoration: underline;
+            ion-text:hover{
+                cursor:pointer;
+            }
+
+            & ion-text {
+                margin: auto 0px;
+            }
+        }
           
       }
   

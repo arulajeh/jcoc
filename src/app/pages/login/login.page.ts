@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController, MenuController } from '@ionic/angular';
+import { ToastController, MenuController, NavController } from '@ionic/angular';
 import { ApiService } from "../../services/api.service";
 import { Router } from '@angular/router';
 
@@ -17,7 +17,8 @@ export class LoginPage implements OnInit {
     private api: ApiService,
     private toastCtrl: ToastController,
     private route: Router,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    public navCtrl: NavController
   ) { }
 
   ngOnInit() {
@@ -41,6 +42,10 @@ export class LoginPage implements OnInit {
     }).catch((err) => {
       this.showToast('Invalid username / password');
     })
+  }
+
+  moveReset(){
+    this.route.navigateByUrl('/reset-pass');
   }
 
   async showToast(msg) {
