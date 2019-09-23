@@ -29,6 +29,8 @@ export class ResetPassPage implements OnInit {
     }else{
       await this.api.postData('resetpassword', {"username": this.username}).then((result) => {
         return this.status = JSON.parse(JSON.stringify(result)).sukses;
+      }).catch((result) =>{
+        this.notif("Failed! Username cannot find.");
       });
       if(this.status == true){
         //alert('SUCCESS');
@@ -36,7 +38,7 @@ export class ResetPassPage implements OnInit {
         this.route.navigateByUrl('/login');
       }else{
         // alert('FAILED!');
-        this.notif("Failed!");
+        this.notif("Failed! Username cannot find.");
       }
     }
   }
