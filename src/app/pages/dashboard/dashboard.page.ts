@@ -50,28 +50,28 @@ export class DashboardPage implements OnInit {
   ngOnInit() {
   }
 
-  onYouTubeIframeAPIReady() {
-    var temp = $("iframe.yt_players");
-    for ( let i = 0; i < temp.length; i++) {
-        const t = this.YT.Player($(temp[i]).attr('id'), {
-            events: {
-                'onStateChange': this.onPlayerStateChange
-            }
-        });
-        this.players.push(t);
-    }
-  }
+  // onYouTubeIframeAPIReady() {
+  //   var temp = $("iframe.yt_players");
+  //   for ( let i = 0; i < temp.length; i++) {
+  //       const t = this.YT.Player($(temp[i]).attr('id'), {
+  //           events: {
+  //               'onStateChange': this.onPlayerStateChange
+  //           }
+  //       });
+  //       this.players.push(t);
+  //   }
+  // }
 
-  onPlayerStateChange(event) {
-    if (event.data == this.YT.PlayerState.PLAYING) {
-        var temp = event.target.getVideoUrl();
-        var tempPlayers = $("iframe.yt_players");
-        for (var i = 0; i < this.players.length; i++) {
-            if (this.players[i].getVideoUrl() != temp) 
-                this.players[i].stopVideo();
-        }
-    }
-  }
+  // onPlayerStateChange(event) {
+  //   if (event.data == this.YT.PlayerState.PLAYING) {
+  //       var temp = event.target.getVideoUrl();
+  //       var tempPlayers = $("iframe.yt_players");
+  //       for (var i = 0; i < this.players.length; i++) {
+  //           if (this.players[i].getVideoUrl() != temp) 
+  //               this.players[i].stopVideo();
+  //       }
+  //   }
+  // }
 
   getDataContent() {
     return this.showLoading('Getting data').then(() => {
@@ -112,7 +112,7 @@ export class DashboardPage implements OnInit {
   async ionViewDidEnter() {
     await this.getDataContent();
     await this.getMusicList();
-    await this.onYouTubeIframeAPIReady();
+    // await this.onYouTubeIframeAPIReady();
     this.getImages();
   }
 
