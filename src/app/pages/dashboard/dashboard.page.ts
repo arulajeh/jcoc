@@ -5,6 +5,7 @@ import { NavigationExtras } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 // import * as youtube from '../../../assets/js/youtube';
 // declare var youtube: any;
+// import * as $ from 'jquery'
 
 @Component({
   selector: 'app-dashboard',
