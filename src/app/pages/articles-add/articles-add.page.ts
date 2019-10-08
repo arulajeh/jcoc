@@ -178,6 +178,11 @@ export class ArticlesAddPage implements OnInit {
       }
     }
     this.navCtrl.navigateForward(['articles-update'], extras);
+    if(this.search == ''){
+      this.search = ' ';
+    }else{
+      this.search = '';
+    }
   }
 
   ngOnInit() {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as md5 from "md5";
 import { ToastController, LoadingController } from '@ionic/angular';
 
@@ -57,7 +57,8 @@ export class MemberUpdatePage implements OnInit {
     private api: ApiService,
     private route: ActivatedRoute,
     private toastCtrl: ToastController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private router : Router
   ) { }
 
   ngOnInit() {
@@ -125,6 +126,7 @@ export class MemberUpdatePage implements OnInit {
       let ress = JSON.parse(JSON.stringify(res));
       if (ress.sukses === true) {
         this.showToast('Update user successfully')
+        this.router.navigateByUrl('/home/add-user');
       } else {
         this.showToast('Failed update users');
       }

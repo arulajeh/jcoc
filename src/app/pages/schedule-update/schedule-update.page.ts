@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastController, LoadingController } from '@ionic/angular';
 
@@ -59,7 +59,8 @@ export class ScheduleUpdatePage implements OnInit {
     private route:ActivatedRoute,
     private api: ApiService,
     private toastCtrl: ToastController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private router : Router
   ) { }
 
   ngOnInit() {
@@ -217,6 +218,7 @@ export class ScheduleUpdatePage implements OnInit {
       const response = JSON.parse(JSON.stringify(res));
       if (response.sukses === true) {
         this.showToast('Update schedule successfully');
+        this.router.navigateByUrl('/home/add-schedule');
       } else {
         this.showToast('Failed create schedule');
       }

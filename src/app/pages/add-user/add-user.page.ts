@@ -211,6 +211,11 @@ export class AddUserPage implements OnInit {
       }
     }
     this.navCtrl.navigateForward(['/member-update'], extras);
+    if(this.search == ''){
+      this.search = ' ';
+    }else{
+      this.search = '';
+    }
   }
 
   async showToast(msg) {

@@ -76,6 +76,7 @@ export class EditMusicPage implements OnInit {
     });
       if(this.status == true){
         this.notif("Success! Music has been updated.");
+        this.backPage();
       }else{
         this.notif("Failed!");
       }

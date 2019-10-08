@@ -116,6 +116,12 @@ export class AddMusicPage implements OnInit {
       }
     };
     this.navCtrl.navigateForward(['/edit-music'], navigationExtras);
+    if(this.search == ''){
+      this.search = ' ';
+    }else{
+      this.search = '';
+    }
+    // this.search = ' ';
   }
 
   deleteMusic(id){

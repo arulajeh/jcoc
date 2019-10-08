@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { ToastController, LoadingController, NavController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-articles-update',
@@ -32,7 +32,8 @@ export class ArticlesUpdatePage implements OnInit {
     private toastCtrl: ToastController,
     private loadingCtrl: LoadingController,
     private route: ActivatedRoute,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private router : Router
   ) { }
 
   ngOnInit() {
@@ -73,6 +74,7 @@ export class ArticlesUpdatePage implements OnInit {
         const response = JSON.parse(JSON.stringify(res));
         if (response.sukses === true) {
           this.showToast('Update article successfully');
+          this.router.navigateByUrl('/home/articles-add');
         } else {
           this.showToast('Update article failed');
         }

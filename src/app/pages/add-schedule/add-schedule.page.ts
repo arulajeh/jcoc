@@ -295,6 +295,11 @@ export class AddSchedulePage implements OnInit {
       }
     }
     this.navCtrl.navigateForward(['schedule-update'], navigationExtras);
+    if(this.search == ''){
+      this.search = ' ';
+    }else{
+      this.search = '';
+    }
   }
 
   getImages() {
