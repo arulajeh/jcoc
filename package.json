@@ -47,7 +47,7 @@
     "ionic-selectable": "^4.4.1",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "jsonwebtoken": "^8.5.1",
     "karma": "~4.1.0",
     "karma-chrome-launcher": "~2.2.0",
